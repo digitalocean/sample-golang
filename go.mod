@@ -1,3 +1,3 @@
-module gitlab.com/snormore/hello
+module gitlab.com/digitalocean/sample-golang
 
 go 1.13
