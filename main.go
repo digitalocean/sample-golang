@@ -34,11 +34,10 @@ func main() {
 
 	http.HandleFunc("/cached", func(w http.ResponseWriter, r *http.Request) {
 		maxAgeParams, ok := r.URL.Query()["max-age"]
-		var maxAge int
 		if ok && len(maxAgeParams) > 0 {
-			maxAge, _ = strconv.Atoi(maxAgeParams[0])
+			maxAge, _ := strconv.Atoi(maxAgeParams[0])
+			w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", maxAge))
 		}
-		w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", maxAge))
 		requestID := uuid.Must(uuid.NewV4())
 		fmt.Fprintf(w, requestID.String())
 	})
