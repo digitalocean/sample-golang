@@ -42,6 +42,18 @@ func main() {
 		fmt.Fprintf(w, requestID.String())
 	})
 
+	http.HandleFunc("/status", func(w http.ResponseWriter, r *http.Request) {
+		codeParams, ok := r.URL.Query()["code"]
+		if ok && len(codeParams) > 0 {
+			statusCode, _ := strconv.Atoi(codeParams[0])
+			if statusCode >= 200 && statusCode < 600 {
+				w.WriteHeader(statusCode)
+			}
+		}
+		requestID := uuid.Must(uuid.NewV4())
+		fmt.Fprintf(w, requestID.String())
+	})
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "80"
