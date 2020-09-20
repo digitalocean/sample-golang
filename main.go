@@ -55,6 +55,19 @@ func main() {
 		fmt.Fprintf(w, strings.Join(headers, "\n"))
 	})
 
+	http.HandleFunc("/env", func(w http.ResponseWriter, r *http.Request) {
+		keys, ok := r.URL.Query()["key"]
+		if ok && len(keys) > 0 {
+			fmt.Fprintf(w, os.Getenv(keys[0]))
+			return
+		}
+		envs := []string{}
+		for _, env := range os.Environ() {
+			envs = append(envs, env)
+		}
+		fmt.Fprintf(w, strings.Join(envs, "\n"))
+	})
+
 	http.HandleFunc("/status", func(w http.ResponseWriter, r *http.Request) {
 		codeParams, ok := r.URL.Query()["code"]
 		if ok && len(codeParams) > 0 {
