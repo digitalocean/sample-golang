@@ -1,0 +1,8 @@
+name: sample-golang
+services:
+- environment_slug: go
+  github:
+    branch: master
+    deploy_on_push: true
+    repo: digitalocean/sample-golang
+  name: sample-golang
