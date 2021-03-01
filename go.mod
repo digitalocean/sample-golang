@@ -1,4 +1,5 @@
 module gitlab.com/digitalocean/sample-golang
+module github.com/go-gitea/gitea
 
 go 1.13
 
