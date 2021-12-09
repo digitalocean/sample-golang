@@ -45,6 +45,18 @@ func main() {
 			maxAge, _ := strconv.Atoi(maxAgeParams[0])
 			w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", maxAge))
 		}
+		responseHeaderParams, ok := r.URL.Query()["headers"]
+		if ok {
+			for _, header := range responseHeaderParams {
+				h := strings.Split(header, ":")
+				w.Header().Set(h[0], strings.TrimSpace(h[1]))
+			}
+		}
+		statusCodeParams, ok := r.URL.Query()["status"]
+		if ok {
+			statusCode, _ := strconv.Atoi(statusCodeParams[0])
+			w.WriteHeader(statusCode)
+		}
 		requestID := uuid.Must(uuid.NewV4())
 		fmt.Fprintf(w, requestID.String())
 	})
