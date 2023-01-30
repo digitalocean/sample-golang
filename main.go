@@ -40,6 +40,7 @@ func main() {
 	})
 
 	http.HandleFunc("/cached", func(w http.ResponseWriter, r *http.Request) {
+		logRequest(r)
 		maxAgeParams, ok := r.URL.Query()["max-age"]
 		if ok && len(maxAgeParams) > 0 {
 			maxAge, _ := strconv.Atoi(maxAgeParams[0])
@@ -58,36 +59,38 @@ func main() {
 			w.WriteHeader(statusCode)
 		}
 		requestID := uuid.Must(uuid.NewV4())
-		fmt.Fprintf(w, requestID.String())
+		fmt.Fprint(w, requestID.String())
 	})
 
 	http.HandleFunc("/headers", func(w http.ResponseWriter, r *http.Request) {
+		logRequest(r)
 		keys, ok := r.URL.Query()["key"]
 		if ok && len(keys) > 0 {
-			fmt.Fprintf(w, r.Header.Get(keys[0]))
+			fmt.Fprint(w, r.Header.Get(keys[0]))
 			return
 		}
 		headers := []string{}
+		headers = append(headers, fmt.Sprintf("host=%s", r.Host))
 		for key, values := range r.Header {
 			headers = append(headers, fmt.Sprintf("%s=%s", key, strings.Join(values, ",")))
 		}
-		fmt.Fprintf(w, strings.Join(headers, "\n"))
+		fmt.Fprint(w, strings.Join(headers, "\n"))
 	})
 
 	http.HandleFunc("/env", func(w http.ResponseWriter, r *http.Request) {
+		logRequest(r)
 		keys, ok := r.URL.Query()["key"]
 		if ok && len(keys) > 0 {
-			fmt.Fprintf(w, os.Getenv(keys[0]))
+			fmt.Fprint(w, os.Getenv(keys[0]))
 			return
 		}
 		envs := []string{}
-		for _, env := range os.Environ() {
-			envs = append(envs, env)
-		}
-		fmt.Fprintf(w, strings.Join(envs, "\n"))
+		envs = append(envs, os.Environ()...)
+		fmt.Fprint(w, strings.Join(envs, "\n"))
 	})
 
 	http.HandleFunc("/status", func(w http.ResponseWriter, r *http.Request) {
+		logRequest(r)
 		codeParams, ok := r.URL.Query()["code"]
 		if ok && len(codeParams) > 0 {
 			statusCode, _ := strconv.Atoi(codeParams[0])
@@ -96,7 +99,7 @@ func main() {
 			}
 		}
 		requestID := uuid.Must(uuid.NewV4())
-		fmt.Fprintf(w, requestID.String())
+		fmt.Fprint(w, requestID.String())
 	})
 
 	port := os.Getenv("PORT")
