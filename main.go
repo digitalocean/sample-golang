@@ -68,6 +68,7 @@ func main() {
 			return
 		}
 		headers := []string{}
+		headers = append(headers, fmt.Sprintf("host=%s", r.Host))
 		for key, values := range r.Header {
 			headers = append(headers, fmt.Sprintf("%s=%s", key, strings.Join(values, ",")))
 		}
