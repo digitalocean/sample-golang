@@ -40,6 +40,7 @@ func main() {
 	})
 
 	http.HandleFunc("/cached", func(w http.ResponseWriter, r *http.Request) {
+		logRequest(r)
 		maxAgeParams, ok := r.URL.Query()["max-age"]
 		if ok && len(maxAgeParams) > 0 {
 			maxAge, _ := strconv.Atoi(maxAgeParams[0])
@@ -62,6 +63,7 @@ func main() {
 	})
 
 	http.HandleFunc("/headers", func(w http.ResponseWriter, r *http.Request) {
+		logRequest(r)
 		keys, ok := r.URL.Query()["key"]
 		if ok && len(keys) > 0 {
 			fmt.Fprintf(w, r.Header.Get(keys[0]))
@@ -76,6 +78,7 @@ func main() {
 	})
 
 	http.HandleFunc("/env", func(w http.ResponseWriter, r *http.Request) {
+		logRequest(r)
 		keys, ok := r.URL.Query()["key"]
 		if ok && len(keys) > 0 {
 			fmt.Fprintf(w, os.Getenv(keys[0]))
@@ -89,6 +92,7 @@ func main() {
 	})
 
 	http.HandleFunc("/status", func(w http.ResponseWriter, r *http.Request) {
+		logRequest(r)
 		codeParams, ok := r.URL.Query()["code"]
 		if ok && len(codeParams) > 0 {
 			statusCode, _ := strconv.Atoi(codeParams[0])
