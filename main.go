@@ -59,14 +59,14 @@ func main() {
 			w.WriteHeader(statusCode)
 		}
 		requestID := uuid.Must(uuid.NewV4())
-		fmt.Fprintf(w, requestID.String())
+		fmt.Fprint(w, requestID.String())
 	})
 
 	http.HandleFunc("/headers", func(w http.ResponseWriter, r *http.Request) {
 		logRequest(r)
 		keys, ok := r.URL.Query()["key"]
 		if ok && len(keys) > 0 {
-			fmt.Fprintf(w, r.Header.Get(keys[0]))
+			fmt.Fprint(w, r.Header.Get(keys[0]))
 			return
 		}
 		headers := []string{}
@@ -74,21 +74,19 @@ func main() {
 		for key, values := range r.Header {
 			headers = append(headers, fmt.Sprintf("%s=%s", key, strings.Join(values, ",")))
 		}
-		fmt.Fprintf(w, strings.Join(headers, "\n"))
+		fmt.Fprint(w, strings.Join(headers, "\n"))
 	})
 
 	http.HandleFunc("/env", func(w http.ResponseWriter, r *http.Request) {
 		logRequest(r)
 		keys, ok := r.URL.Query()["key"]
 		if ok && len(keys) > 0 {
-			fmt.Fprintf(w, os.Getenv(keys[0]))
+			fmt.Fprint(w, os.Getenv(keys[0]))
 			return
 		}
 		envs := []string{}
-		for _, env := range os.Environ() {
-			envs = append(envs, env)
-		}
-		fmt.Fprintf(w, strings.Join(envs, "\n"))
+		envs = append(envs, os.Environ()...)
+		fmt.Fprint(w, strings.Join(envs, "\n"))
 	})
 
 	http.HandleFunc("/status", func(w http.ResponseWriter, r *http.Request) {
@@ -101,7 +99,7 @@ func main() {
 			}
 		}
 		requestID := uuid.Must(uuid.NewV4())
-		fmt.Fprintf(w, requestID.String())
+		fmt.Fprint(w, requestID.String())
 	})
 
 	port := os.Getenv("PORT")
