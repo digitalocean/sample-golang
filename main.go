@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"strconv"
@@ -33,11 +35,27 @@ func logRequest(r *http.Request) {
 	fmt.Println("Got request!", method, uri)
 }
 
+type InitializeResponse struct {
+	Canvas struct {
+		Content struct {
+			Components []struct {
+				Type   string `json:"type"`
+				Label  string `json:"label"`
+				Style  string `json:"style"`
+				ID     string `json:"id"`
+				Action struct {
+					Type string `json:"type"`
+				} `json:"action"`
+			} `json:"components"`
+		} `json:"content"`
+	} `json:"canvas"`
+}
+
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		logRequest(r)
-		fmt.Fprintf(w, "Hello! you've requested %s\n", r.URL.Path)
-	})
+	//http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	//	logRequest(r)
+	//	fmt.Fprintf(w, "Hello! you've requested %s\n", r.URL.Path)
+	//})
 
 	http.HandleFunc("/cached", func(w http.ResponseWriter, r *http.Request) {
 		logRequest(r)
@@ -100,6 +118,46 @@ func main() {
 		}
 		requestID := uuid.Must(uuid.NewV4())
 		fmt.Fprint(w, requestID.String())
+	})
+
+	// Handle POST requests to the "/initialize" endpoint
+	http.HandleFunc("/initialize", func(w http.ResponseWriter, r *http.Request) {
+		// Read the body of the POST request
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		defer r.Body.Close()
+
+		// Log the body, can remove this in production
+		fmt.Println("Received initialize request with body:", string(body))
+
+		// Construct the response object
+		response := InitializeResponse{}
+		response.Canvas.Content.Components = []struct {
+			Type   string `json:"type"`
+			Label  string `json:"label"`
+			Style  string `json:"style"`
+			ID     string `json:"id"`
+			Action struct {
+				Type string `json:"type"`
+			} `json:"action"`
+		}{
+			{
+				Type:  "button",
+				Label: "Click Me!",
+				Style: "primary",
+				ID:    "url_button",
+				Action: struct {
+					Type string `json:"type"`
+				}{Type: "submit"},
+			},
+		}
+
+		// Send the response as JSON
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(response)
 	})
 
 	port := os.Getenv("PORT")
