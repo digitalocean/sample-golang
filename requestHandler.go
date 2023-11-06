@@ -20,7 +20,19 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 
 	// You must close the original body
 	defer r.Body.Close()
+	// Unmarshal the JSON into your struct
+	var initReq InitializeRequest
+	if err := json.Unmarshal(bodyBytes, &initReq); err != nil {
+		http.Error(w, "Error unmarshalling request body", http.StatusBadRequest)
+		return
+	}
+	fmt.Println("option id %v", initReq.InputValues.TicketOption)
 
+	if initReq.InputValues.TicketOption == SubmitTicketID {
+		response := GetCreateTicketCanvasBody()
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(response)
+	}
 }
 
 func InitializeCanvasHandler(w http.ResponseWriter, r *http.Request) {
