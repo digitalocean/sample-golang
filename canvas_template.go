@@ -45,6 +45,9 @@ var InitTicketCanvasBody = []Components{
 		Type:  "single-select",
 		ID:    "ticket-option",
 		Label: "Pre-Oncall Ticket",
+		Action: Action{
+			Type: "submit",
+		},
 		Options: []Option{
 			{Type: "option", ID: RelatedTicketID, Text: "Related Ticket"},
 			{Type: "option", ID: SubmitTicketID, Text: "Create Ticket"},
