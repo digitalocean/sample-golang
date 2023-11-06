@@ -28,11 +28,11 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Println("option id %v", initReq.InputValues.TicketOption)
 
-	if initReq.InputValues.TicketOption == SubmitTicketID {
-		response := GetCreateTicketCanvasBody()
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(response)
-	}
+	response := GetInitTicketCanvasBody()
+
+	// Send the response as JSON
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
 }
 
 func InitializeCanvasHandler(w http.ResponseWriter, r *http.Request) {
