@@ -91,6 +91,11 @@ func GetCreateTicketComponents() []Components {
 					"text": "Create Ticket"
 				}
 			]
+		},
+		{
+			"type": "text",
+			"text": "*Create a ticket*",
+			"style": "header"
 		}
 	]`
 
