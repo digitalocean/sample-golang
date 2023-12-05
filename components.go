@@ -102,9 +102,9 @@ func (ta *TextArea) Render() string {
 
 // Option for Dropdown and SingleSelect
 type Option struct {
-	Type string
-	ID   string
-	Text string
+	Type string `json:"type"`
+	ID   string `json:"id"`
+	Text string `json:"text"`
 }
 
 // NewOption is a constructor for Option
@@ -238,9 +238,9 @@ func InitPreOncallCanvas() CanvasReponse {
 	option1 := NewOption(RelatedTicketID, "Related Ticket")
 	option2 := NewOption(SubmitTicketID, "Create Ticket")
 	action := NewAction("submit")
-	SingleSelect := NewSingleSelect("pre-oncall-ticket-option", "single-select", "Pre-Oncall Ticket", []Option{*option1, *option2}, action)
+	singleSelect := NewSingleSelect("pre-oncall-ticket-option", "single-select", "Pre-Oncall Ticket", []Option{*option1, *option2}, action)
 
-	content := newContent([]Component{SingleSelect})
+	content := newContent([]Component{singleSelect})
 	canvasResp := newCanvasReponse(*content)
 
 	return *canvasResp
