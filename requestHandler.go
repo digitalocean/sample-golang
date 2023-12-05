@@ -28,7 +28,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Println("option id %v", initReq.InputValues.TicketOption)
 
-	response := GetCreateTicketCanvasBody()
+	response := GetInitTicketCanvasBody()
 
 	// Send the response as JSON
 	w.Header().Set("Content-Type", "application/json")
@@ -49,6 +49,8 @@ func InitializeCanvasHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Construct the response object
 	response := GetInitTicketCanvasBody()
+
+	fmt.Println("response %v", response)
 
 	// Send the response as JSON
 	w.Header().Set("Content-Type", "application/json")
