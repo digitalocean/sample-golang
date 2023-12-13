@@ -3,6 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	larkcore "github.com/larksuite/oapi-sdk-go/v3/core"
+
 	"io/ioutil"
 	"net/http"
 )
@@ -26,7 +28,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error unmarshalling request body", http.StatusBadRequest)
 		return
 	}
-	fmt.Println("option id %v", initReq.InputValues.TicketOption)
+	fmt.Println("request %v", larkcore.Prettify(initReq))
 
 	response := GetInitTicketCanvasBody()
 

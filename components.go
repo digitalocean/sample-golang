@@ -72,11 +72,6 @@ type Input struct {
 	Placeholder string
 }
 
-func (i Input) Render() string {
-
-	return ""
-}
-
 // NewInput is a constructor for Input
 func NewInput(id, label, placeholder string) *Input {
 	return &Input{Type: "input", ID: id, Label: label, Placeholder: placeholder}

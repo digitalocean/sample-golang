@@ -1,2 +1,2 @@
-github.com/gofrs/uuid v3.3.0+incompatible h1:8K4tyRfvU1CYPgJsveYFQMhpFd/wXNM7iK6rR7UHz84=
-github.com/gofrs/uuid v3.3.0+incompatible/go.mod h1:b2aQJv3Z4Fp6yNu3cdSllBxTCLRxnplIgP/c0N/04lM=
+github.com/larksuite/oapi-sdk-go/v3 v3.0.32 h1:AgnmZ6GYiuT3k5ISRoHzhTo9GuXlEo/kQAbExzZAkDA=
+github.com/larksuite/oapi-sdk-go/v3 v3.0.32/go.mod h1:F4MLXkfdc/7WAJPLy4lJ0R6VqCxKgqWYS1uYY84p3SI=
