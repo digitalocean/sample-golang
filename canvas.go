@@ -136,10 +136,10 @@ type SingleSelect struct {
 	ID      string   `json:"id"`
 	Label   string   `json:"label"`
 	Options []Option `json:"options"`
-	Action  Action   `json:"action"`
+	Action  *Action  `json:"action"`
 }
 
-func NewSingleSelect(id, selectType, label string, options []Option, action Action) *SingleSelect {
+func NewSingleSelect(id, selectType, label string, options []Option, action *Action) *SingleSelect {
 	return &SingleSelect{Type: selectType, ID: id, Label: label, Options: options, Action: action}
 }
 
@@ -238,7 +238,7 @@ func InitPreOncallCanvas() CanvasReponse {
 	option1 := NewOption(RelatedTicketID, "Related Ticket")
 	option2 := NewOption(SubmitTicketID, "Create Ticket")
 	action := NewAction("submit")
-	singleSelect := NewSingleSelect("pre-oncall-ticket-option", "single-select", "Pre-Oncall Ticket", []Option{*option1, *option2}, action)
+	singleSelect := NewSingleSelect("pre-oncall-ticket-option", "single-select", "Pre-Oncall Ticket", []Option{*option1, *option2}, &action)
 
 	content := newContent([]Component{singleSelect})
 	canvasResp := newCanvasReponse(*content)
@@ -251,7 +251,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	option1 := NewOption(RelatedTicketID, "Related Ticket")
 	option2 := NewOption(SubmitTicketID, "Create Ticket")
 	action := NewAction("submit")
-	singleSelect := NewSingleSelect("pre-oncall-ticket-option", "single-select", "Pre-Oncall Ticket", []Option{*option1, *option2}, action)
+	singleSelect := NewSingleSelect("pre-oncall-ticket-option", "single-select", "Pre-Oncall Ticket", []Option{*option1, *option2}, &action)
 	fmt.Println(" InitCreateOncalTicketCanvas singleSelect %v", larkcore.Prettify(singleSelect))
 	// bizline
 	bizLineText := NewText("Business Line Search", "header")
@@ -291,7 +291,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	for _, priority := range priorityList {
 		prioritySingleSelectOptions = append(prioritySingleSelectOptions, *NewOption(priority, priority))
 	}
-	prioritySingleSelect := NewSingleSelect("prioritySingleSelect", "single-select", "Priority", prioritySingleSelectOptions, action)
+	prioritySingleSelect := NewSingleSelect("prioritySingleSelect", "single-select", "Priority", prioritySingleSelectOptions, nil)
 	fmt.Println(" InitCreateOncalTicketCanvas prioritySingleSelect %v", larkcore.Prettify(prioritySingleSelect))
 	// create group
 	createGroupText := NewText("Create Group", "header")
@@ -300,7 +300,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	for _, createGroup := range createGroupList {
 		createGroupSingleSelectOptions = append(createGroupSingleSelectOptions, *NewOption(createGroup, createGroup))
 	}
-	createGroupSingleSelect := NewSingleSelect("createGroupSingleSelect", "single-select", "Create Group", createGroupSingleSelectOptions, action)
+	createGroupSingleSelect := NewSingleSelect("createGroupSingleSelect", "single-select", "Create Group", createGroupSingleSelectOptions, &action)
 	fmt.Println(" InitCreateOncalTicketCanvas createGroupSingleSelect %v", larkcore.Prettify(createGroupSingleSelect))
 	// user id
 	userIDText := NewText("User ID", "header")
