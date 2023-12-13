@@ -33,7 +33,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("pretty's request %v", larkcore.Prettify(initReq))
 	fmt.Println("======================================")
 	response := GetCreateTicketCanvasBody([]string{"bizline1", "bizline2"}, []string{"region1", "region2"}, []string{"stack1", "stack2"}, initReq.InputValues)
-	fmt.Println("GetCreateTicketCanvasBody response %v", larkcore.Prettify(response))
+	//fmt.Println("GetCreateTicketCanvasBody response %v", larkcore.Prettify(response))
 	// Send the response as JSON
 	// Marshal the struct to a JSON byte slice
 	jsonData, err := json.Marshal(response)

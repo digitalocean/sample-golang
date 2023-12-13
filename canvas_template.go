@@ -19,7 +19,7 @@ func GetInitTicketCanvasBody() CanvasReponse {
 }
 
 func GetCreateTicketCanvasBody(bizLines []string, regions []string, stackNames []string, selectedValue map[string]string) CanvasReponse {
-	return InitCreateOncalTicketCanvas(bizLines, regions, stackNames, selectedValue)
+	return InitCreateOncalTicketCanvas(bizLines, regions, stackNames, selectedValue, true)
 }
 
 //func GetCreateTicketCanvasBody() CanvasResponse {

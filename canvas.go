@@ -248,7 +248,7 @@ func InitPreOncallCanvas() CanvasReponse {
 	return *canvasResp
 }
 
-func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames []string, selectedValues map[string]string) CanvasReponse {
+func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames []string, selectedValues map[string]string, validInput bool) CanvasReponse {
 	if selectedValues == nil {
 		selectedValues = make(map[string]string)
 	}
