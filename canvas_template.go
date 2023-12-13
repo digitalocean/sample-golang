@@ -1,10 +1,6 @@
 package main
 
 // Define the structures based on the JSON input
-const (
-	RelatedTicketID = "related-ticket"
-	SubmitTicketID  = "submit-ticket"
-)
 
 type Workspace struct {
 	WorkspaceID     string            `json:"workspace_id"`

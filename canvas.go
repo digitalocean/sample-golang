@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	larkcore "github.com/larksuite/oapi-sdk-go/v3/core"
 )
 
 // Component interface for all UI components.
@@ -67,10 +66,11 @@ func (t *Text) Render() string {
 
 // Input component
 type Input struct {
-	Type        string `json:"type"`
-	ID          string `json:"id"`
-	Label       string `json:"label"`
-	Placeholder string `json:"placeholder"`
+	Type        string  `json:"type"`
+	ID          string  `json:"id"`
+	Label       string  `json:"label"`
+	Placeholder string  `json:"placeholder"`
+	Value       *string `json:"value,omitempty"`
 }
 
 func (i Input) Render() string {
@@ -78,8 +78,8 @@ func (i Input) Render() string {
 }
 
 // NewInput is a constructor for Input
-func NewInput(id, label, placeholder string) *Input {
-	return &Input{Type: "input", ID: id, Label: label, Placeholder: placeholder}
+func NewInput(id, label, placeholder string, value *string) *Input {
+	return &Input{Type: "input", ID: id, Label: label, Placeholder: placeholder, Value: value}
 }
 
 // TextArea component
@@ -118,11 +118,12 @@ type Dropdown struct {
 	ID      string   `json:"id"`
 	Label   string   `json:"label"`
 	Options []Option `json:"options"`
+	Value   *string  `json:"value,omitempty"`
 }
 
 // NewDropdown is a constructor for Dropdown
-func NewDropdown(id, label string, options []Option) *Dropdown {
-	return &Dropdown{Type: "dropdown", ID: id, Label: label, Options: options}
+func NewDropdown(id, label string, options []Option, value *string) *Dropdown {
+	return &Dropdown{Type: "dropdown", ID: id, Label: label, Options: options, Value: value}
 }
 
 // Render method for Dropdown
@@ -137,10 +138,11 @@ type SingleSelect struct {
 	Label   string   `json:"label"`
 	Options []Option `json:"options"`
 	Action  *Action  `json:"action"`
+	Value   *string  `json:"value,omitempty"`
 }
 
-func NewSingleSelect(id, selectType, label string, options []Option, action *Action) *SingleSelect {
-	return &SingleSelect{Type: selectType, ID: id, Label: label, Options: options, Action: action}
+func NewSingleSelect(id, selectType, label string, options []Option, action *Action, value *string) *SingleSelect {
+	return &SingleSelect{Type: selectType, ID: id, Label: label, Options: options, Action: action, Value: value}
 }
 
 // Render method for SingleSelect
@@ -235,10 +237,10 @@ func newCanvasReponse(content Content) *CanvasReponse {
 //}
 
 func InitPreOncallCanvas() CanvasReponse {
-	option1 := NewOption(RelatedTicketID, "Related Ticket")
-	option2 := NewOption(SubmitTicketID, "Create Ticket")
+	option1 := NewOption(RelatedTicketOptionID, "Related Ticket")
+	option2 := NewOption(SummitTicketOptionID, "Create Ticket")
 	action := NewAction("submit")
-	singleSelect := NewSingleSelect("pre-oncall-ticket-option", "single-select", "Pre-Oncall Ticket", []Option{*option1, *option2}, &action)
+	singleSelect := NewSingleSelect(CategorySingleSelectID, "single-select", CategorySingleSelectLabel, []Option{*option1, *option2}, &action, nil)
 
 	content := newContent([]Component{singleSelect})
 	canvasResp := newCanvasReponse(*content)
@@ -246,30 +248,34 @@ func InitPreOncallCanvas() CanvasReponse {
 	return *canvasResp
 }
 
-func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames []string) CanvasReponse {
+func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames []string, selectedValues map[string]string) CanvasReponse {
+	if selectedValues == nil {
+		selectedValues = make(map[string]string)
+	}
 
-	option1 := NewOption(RelatedTicketID, "Related Ticket")
-	option2 := NewOption(SubmitTicketID, "Create Ticket")
+	option1 := NewOption(RelatedTicketOptionID, "Related Ticket")
+	option2 := NewOption(SummitTicketOptionID, "Create Ticket")
 	action := NewAction("submit")
-	singleSelect := NewSingleSelect("pre-oncall-ticket-option", "single-select", "Pre-Oncall Ticket", []Option{*option1, *option2}, &action)
+
+	categorySelect := NewSingleSelect(CategorySingleSelectID, "single-select", CategorySingleSelectLabel, []Option{*option1, *option2}, &action, nil)
 
 	// bizline
 	bizLineText := NewText("Business Line Search", "header")
-	bizLineSearchInput := NewInput("bizLineSearchInput", "bizLineSearchInput", "Enter input here")
+	bizLineSearchInput := NewInput("bizLineSearchInput", "bizLineSearchInput", "Enter input here", nil)
 	bizLineSearchBtn := NewButton("bizLineSearchBtn", "bizLineSearchBtn", action, "primary", false)
 	bizLineDropDownOptions := []Option{}
 	for _, bizLine := range bizLines {
 		bizLineDropDownOptions = append(bizLineDropDownOptions, *NewOption(bizLine, bizLine))
 	}
-	bizLineSearchDropDown := NewDropdown("bizLineSearchDropDown", "bizLineSearchDropDown", bizLineDropDownOptions)
+	bizLineSearchDropDown := NewDropdown("bizLineSearchDropDown", "bizLineSearchDropDown", bizLineDropDownOptions, nil)
 
 	// ticket title
 	ticketTitleText := NewText("Ticket Title", "header")
-	ticketTitleInput := NewInput("ticketTitleInput", "ticketTitleInput", "Briefly describe the problem")
+	ticketTitleInput := NewInput("ticketTitleInput", "ticketTitleInput", "Briefly describe the problem", nil)
 
 	// region search
 	regionSearchText := NewText("Region Search", "header")
-	regionSearchInput := NewInput("regionSearchInput", "regionSearchInput", "Enter input here")
+	regionSearchInput := NewInput("regionSearchInput", "regionSearchInput", "Enter input here", nil)
 	regionSearchBtn := NewButton("regionSearchBtn", "regionSearchBtn", action, "primary", false)
 	regionDropDownOptions := []Option{}
 	for _, region := range regions {
@@ -282,7 +288,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	for _, stackOption := range stackNames {
 		stackDropDownOptions = append(stackDropDownOptions, *NewOption(stackOption, stackOption))
 	}
-	stackSearchDropDown := NewDropdown("stackSearchDropDown", "stackSearchDropDown", stackDropDownOptions)
+	stackSearchDropDown := NewDropdown("stackSearchDropDown", "stackSearchDropDown", stackDropDownOptions, nil)
 
 	// priority
 	priorityText := NewText("Priority", "header")
@@ -291,7 +297,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	for _, priority := range priorityList {
 		prioritySingleSelectOptions = append(prioritySingleSelectOptions, *NewOption(priority, priority))
 	}
-	prioritySingleSelect := NewSingleSelect("prioritySingleSelect", "single-select", "Priority", prioritySingleSelectOptions, nil)
+	prioritySingleSelect := NewSingleSelect("prioritySingleSelect", "single-select", "Priority", prioritySingleSelectOptions, nil, nil)
 
 	// create group
 	createGroupText := NewText("Create Group", "header")
@@ -300,24 +306,24 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	for _, createGroup := range createGroupList {
 		createGroupSingleSelectOptions = append(createGroupSingleSelectOptions, *NewOption(createGroup, createGroup))
 	}
-	createGroupSingleSelect := NewSingleSelect("createGroupSingleSelect", "single-select", "Create Group", createGroupSingleSelectOptions, nil)
+	createGroupSingleSelect := NewSingleSelect("createGroupSingleSelect", "single-select", "Create Group", createGroupSingleSelectOptions, nil, nil)
 
 	// user id
 	userIDText := NewText("User ID", "header")
-	userIDInput := NewInput("userIDInput", "userIDInput", "type in user id")
+	userIDInput := NewInput("userIDInput", "userIDInput", "type in user id", nil)
 
 	// tenant id
 	tenantIDText := NewText("Tenant ID", "header")
-	tenantIDInput := NewInput("tenantIDInput", "tenantIDInput", "type in tenant id")
+	tenantIDInput := NewInput("tenantIDInput", "tenantIDInput", "type in tenant id", nil)
 
 	// lark version
 	larkVersionText := NewText("Lark Version", "header")
-	larkVersionInput := NewInput("larkVersionInput", "larkVersionInput", "type in lark version")
+	larkVersionInput := NewInput("larkVersionInput", "larkVersionInput", "type in lark version", nil)
 
 	// Create button to submit ticket
 	submitTicketBtn := NewButton("submitTicketBtn", "submitTicketBtn", action, "primary", false)
 
-	content := newContent([]Component{singleSelect, bizLineText, bizLineSearchInput, bizLineSearchBtn,
+	content := newContent([]Component{categorySelect, bizLineText, bizLineSearchInput, bizLineSearchBtn,
 		bizLineSearchDropDown, ticketTitleText, ticketTitleInput,
 		regionSearchText, regionSearchInput, regionSearchBtn,
 		stackSearchText, stackSearchDropDown,
@@ -330,6 +336,6 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 
 	//content := newContent([]Component{singleSelect, bizLineText, bizLineSearchInput, bizLineSearchBtn, bizLineSearchDropDown})
 	canvasResp := newCanvasReponse(*content)
-	fmt.Println(" InitCreateOncalTicketCanvas canvasResp %v", larkcore.Prettify(canvasResp))
+	//fmt.Println(" InitCreateOncalTicketCanvas canvasResp %v", larkcore.Prettify(canvasResp))
 	return *canvasResp
 }
