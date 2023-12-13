@@ -328,7 +328,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 		larkVersionText, larkVersionInput,
 		submitTicketBtn})
 
-	content := newContent([]Component{singleSelect, bizLineText, bizLineSearchInput, bizLineSearchBtn, bizLineSearchDropDown})
+	//content := newContent([]Component{singleSelect, bizLineText, bizLineSearchInput, bizLineSearchBtn, bizLineSearchDropDown})
 	canvasResp := newCanvasReponse(*content)
 	fmt.Println(" InitCreateOncalTicketCanvas canvasResp %v", larkcore.Prettify(canvasResp))
 	return *canvasResp
