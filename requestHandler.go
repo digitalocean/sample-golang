@@ -23,8 +23,9 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	// You must close the original body
 	defer r.Body.Close()
 	// Unmarshal the JSON into your struct
-	var initReq InitializeRequest
-	if err := json.Unmarshal(bodyBytes, &initReq); err != nil {
+	var initReq Workspace
+	if err := json.Unmarshal([]byte(bodyString), &initReq); err != nil {
+		fmt.Println("meet parse err", err)
 		http.Error(w, "Error unmarshalling request body", http.StatusBadRequest)
 		return
 	}

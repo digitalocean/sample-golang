@@ -16,6 +16,12 @@ type InitializeRequest struct {
 	InputValues   InputValues `json:"input_values"`
 }
 
+type Workspace struct {
+	WorkspaceID     string `json:"workspace_id"`
+	WorkspaceRegion string `json:"workspace_region"`
+	// ... include other fields as necessary
+}
+
 func GetInitTicketCanvasBody() CanvasReponse {
 	return InitPreOncallCanvas()
 }
