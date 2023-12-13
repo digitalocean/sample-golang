@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	larkcore "github.com/larksuite/oapi-sdk-go/v3/core"
+	"log"
 
 	"io/ioutil"
 	"net/http"
@@ -34,6 +35,16 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	response := GetCreateTicketCanvasBody([]string{"bizline1", "bizline2"}, []string{"region1", "region2"}, []string{"stack1", "stack2"})
 	fmt.Println("GetCreateTicketCanvasBody response %v", larkcore.Prettify(response))
 	// Send the response as JSON
+	// Marshal the struct to a JSON byte slice
+	jsonData, err := json.Marshal(initReq)
+	if err != nil {
+		log.Fatalf("Error occurred during marshaling. Error: %s", err.Error())
+	}
+
+	// Convert the byte slice to a string and print it
+	jsonString := string(jsonData)
+	fmt.Println("this is the submit json string %v", jsonString)
+
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
 }
@@ -54,6 +65,15 @@ func InitializeCanvasHandler(w http.ResponseWriter, r *http.Request) {
 	response := GetInitTicketCanvasBody()
 
 	fmt.Println("response %v", response)
+
+	jsonData, err := json.Marshal(response)
+	if err != nil {
+		log.Fatalf("Error occurred during marshaling. Error: %s", err.Error())
+	}
+
+	// Convert the byte slice to a string and print it
+	jsonString := string(jsonData)
+	fmt.Println("this is the init json string %v", jsonString)
 
 	// Send the response as JSON
 	w.Header().Set("Content-Type", "application/json")
