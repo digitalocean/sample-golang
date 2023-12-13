@@ -247,12 +247,12 @@ func InitPreOncallCanvas() CanvasReponse {
 }
 
 func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames []string) CanvasReponse {
-	fmt.Println(" InitCreateOncalTicketCanvas bizLines %v", bizLines)
+
 	option1 := NewOption(RelatedTicketID, "Related Ticket")
 	option2 := NewOption(SubmitTicketID, "Create Ticket")
 	action := NewAction("submit")
 	singleSelect := NewSingleSelect("pre-oncall-ticket-option", "single-select", "Pre-Oncall Ticket", []Option{*option1, *option2}, &action)
-	fmt.Println(" InitCreateOncalTicketCanvas singleSelect %v", larkcore.Prettify(singleSelect))
+
 	// bizline
 	bizLineText := NewText("Business Line Search", "header")
 	bizLineSearchInput := NewInput("bizLineSearchInput", "bizLineSearchInput", "Enter input here")
@@ -262,11 +262,11 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 		bizLineDropDownOptions = append(bizLineDropDownOptions, *NewOption(bizLine, bizLine))
 	}
 	bizLineSearchDropDown := NewDropdown("bizLineSearchDropDown", "bizLineSearchDropDown", bizLineDropDownOptions)
-	fmt.Println(" InitCreateOncalTicketCanvas bizLineSearchDropDown %v", larkcore.Prettify(bizLineSearchDropDown))
+
 	// ticket title
 	ticketTitleText := NewText("Ticket Title", "header")
 	ticketTitleInput := NewInput("ticketTitleInput", "ticketTitleInput", "Briefly describe the problem")
-	fmt.Println(" InitCreateOncalTicketCanvas ticketTitleInput %v", larkcore.Prettify(ticketTitleInput))
+
 	// region search
 	regionSearchText := NewText("Region Search", "header")
 	regionSearchInput := NewInput("regionSearchInput", "regionSearchInput", "Enter input here")
@@ -275,7 +275,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	for _, region := range regions {
 		regionDropDownOptions = append(regionDropDownOptions, *NewOption(region, region))
 	}
-	fmt.Println(" InitCreateOncalTicketCanvas regionDropDownOptions %v", larkcore.Prettify(regionDropDownOptions))
+
 	// stack search
 	stackSearchText := NewText("Stack Search", "header")
 	stackDropDownOptions := []Option{}
@@ -283,7 +283,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 		stackDropDownOptions = append(stackDropDownOptions, *NewOption(stackOption, stackOption))
 	}
 	stackSearchDropDown := NewDropdown("stackSearchDropDown", "stackSearchDropDown", stackDropDownOptions)
-	fmt.Println(" InitCreateOncalTicketCanvas stackSearchDropDown %v", larkcore.Prettify(stackSearchDropDown))
+
 	// priority
 	priorityText := NewText("Priority", "header")
 	prioritySingleSelectOptions := []Option{}
@@ -292,7 +292,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 		prioritySingleSelectOptions = append(prioritySingleSelectOptions, *NewOption(priority, priority))
 	}
 	prioritySingleSelect := NewSingleSelect("prioritySingleSelect", "single-select", "Priority", prioritySingleSelectOptions, nil)
-	fmt.Println(" InitCreateOncalTicketCanvas prioritySingleSelect %v", larkcore.Prettify(prioritySingleSelect))
+
 	// create group
 	createGroupText := NewText("Create Group", "header")
 	createGroupSingleSelectOptions := []Option{}
@@ -300,8 +300,8 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	for _, createGroup := range createGroupList {
 		createGroupSingleSelectOptions = append(createGroupSingleSelectOptions, *NewOption(createGroup, createGroup))
 	}
-	createGroupSingleSelect := NewSingleSelect("createGroupSingleSelect", "single-select", "Create Group", createGroupSingleSelectOptions, &action)
-	fmt.Println(" InitCreateOncalTicketCanvas createGroupSingleSelect %v", larkcore.Prettify(createGroupSingleSelect))
+	createGroupSingleSelect := NewSingleSelect("createGroupSingleSelect", "single-select", "Create Group", createGroupSingleSelectOptions, nil)
+
 	// user id
 	userIDText := NewText("User ID", "header")
 	userIDInput := NewInput("userIDInput", "userIDInput", "type in user id")
