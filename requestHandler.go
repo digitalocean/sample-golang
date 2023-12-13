@@ -31,7 +31,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Println("pretty's request %v", larkcore.Prettify(initReq))
 
-	response := GetInitTicketCanvasBody()
+	response := GetCreateTicketCanvasBody([]string{"bizline1", "bizline2"}, []string{"region1", "region2"}, []string{"stack1", "stack2"})
 
 	// Send the response as JSON
 	w.Header().Set("Content-Type", "application/json")

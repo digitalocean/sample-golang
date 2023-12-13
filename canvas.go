@@ -72,6 +72,10 @@ type Input struct {
 	Placeholder string
 }
 
+func (i Input) Render() string {
+	return ""
+}
+
 // NewInput is a constructor for Input
 func NewInput(id, label, placeholder string) *Input {
 	return &Input{Type: "input", ID: id, Label: label, Placeholder: placeholder}
@@ -236,6 +240,92 @@ func InitPreOncallCanvas() CanvasReponse {
 	singleSelect := NewSingleSelect("pre-oncall-ticket-option", "single-select", "Pre-Oncall Ticket", []Option{*option1, *option2}, action)
 
 	content := newContent([]Component{singleSelect})
+	canvasResp := newCanvasReponse(*content)
+
+	return *canvasResp
+}
+
+func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames []string) CanvasReponse {
+	option1 := NewOption(RelatedTicketID, "Related Ticket")
+	option2 := NewOption(SubmitTicketID, "Create Ticket")
+	action := NewAction("submit")
+	singleSelect := NewSingleSelect("pre-oncall-ticket-option", "single-select", "Pre-Oncall Ticket", []Option{*option1, *option2}, action)
+
+	// bizline
+	bizLineText := NewText("Business Line Search", "header")
+	bizLineSearchInput := NewInput("bizLineSearchInput", "bizLineSearchInput", "Enter input here")
+	bizLineSearchBtn := NewButton("bizLineSearchBtn", "bizLineSearchBtn", action, "primary", false)
+	bizLineDropDownOptions := []Option{}
+	for _, bizLine := range bizLines {
+		bizLineDropDownOptions = append(bizLineDropDownOptions, *NewOption(bizLine, bizLine))
+	}
+	bizLineSearchDropDown := NewDropdown("bizLineSearchDropDown", "bizLineSearchDropDown", bizLineDropDownOptions)
+
+	// ticket title
+	ticketTitleText := NewText("Ticket Title", "header")
+	ticketTitleInput := NewInput("ticketTitleInput", "ticketTitleInput", "Briefly describe the problem")
+
+	// region search
+	regionSearchText := NewText("Region Search", "header")
+	regionSearchInput := NewInput("regionSearchInput", "regionSearchInput", "Enter input here")
+	regionSearchBtn := NewButton("regionSearchBtn", "regionSearchBtn", action, "primary", false)
+	regionDropDownOptions := []Option{}
+	for _, region := range regions {
+		regionDropDownOptions = append(regionDropDownOptions, *NewOption(region, region))
+	}
+
+	// stack search
+	stackSearchText := NewText("Stack Search", "header")
+	stackDropDownOptions := []Option{}
+	for _, stackOption := range stackNames {
+		stackDropDownOptions = append(stackDropDownOptions, *NewOption(stackOption, stackOption))
+	}
+	stackSearchDropDown := NewDropdown("stackSearchDropDown", "stackSearchDropDown", stackDropDownOptions)
+
+	// priority
+	priorityText := NewText("Priority", "header")
+	prioritySingleSelectOptions := []Option{}
+	priorityList := []string{"P0", "P1", "P2"}
+	for _, priority := range priorityList {
+		prioritySingleSelectOptions = append(prioritySingleSelectOptions, *NewOption(priority, priority))
+	}
+	prioritySingleSelect := NewSingleSelect("prioritySingleSelect", "single-select", "Priority", prioritySingleSelectOptions, action)
+
+	// create group
+	createGroupText := NewText("Create Group", "header")
+	createGroupSingleSelectOptions := []Option{}
+	createGroupList := []string{"Auto Create", "Associate", "Not Create"}
+	for _, createGroup := range createGroupList {
+		createGroupSingleSelectOptions = append(createGroupSingleSelectOptions, *NewOption(createGroup, createGroup))
+	}
+	createGroupSingleSelect := NewSingleSelect("createGroupSingleSelect", "single-select", "Create Group", createGroupSingleSelectOptions, action)
+
+	// user id
+	userIDText := NewText("User ID", "header")
+	userIDInput := NewInput("userIDInput", "userIDInput", "type in user id")
+
+	// tenant id
+	tenantIDText := NewText("Tenant ID", "header")
+	tenantIDInput := NewInput("tenantIDInput", "tenantIDInput", "type in tenant id")
+
+	// lark version
+	larkVersionText := NewText("Lark Version", "header")
+	larkVersionInput := NewInput("larkVersionInput", "larkVersionInput", "type in lark version")
+
+	// Create button to submit ticket
+	submitTicketBtn := NewButton("submitTicketBtn", "submitTicketBtn", action, "primary", false)
+
+	content := newContent([]Component{singleSelect, bizLineText, bizLineSearchInput, bizLineSearchBtn,
+		bizLineSearchDropDown, ticketTitleText, ticketTitleInput,
+		regionSearchText, regionSearchInput, regionSearchBtn,
+		stackSearchText, stackSearchDropDown,
+		priorityText, prioritySingleSelect,
+		createGroupText, createGroupSingleSelect,
+		userIDText, userIDInput,
+		tenantIDText, tenantIDInput,
+		larkVersionText, larkVersionInput,
+		submitTicketBtn})
+
 	canvasResp := newCanvasReponse(*content)
 
 	return *canvasResp
