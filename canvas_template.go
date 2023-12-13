@@ -18,8 +18,8 @@ func GetInitTicketCanvasBody() CanvasReponse {
 	return InitPreOncallCanvas()
 }
 
-func GetCreateTicketCanvasBody(bizLines []string, regions []string, stackNames []string) CanvasReponse {
-	return InitCreateOncalTicketCanvas(bizLines, regions, stackNames)
+func GetCreateTicketCanvasBody(bizLines []string, regions []string, stackNames []string, selectedValue map[string]string) CanvasReponse {
+	return InitCreateOncalTicketCanvas(bizLines, regions, stackNames, selectedValue)
 }
 
 //func GetCreateTicketCanvasBody() CanvasResponse {

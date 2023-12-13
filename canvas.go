@@ -256,27 +256,31 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	option1 := NewOption(RelatedTicketOptionID, "Related Ticket")
 	option2 := NewOption(SummitTicketOptionID, "Create Ticket")
 	action := NewAction("submit")
+	var categorySelectedValue *string
+	if val, exist := selectedValues[CategorySingleSelectID]; exist {
+		categorySelectedValue = &val
+	}
 
-	categorySelect := NewSingleSelect(CategorySingleSelectID, "single-select", CategorySingleSelectLabel, []Option{*option1, *option2}, &action, nil)
+	categorySelect := NewSingleSelect(CategorySingleSelectID, "single-select", CategorySingleSelectLabel, []Option{*option1, *option2}, &action, categorySelectedValue)
 
 	// bizline
 	bizLineText := NewText("Business Line Search", "header")
-	bizLineSearchInput := NewInput("bizLineSearchInput", "bizLineSearchInput", "Enter input here", nil)
-	bizLineSearchBtn := NewButton("bizLineSearchBtn", "bizLineSearchBtn", action, "primary", false)
+	bizLineSearchInput := NewInput(BizLineSearchInputID, BizLineSearchLabel, "Enter input here", nil)
+	bizLineSearchBtn := NewButton(BizLineSearchButtonID, BizLineSearchButtonLabel, action, "primary", false)
 	bizLineDropDownOptions := []Option{}
 	for _, bizLine := range bizLines {
 		bizLineDropDownOptions = append(bizLineDropDownOptions, *NewOption(bizLine, bizLine))
 	}
-	bizLineSearchDropDown := NewDropdown("bizLineSearchDropDown", "bizLineSearchDropDown", bizLineDropDownOptions, nil)
+	bizLineSearchDropDown := NewDropdown(BizLineSearchDropdownID, BizLineSearchDropdownLabel, bizLineDropDownOptions, nil)
 
 	// ticket title
 	ticketTitleText := NewText("Ticket Title", "header")
-	ticketTitleInput := NewInput("ticketTitleInput", "ticketTitleInput", "Briefly describe the problem", nil)
+	ticketTitleInput := NewInput(TicketTitleInputID, TicketTitleLabel, "Briefly describe the problem", nil)
 
 	// region search
 	regionSearchText := NewText("Region Search", "header")
-	regionSearchInput := NewInput("regionSearchInput", "regionSearchInput", "Enter input here", nil)
-	regionSearchBtn := NewButton("regionSearchBtn", "regionSearchBtn", action, "primary", false)
+	regionSearchInput := NewInput(RegionSearchInputID, RegionSearchLabel, "Enter input here", nil)
+	regionSearchBtn := NewButton(RegionSearchButtonID, RegionSearchButtonLabel, action, "primary", false)
 	regionDropDownOptions := []Option{}
 	for _, region := range regions {
 		regionDropDownOptions = append(regionDropDownOptions, *NewOption(region, region))
@@ -288,25 +292,25 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	for _, stackOption := range stackNames {
 		stackDropDownOptions = append(stackDropDownOptions, *NewOption(stackOption, stackOption))
 	}
-	stackSearchDropDown := NewDropdown("stackSearchDropDown", "stackSearchDropDown", stackDropDownOptions, nil)
+	stackSearchDropDown := NewDropdown(StackSearchDropdownID, StackSearchDropdownLabel, stackDropDownOptions, nil)
 
 	// priority
 	priorityText := NewText("Priority", "header")
 	prioritySingleSelectOptions := []Option{}
-	priorityList := []string{"P0", "P1", "P2"}
+	priorityList := []string{P0, P1, P2}
 	for _, priority := range priorityList {
 		prioritySingleSelectOptions = append(prioritySingleSelectOptions, *NewOption(priority, priority))
 	}
-	prioritySingleSelect := NewSingleSelect("prioritySingleSelect", "single-select", "Priority", prioritySingleSelectOptions, nil, nil)
+	prioritySingleSelect := NewSingleSelect(PrioritySingleSelectID, "single-select", PrioritySingleSelectLabel, prioritySingleSelectOptions, nil, nil)
 
 	// create group
 	createGroupText := NewText("Create Group", "header")
 	createGroupSingleSelectOptions := []Option{}
-	createGroupList := []string{"Auto Create", "Associate", "Not Create"}
+	createGroupList := []string{AutoCreateGroup, AssociateGroup, NotCreateGroup}
 	for _, createGroup := range createGroupList {
 		createGroupSingleSelectOptions = append(createGroupSingleSelectOptions, *NewOption(createGroup, createGroup))
 	}
-	createGroupSingleSelect := NewSingleSelect("createGroupSingleSelect", "single-select", "Create Group", createGroupSingleSelectOptions, nil, nil)
+	createGroupSingleSelect := NewSingleSelect(CreateGroupSingleSelectID, "single-select", CreateGroupSingleSelectLabel, createGroupSingleSelectOptions, nil, nil)
 
 	// user id
 	userIDText := NewText("User ID", "header")
@@ -314,14 +318,14 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 
 	// tenant id
 	tenantIDText := NewText("Tenant ID", "header")
-	tenantIDInput := NewInput("tenantIDInput", "tenantIDInput", "type in tenant id", nil)
+	tenantIDInput := NewInput(userIDInputID, userIDInputLabel, "type in tenant id", nil)
 
 	// lark version
 	larkVersionText := NewText("Lark Version", "header")
-	larkVersionInput := NewInput("larkVersionInput", "larkVersionInput", "type in lark version", nil)
+	larkVersionInput := NewInput(LarkVersionInputID, LarkVersionInputLabel, "type in lark version", nil)
 
 	// Create button to submit ticket
-	submitTicketBtn := NewButton("submitTicketBtn", "submitTicketBtn", action, "primary", false)
+	submitTicketBtn := NewButton(SubmitTicketButtonID, SubmitTicketLabel, action, "primary", false)
 
 	content := newContent([]Component{categorySelect, bizLineText, bizLineSearchInput, bizLineSearchBtn,
 		bizLineSearchDropDown, ticketTitleText, ticketTitleInput,
