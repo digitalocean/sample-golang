@@ -7,10 +7,10 @@ const (
 )
 
 type Workspace struct {
-	WorkspaceID     string       `json:"workspace_id"`
-	WorkspaceRegion string       `json:"workspace_region"`
-	Conversation    Conversation `json:"conversation"`
-	InputValues     string       `json:"input_values"`
+	WorkspaceID     string            `json:"workspace_id"`
+	WorkspaceRegion string            `json:"workspace_region"`
+	Conversation    Conversation      `json:"conversation"`
+	InputValues     map[string]string `json:"input_values"`
 }
 
 type Conversation struct {
