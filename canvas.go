@@ -51,8 +51,8 @@ func (b *Button) Render() string {
 // Text component
 type Text struct {
 	Type  string `json:"type"`
-	Text  string
-	Style string
+	Text  string `json:"text"`
+	Style string `json:"style,omitempty"`
 }
 
 // NewText is a constructor for Text
@@ -67,10 +67,10 @@ func (t *Text) Render() string {
 
 // Input component
 type Input struct {
-	Type        string
-	ID          string
-	Label       string
-	Placeholder string
+	Type        string `json:"type"`
+	ID          string `json:"id"`
+	Label       string `json:"label"`
+	Placeholder string `json:"placeholder"`
 }
 
 func (i Input) Render() string {
@@ -263,70 +263,70 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	}
 	bizLineSearchDropDown := NewDropdown("bizLineSearchDropDown", "bizLineSearchDropDown", bizLineDropDownOptions)
 	fmt.Println(" InitCreateOncalTicketCanvas bizLineSearchDropDown %v", larkcore.Prettify(bizLineSearchDropDown))
-	//// ticket title
-	//ticketTitleText := NewText("Ticket Title", "header")
-	//ticketTitleInput := NewInput("ticketTitleInput", "ticketTitleInput", "Briefly describe the problem")
-	//fmt.Println(" InitCreateOncalTicketCanvas ticketTitleInput %v", larkcore.Prettify(ticketTitleInput))
-	//// region search
-	//regionSearchText := NewText("Region Search", "header")
-	//regionSearchInput := NewInput("regionSearchInput", "regionSearchInput", "Enter input here")
-	//regionSearchBtn := NewButton("regionSearchBtn", "regionSearchBtn", action, "primary", false)
-	//regionDropDownOptions := []Option{}
-	//for _, region := range regions {
-	//	regionDropDownOptions = append(regionDropDownOptions, *NewOption(region, region))
-	//}
-	//fmt.Println(" InitCreateOncalTicketCanvas regionDropDownOptions %v", larkcore.Prettify(regionDropDownOptions))
-	//// stack search
-	//stackSearchText := NewText("Stack Search", "header")
-	//stackDropDownOptions := []Option{}
-	//for _, stackOption := range stackNames {
-	//	stackDropDownOptions = append(stackDropDownOptions, *NewOption(stackOption, stackOption))
-	//}
-	//stackSearchDropDown := NewDropdown("stackSearchDropDown", "stackSearchDropDown", stackDropDownOptions)
-	//fmt.Println(" InitCreateOncalTicketCanvas stackSearchDropDown %v", larkcore.Prettify(stackSearchDropDown))
-	//// priority
-	//priorityText := NewText("Priority", "header")
-	//prioritySingleSelectOptions := []Option{}
-	//priorityList := []string{"P0", "P1", "P2"}
-	//for _, priority := range priorityList {
-	//	prioritySingleSelectOptions = append(prioritySingleSelectOptions, *NewOption(priority, priority))
-	//}
-	//prioritySingleSelect := NewSingleSelect("prioritySingleSelect", "single-select", "Priority", prioritySingleSelectOptions, action)
-	//fmt.Println(" InitCreateOncalTicketCanvas prioritySingleSelect %v", larkcore.Prettify(prioritySingleSelect))
-	//// create group
-	//createGroupText := NewText("Create Group", "header")
-	//createGroupSingleSelectOptions := []Option{}
-	//createGroupList := []string{"Auto Create", "Associate", "Not Create"}
-	//for _, createGroup := range createGroupList {
-	//	createGroupSingleSelectOptions = append(createGroupSingleSelectOptions, *NewOption(createGroup, createGroup))
-	//}
-	//createGroupSingleSelect := NewSingleSelect("createGroupSingleSelect", "single-select", "Create Group", createGroupSingleSelectOptions, action)
-	//fmt.Println(" InitCreateOncalTicketCanvas createGroupSingleSelect %v", larkcore.Prettify(createGroupSingleSelect))
-	//// user id
-	//userIDText := NewText("User ID", "header")
-	//userIDInput := NewInput("userIDInput", "userIDInput", "type in user id")
-	//
-	//// tenant id
-	//tenantIDText := NewText("Tenant ID", "header")
-	//tenantIDInput := NewInput("tenantIDInput", "tenantIDInput", "type in tenant id")
-	//
-	//// lark version
-	//larkVersionText := NewText("Lark Version", "header")
-	//larkVersionInput := NewInput("larkVersionInput", "larkVersionInput", "type in lark version")
-	//
-	//// Create button to submit ticket
-	//submitTicketBtn := NewButton("submitTicketBtn", "submitTicketBtn", action, "primary", false)
-	//
-	//content := newContent([]Component{singleSelect, bizLineText, bizLineSearchInput, bizLineSearchBtn,
-	//	bizLineSearchDropDown, ticketTitleText, ticketTitleInput,
-	//	regionSearchText, regionSearchInput, regionSearchBtn,
-	//	stackSearchText, stackSearchDropDown,
-	//	priorityText, prioritySingleSelect,
-	//	createGroupText, createGroupSingleSelect,
-	//	userIDText, userIDInput,
-	//	tenantIDText, tenantIDInput,
-	//	larkVersionText, larkVersionInput,
-	//	submitTicketBtn})
+	// ticket title
+	ticketTitleText := NewText("Ticket Title", "header")
+	ticketTitleInput := NewInput("ticketTitleInput", "ticketTitleInput", "Briefly describe the problem")
+	fmt.Println(" InitCreateOncalTicketCanvas ticketTitleInput %v", larkcore.Prettify(ticketTitleInput))
+	// region search
+	regionSearchText := NewText("Region Search", "header")
+	regionSearchInput := NewInput("regionSearchInput", "regionSearchInput", "Enter input here")
+	regionSearchBtn := NewButton("regionSearchBtn", "regionSearchBtn", action, "primary", false)
+	regionDropDownOptions := []Option{}
+	for _, region := range regions {
+		regionDropDownOptions = append(regionDropDownOptions, *NewOption(region, region))
+	}
+	fmt.Println(" InitCreateOncalTicketCanvas regionDropDownOptions %v", larkcore.Prettify(regionDropDownOptions))
+	// stack search
+	stackSearchText := NewText("Stack Search", "header")
+	stackDropDownOptions := []Option{}
+	for _, stackOption := range stackNames {
+		stackDropDownOptions = append(stackDropDownOptions, *NewOption(stackOption, stackOption))
+	}
+	stackSearchDropDown := NewDropdown("stackSearchDropDown", "stackSearchDropDown", stackDropDownOptions)
+	fmt.Println(" InitCreateOncalTicketCanvas stackSearchDropDown %v", larkcore.Prettify(stackSearchDropDown))
+	// priority
+	priorityText := NewText("Priority", "header")
+	prioritySingleSelectOptions := []Option{}
+	priorityList := []string{"P0", "P1", "P2"}
+	for _, priority := range priorityList {
+		prioritySingleSelectOptions = append(prioritySingleSelectOptions, *NewOption(priority, priority))
+	}
+	prioritySingleSelect := NewSingleSelect("prioritySingleSelect", "single-select", "Priority", prioritySingleSelectOptions, action)
+	fmt.Println(" InitCreateOncalTicketCanvas prioritySingleSelect %v", larkcore.Prettify(prioritySingleSelect))
+	// create group
+	createGroupText := NewText("Create Group", "header")
+	createGroupSingleSelectOptions := []Option{}
+	createGroupList := []string{"Auto Create", "Associate", "Not Create"}
+	for _, createGroup := range createGroupList {
+		createGroupSingleSelectOptions = append(createGroupSingleSelectOptions, *NewOption(createGroup, createGroup))
+	}
+	createGroupSingleSelect := NewSingleSelect("createGroupSingleSelect", "single-select", "Create Group", createGroupSingleSelectOptions, action)
+	fmt.Println(" InitCreateOncalTicketCanvas createGroupSingleSelect %v", larkcore.Prettify(createGroupSingleSelect))
+	// user id
+	userIDText := NewText("User ID", "header")
+	userIDInput := NewInput("userIDInput", "userIDInput", "type in user id")
+
+	// tenant id
+	tenantIDText := NewText("Tenant ID", "header")
+	tenantIDInput := NewInput("tenantIDInput", "tenantIDInput", "type in tenant id")
+
+	// lark version
+	larkVersionText := NewText("Lark Version", "header")
+	larkVersionInput := NewInput("larkVersionInput", "larkVersionInput", "type in lark version")
+
+	// Create button to submit ticket
+	submitTicketBtn := NewButton("submitTicketBtn", "submitTicketBtn", action, "primary", false)
+
+	content := newContent([]Component{singleSelect, bizLineText, bizLineSearchInput, bizLineSearchBtn,
+		bizLineSearchDropDown, ticketTitleText, ticketTitleInput,
+		regionSearchText, regionSearchInput, regionSearchBtn,
+		stackSearchText, stackSearchDropDown,
+		priorityText, prioritySingleSelect,
+		createGroupText, createGroupSingleSelect,
+		userIDText, userIDInput,
+		tenantIDText, tenantIDInput,
+		larkVersionText, larkVersionInput,
+		submitTicketBtn})
 
 	content := newContent([]Component{singleSelect, bizLineText, bizLineSearchInput, bizLineSearchBtn, bizLineSearchDropDown})
 	canvasResp := newCanvasReponse(*content)
