@@ -15,11 +15,11 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error reading request body", http.StatusInternalServerError)
 		return
 	}
-
+	fmt.Println("-------------------------------------- this is submit request")
 	// Convert the bytes to string and print it
 	bodyString := string(bodyBytes)
-	fmt.Println(bodyString)
-
+	fmt.Println("this iis the body this %v", bodyString)
+	fmt.Println("======================================")
 	// You must close the original body
 	defer r.Body.Close()
 	// Unmarshal the JSON into your struct
@@ -28,7 +28,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error unmarshalling request body", http.StatusBadRequest)
 		return
 	}
-	fmt.Println("request %v", larkcore.Prettify(initReq))
+	fmt.Println("pretty's request %v", larkcore.Prettify(initReq))
 
 	response := GetInitTicketCanvasBody()
 
