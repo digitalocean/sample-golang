@@ -36,7 +36,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("GetCreateTicketCanvasBody response %v", larkcore.Prettify(response))
 	// Send the response as JSON
 	// Marshal the struct to a JSON byte slice
-	jsonData, err := json.Marshal(initReq)
+	jsonData, err := json.Marshal(response)
 	if err != nil {
 		log.Fatalf("Error occurred during marshaling. Error: %s", err.Error())
 	}
