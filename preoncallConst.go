@@ -45,9 +45,15 @@ const (
 	userIDInputID    = "userIDInputID"
 	userIDInputLabel = "userIDInputLabel"
 
+	tenantIDInputID    = "tenantIDInputID"
+	tenantIDInputLabel = "tenantIDInputLabel"
+
 	LarkVersionInputID    = "larkVersionInputID"
 	LarkVersionInputLabel = "larkVersionInputLabel"
 
 	SubmitTicketButtonID = "submitTicketButtonID"
 	SubmitTicketLabel    = "submitTicketLabel"
+
+	RegionSearchDropdownID    = "regionSearchDropdownID"
+	RegionSearchDropdownLabel = "regionSearchDropdownLabel"
 )
