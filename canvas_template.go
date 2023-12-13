@@ -15,7 +15,7 @@ type Workspace struct {
 
 type Conversation struct {
 	ConversationID  string `json:"id"`
-	AdminAssigneeID string `json:"admin_assignee_id"`
+	AdminAssigneeID int    `json:"admin_assignee_id"`
 }
 
 func GetInitTicketCanvasBody() CanvasReponse {
