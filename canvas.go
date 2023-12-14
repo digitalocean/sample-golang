@@ -381,7 +381,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	content := newContent([]Component{categorySelect, bizLineText, bizLineSearchInput, bizLineSearchBtn,
 		bizLineSearchDropDown, ticketTitleText, ticketTitleInput,
 		regionSearchText, regionSearchInput, regionSearchBtn, regionSearchDropDown,
-		stackSearchText, stackSearchDropDown
+		stackSearchText, stackSearchDropDown,
 		//priorityText, prioritySingleSelect,
 		//createGroupText, createGroupSingleSelect,
 		//userIDText, userIDInput,
