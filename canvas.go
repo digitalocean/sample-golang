@@ -288,8 +288,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	// ticket title
 	ticketTitleText := NewText("Ticket Title", "header")
 
-
-	ticketTitleInput := NewInput(TicketTitleInputID, TicketTitleLabel, "Briefly describe the problem", getValuePtr(TicketTitleInputID, selectedValues)))
+	ticketTitleInput := NewInput(TicketTitleInputID, TicketTitleLabel, "Briefly describe the problem", getValuePtr(TicketTitleInputID, selectedValues))
 
 	// region search
 	regionSearchText := NewText("Region Search", "header")
@@ -301,7 +300,6 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 		regionDropDownOptions = append(regionDropDownOptions, *NewOption(region, region))
 	}
 
-
 	regionSearchDropDown := NewDropdown(RegionSearchDropdownID, RegionSearchDropdownLabel, regionDropDownOptions, getValuePtr(RegionSearchDropdownID, selectedValues))
 
 	// stack search
@@ -311,8 +309,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 		stackDropDownOptions = append(stackDropDownOptions, *NewOption(stackOption, stackOption))
 	}
 
-
-	stackSearchDropDown := NewDropdown(StackSearchDropdownID, StackSearchDropdownLabel, stackDropDownOptions, getValuePtr(StackSearchDropdownID, selectedValues)
+	stackSearchDropDown := NewDropdown(StackSearchDropdownID, StackSearchDropdownLabel, stackDropDownOptions, getValuePtr(StackSearchDropdownID, selectedValues))
 	//
 	//// priority
 	//priorityText := NewText("Priority", "header")
