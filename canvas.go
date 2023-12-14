@@ -284,44 +284,44 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	}
 
 	bizLineSearchDropDown := NewDropdown(BizLineSearchDropdownID, BizLineSearchDropdownLabel, bizLineDropDownOptions, bizLineSelectedValue)
-	//
-	//// ticket title
-	//ticketTitleText := NewText("Ticket Title", "header")
-	//
-	//var ticketTitleValue *string
-	//if val, exist := selectedValues[TicketTitleInputID]; exist {
-	//	ticketTitleValue = &val
-	//}
-	//ticketTitleInput := NewInput(TicketTitleInputID, TicketTitleLabel, "Briefly describe the problem", ticketTitleValue)
-	//
-	//// region search
-	//regionSearchText := NewText("Region Search", "header")
-	//regionSearchInput := NewInput(RegionSearchInputID, RegionSearchLabel, "Enter input here", nil)
-	//regionSearchBtn := NewButton(RegionSearchButtonID, RegionSearchButtonLabel, action, "primary", false)
-	//
-	//regionDropDownOptions := []Option{}
-	//for _, region := range regions {
-	//	regionDropDownOptions = append(regionDropDownOptions, *NewOption(region, region))
-	//}
-	//
-	//var regionSelectedValue *string
-	//if val, exist := selectedValues[RegionSearchDropdownID]; exist {
-	//	regionSelectedValue = &val
-	//}
-	//regionSearchDropDown := NewDropdown(RegionSearchDropdownID, RegionSearchDropdownLabel, regionDropDownOptions, regionSelectedValue)
-	//
-	//// stack search
-	//stackSearchText := NewText("Stack Search", "header")
-	//stackDropDownOptions := []Option{}
-	//for _, stackOption := range stackNames {
-	//	stackDropDownOptions = append(stackDropDownOptions, *NewOption(stackOption, stackOption))
-	//}
-	//
-	//var stackSelectedValue *string
-	//if val, exist := selectedValues[StackSearchDropdownID]; exist {
-	//	stackSelectedValue = &val
-	//}
-	//stackSearchDropDown := NewDropdown(StackSearchDropdownID, StackSearchDropdownLabel, stackDropDownOptions, stackSelectedValue)
+
+	// ticket title
+	ticketTitleText := NewText("Ticket Title", "header")
+
+	var ticketTitleValue *string
+	if val, exist := selectedValues[TicketTitleInputID]; exist {
+		ticketTitleValue = &val
+	}
+	ticketTitleInput := NewInput(TicketTitleInputID, TicketTitleLabel, "Briefly describe the problem", ticketTitleValue)
+
+	// region search
+	regionSearchText := NewText("Region Search", "header")
+	regionSearchInput := NewInput(RegionSearchInputID, RegionSearchLabel, "Enter input here", nil)
+	regionSearchBtn := NewButton(RegionSearchButtonID, RegionSearchButtonLabel, action, "primary", false)
+
+	regionDropDownOptions := []Option{}
+	for _, region := range regions {
+		regionDropDownOptions = append(regionDropDownOptions, *NewOption(region, region))
+	}
+
+	var regionSelectedValue *string
+	if val, exist := selectedValues[RegionSearchDropdownID]; exist {
+		regionSelectedValue = &val
+	}
+	regionSearchDropDown := NewDropdown(RegionSearchDropdownID, RegionSearchDropdownLabel, regionDropDownOptions, regionSelectedValue)
+
+	// stack search
+	stackSearchText := NewText("Stack Search", "header")
+	stackDropDownOptions := []Option{}
+	for _, stackOption := range stackNames {
+		stackDropDownOptions = append(stackDropDownOptions, *NewOption(stackOption, stackOption))
+	}
+
+	var stackSelectedValue *string
+	if val, exist := selectedValues[StackSearchDropdownID]; exist {
+		stackSelectedValue = &val
+	}
+	stackSearchDropDown := NewDropdown(StackSearchDropdownID, StackSearchDropdownLabel, stackDropDownOptions, stackSelectedValue)
 	//
 	//// priority
 	//priorityText := NewText("Priority", "header")
@@ -378,18 +378,19 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	//// Create button to submit ticket
 	//submitTicketBtn := NewButton(SubmitTicketButtonID, SubmitTicketLabel, action, "primary", false)
 	//
-	//content := newContent([]Component{categorySelect, bizLineText, bizLineSearchInput, bizLineSearchBtn,
-	//	bizLineSearchDropDown, ticketTitleText, ticketTitleInput,
-	//	regionSearchText, regionSearchInput, regionSearchBtn, regionSearchDropDown,
-	//	stackSearchText, stackSearchDropDown,
-	//	priorityText, prioritySingleSelect,
-	//	createGroupText, createGroupSingleSelect,
-	//	userIDText, userIDInput,
-	//	tenantIDText, tenantIDInput,
-	//	larkVersionText, larkVersionInput,
-	//	submitTicketBtn})
+	content := newContent([]Component{categorySelect, bizLineText, bizLineSearchInput, bizLineSearchBtn,
+		bizLineSearchDropDown, ticketTitleText, ticketTitleInput,
+		regionSearchText, regionSearchInput, regionSearchBtn, regionSearchDropDown,
+		stackSearchText, stackSearchDropDown
+		//priorityText, prioritySingleSelect,
+		//createGroupText, createGroupSingleSelect,
+		//userIDText, userIDInput,
+		//tenantIDText, tenantIDInput,
+		//larkVersionText, larkVersionInput,
+		//submitTicketBtn
+	})
 
-	content := newContent([]Component{categorySelect, bizLineText, bizLineSearchInput, bizLineSearchBtn, bizLineSearchDropDown})
+	//content := newContent([]Component{categorySelect, bizLineText, bizLineSearchInput, bizLineSearchBtn, bizLineSearchDropDown})
 
 	//content := newContent([]Component{singleSelect, bizLineText, bizLineSearchInput, bizLineSearchBtn, bizLineSearchDropDown})
 	canvasResp := newCanvasReponse(*content)
