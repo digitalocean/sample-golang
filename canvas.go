@@ -288,11 +288,8 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	// ticket title
 	ticketTitleText := NewText("Ticket Title", "header")
 
-	var ticketTitleValue *string
-	if val, exist := selectedValues[TicketTitleInputID]; exist {
-		ticketTitleValue = &val
-	}
-	ticketTitleInput := NewInput(TicketTitleInputID, TicketTitleLabel, "Briefly describe the problem", ticketTitleValue)
+
+	ticketTitleInput := NewInput(TicketTitleInputID, TicketTitleLabel, "Briefly describe the problem", getValuePtr(TicketTitleInputID, selectedValues)))
 
 	// region search
 	regionSearchText := NewText("Region Search", "header")
@@ -304,11 +301,8 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 		regionDropDownOptions = append(regionDropDownOptions, *NewOption(region, region))
 	}
 
-	var regionSelectedValue *string
-	if val, exist := selectedValues[RegionSearchDropdownID]; exist {
-		regionSelectedValue = &val
-	}
-	regionSearchDropDown := NewDropdown(RegionSearchDropdownID, RegionSearchDropdownLabel, regionDropDownOptions, regionSelectedValue)
+
+	regionSearchDropDown := NewDropdown(RegionSearchDropdownID, RegionSearchDropdownLabel, regionDropDownOptions, getValuePtr(RegionSearchDropdownID, selectedValues))
 
 	// stack search
 	stackSearchText := NewText("Stack Search", "header")
@@ -317,11 +311,8 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 		stackDropDownOptions = append(stackDropDownOptions, *NewOption(stackOption, stackOption))
 	}
 
-	var stackSelectedValue *string
-	if val, exist := selectedValues[StackSearchDropdownID]; exist {
-		stackSelectedValue = &val
-	}
-	stackSearchDropDown := NewDropdown(StackSearchDropdownID, StackSearchDropdownLabel, stackDropDownOptions, stackSelectedValue)
+
+	stackSearchDropDown := NewDropdown(StackSearchDropdownID, StackSearchDropdownLabel, stackDropDownOptions, getValuePtr(StackSearchDropdownID, selectedValues)
 	//
 	//// priority
 	//priorityText := NewText("Priority", "header")
