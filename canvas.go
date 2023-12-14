@@ -241,7 +241,7 @@ func getValuePtr(key string, selectedValues map[string]string) *string {
 	if val, exist := selectedValues[key]; exist && val != "" {
 		selectedValue = &val
 	}
-	fmt.Println("getValuePtr selectedValue %v", selectedValue)
+	fmt.Printf("getValuePtr selectedValue %v \n", selectedValue)
 	return selectedValue
 }
 
