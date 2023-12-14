@@ -236,6 +236,15 @@ func newCanvasReponse(content Content) *CanvasReponse {
 //	return canvasResp
 //}
 
+func getValuePtr(key string, selectedValues map[string]string) *string {
+	var selectedValue *string
+	if val, exist := selectedValues[key]; exist && val != "" {
+		selectedValue = &val
+	}
+	fmt.Println("getValuePtr selectedValue %v", selectedValue)
+	return selectedValue
+}
+
 func InitPreOncallCanvas() CanvasReponse {
 	option1 := NewOption(RelatedTicketOptionID, "Related Ticket")
 	option2 := NewOption(SummitTicketOptionID, "Create Ticket")
@@ -256,12 +265,8 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	option1 := NewOption(RelatedTicketOptionID, "Related Ticket")
 	option2 := NewOption(SummitTicketOptionID, "Create Ticket")
 	action := NewAction("submit")
-	var categorySelectedValue *string
-	if val, exist := selectedValues[CategorySingleSelectID]; exist {
-		categorySelectedValue = &val
-	}
 
-	categorySelect := NewSingleSelect(CategorySingleSelectID, "single-select", CategorySingleSelectLabel, []Option{*option1, *option2}, &action, categorySelectedValue)
+	categorySelect := NewSingleSelect(CategorySingleSelectID, "single-select", CategorySingleSelectLabel, []Option{*option1, *option2}, &action, getValuePtr(CategorySingleSelectID, selectedValues))
 
 	// bizline
 	bizLineText := NewText("Business Line Search", "header")
@@ -278,12 +283,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 		bizLineDropDownOptions = append(bizLineDropDownOptions, *NewOption(bizLine, bizLine))
 	}
 
-	var bizLineSelectedValue *string
-	if val, exist := selectedValues[BizLineSearchDropdownID]; exist {
-		bizLineSelectedValue = &val
-	}
-
-	bizLineSearchDropDown := NewDropdown(BizLineSearchDropdownID, BizLineSearchDropdownLabel, bizLineDropDownOptions, bizLineSelectedValue)
+	bizLineSearchDropDown := NewDropdown(BizLineSearchDropdownID, BizLineSearchDropdownLabel, bizLineDropDownOptions, getValuePtr(BizLineSearchDropdownID, selectedValues))
 
 	// ticket title
 	ticketTitleText := NewText("Ticket Title", "header")
