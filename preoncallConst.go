@@ -32,28 +32,28 @@ const (
 	P1 = "P1"
 	P2 = "P2"
 
-	PrioritySingleSelectID    = "prioritySingleSelectID"
+	PrioritySingleSelectID    = "prioritySingleSelect"
 	PrioritySingleSelectLabel = "prioritySingleSelectLabel"
 
 	AutoCreateGroup = "Auto Create"
 	AssociateGroup  = "Associate"
 	NotCreateGroup  = "Not Create"
 
-	CreateGroupSingleSelectID    = "createGroupSingleSelectID"
+	CreateGroupSingleSelectID    = "createGroupSingleSelect"
 	CreateGroupSingleSelectLabel = "createGroupSingleSelectLabel"
 
-	userIDInputID    = "userIDInputID"
+	userIDInputID    = "userIDInput"
 	userIDInputLabel = "userIDInputLabel"
 
-	tenantIDInputID    = "tenantIDInputID"
+	tenantIDInputID    = "tenantIDInput"
 	tenantIDInputLabel = "tenantIDInputLabel"
 
-	LarkVersionInputID    = "larkVersionInputID"
+	LarkVersionInputID    = "larkVersionInput"
 	LarkVersionInputLabel = "larkVersionInputLabel"
 
-	SubmitTicketButtonID = "submitTicketButtonID"
+	SubmitTicketButtonID = "submitTicketButton"
 	SubmitTicketLabel    = "submitTicketLabel"
 
-	RegionSearchDropdownID    = "regionSearchDropdownID"
+	RegionSearchDropdownID    = "regionSearchDropdown"
 	RegionSearchDropdownLabel = "regionSearchDropdownLabel"
 )
