@@ -273,17 +273,17 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 
 	bizLineSearchInput := NewInput(BizLineSearchInputID, BizLineSearchLabel, "Enter input here", bizLineSearchValue)
 	bizLineSearchBtn := NewButton(BizLineSearchButtonID, BizLineSearchButtonLabel, action, "primary", false)
-	//bizLineDropDownOptions := []Option{}
-	//for _, bizLine := range bizLines {
-	//	bizLineDropDownOptions = append(bizLineDropDownOptions, *NewOption(bizLine, bizLine))
-	//}
-	//
-	//var bizLineSelectedValue *string
-	//if val, exist := selectedValues[BizLineSearchDropdownID]; exist {
-	//	bizLineSelectedValue = &val
-	//}
-	//
-	//bizLineSearchDropDown := NewDropdown(BizLineSearchDropdownID, BizLineSearchDropdownLabel, bizLineDropDownOptions, bizLineSelectedValue)
+	bizLineDropDownOptions := []Option{}
+	for _, bizLine := range bizLines {
+		bizLineDropDownOptions = append(bizLineDropDownOptions, *NewOption(bizLine, bizLine))
+	}
+
+	var bizLineSelectedValue *string
+	if val, exist := selectedValues[BizLineSearchDropdownID]; exist {
+		bizLineSelectedValue = &val
+	}
+
+	bizLineSearchDropDown := NewDropdown(BizLineSearchDropdownID, BizLineSearchDropdownLabel, bizLineDropDownOptions, bizLineSelectedValue)
 	//
 	//// ticket title
 	//ticketTitleText := NewText("Ticket Title", "header")
@@ -389,7 +389,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	//	larkVersionText, larkVersionInput,
 	//	submitTicketBtn})
 
-	content := newContent([]Component{categorySelect, bizLineText, bizLineSearchInput, bizLineSearchBtn})
+	content := newContent([]Component{categorySelect, bizLineText, bizLineSearchInput, bizLineSearchBtn, bizLineSearchDropDown})
 
 	//content := newContent([]Component{singleSelect, bizLineText, bizLineSearchInput, bizLineSearchBtn, bizLineSearchDropDown})
 	canvasResp := newCanvasReponse(*content)
