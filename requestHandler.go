@@ -35,7 +35,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error marshalling response", http.StatusInternalServerError)
 		return
 	}
-	print("this is the response of submit handler %v", string(jsonResponse))
+	fmt.Printf("this is the response of submit handler %v", string(jsonResponse))
 
 	w.Write(jsonResponse)
 
@@ -64,7 +64,7 @@ func InitializeCanvasHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error marshalling response", http.StatusInternalServerError)
 		return
 	}
-	print("this is the response of initialize handler %v", string(jsonResponse))
+	fmt.Println("this is the response of initialize handler %v", string(jsonResponse))
 
 	w.Write(jsonResponse)
 }
