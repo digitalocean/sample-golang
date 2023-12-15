@@ -3,8 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
-
 	"io/ioutil"
 	"net/http"
 )
@@ -32,7 +30,14 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
+	jsonResponse, err := json.Marshal(response)
+	if err != nil {
+		http.Error(w, "Error marshalling response", http.StatusInternalServerError)
+		return
+	}
+	print("this is the response of submit handler %v", string(jsonResponse))
+
+	w.Write(jsonResponse)
 
 }
 
@@ -50,16 +55,16 @@ func InitializeCanvasHandler(w http.ResponseWriter, r *http.Request) {
 	response := HandlePreoncallInitializationAction()
 	fmt.Println("response %v", response)
 
-	jsonData, err := json.Marshal(response)
-	if err != nil {
-		log.Fatalf("Error occurred during marshaling. Error: %s", err.Error())
-	}
-
 	// Convert the byte slice to a string and print it
-	jsonString := string(jsonData)
-	fmt.Println("this is the init json string %v", jsonString)
 
 	// Send the response as JSON
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
+	jsonResponse, err := json.Marshal(response)
+	if err != nil {
+		http.Error(w, "Error marshalling response", http.StatusInternalServerError)
+		return
+	}
+	print("this is the response of initialize handler %v", string(jsonResponse))
+
+	w.Write(jsonResponse)
 }
