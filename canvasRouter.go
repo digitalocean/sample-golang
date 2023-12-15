@@ -14,7 +14,7 @@ func HandlePreoncallCanvasSubmitAction(body string) (CanvasReponse, error) {
 
 		return CanvasReponse{}, err
 	}
-	fmt.Println("pretty's request %v", larkcore.Prettify(initReq))
+	fmt.Printf("pretty's request %v \n", larkcore.Prettify(initReq))
 	fmt.Println("======================================")
 	response := GetCreateTicketCanvasBody([]string{"bizline1", "bizline2"}, []string{"region1", "region2"}, []string{"stack1", "stack2"}, initReq.InputValues)
 	//fmt.Println("GetCreateTicketCanvasBody response %v", larkcore.Prettify(response))
@@ -27,7 +27,7 @@ func HandlePreoncallCanvasSubmitAction(body string) (CanvasReponse, error) {
 
 	// Convert the byte slice to a string and print it
 	jsonString := string(jsonData)
-	fmt.Println("this is the submit json string %v", jsonString)
+	fmt.Printf("this is the submit json string %v\n", jsonString)
 
 	return response, nil
 }
