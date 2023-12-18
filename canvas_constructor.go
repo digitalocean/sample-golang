@@ -169,7 +169,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, selectedValue map[string]str
 
 	metaInfoResp, err := GetPreOncallMetaInfo(ctx, true, true)
 	if err != nil {
-
+		fmt.Printf("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v \n", err)
 		return InitPreOncallCanvas()
 	}
 
@@ -193,5 +193,8 @@ func GetCreateTicketCanvasBody(ctx context.Context, selectedValue map[string]str
 		regions = append(regions, region.Name)
 	}
 
+	fmt.Printf("GetCreateTicketCanvasBody bizLines %v \n", bizLines)
+	fmt.Printf("GetCreateTicketCanvasBody regions %v \n", regions)
+	fmt.Printf("GetCreateTicketCanvasBody stackNames %v \n", stackNames)
 	return InitCreateOncalTicketCanvas(bizLines, regions, stackNames, selectedValue, true)
 }
