@@ -1,113 +1,134 @@
 package main
 
-// Define a struct to match the JSON request body
-type MetaInfoApiRequestBody struct {
-	Business      bool `json:"business"`
-	Stack         bool `json:"stack"`
-	Type          bool `json:"type,omitempty"`
-	Priority      bool `json:"priority,omitempty"`
-	App           bool `json:"app,omitempty"`
-	CreateChatWay bool `json:"createChatWay,omitempty"`
-	External      bool `json:"external,omitempty"`
-	Source        bool `json:"source,omitempty"`
-	Region        bool `json:"region,omitempty"`
-	Status        bool `json:"status,omitempty"`
+import (
+	"bytes"
+	"code.byted.org/gopkg/pkg/log"
+	"context"
+	"encoding/json"
+	"fmt"
+	larkcore "github.com/larksuite/oapi-sdk-go/v3/core"
+	"io/ioutil"
+	"net/http"
+)
+
+const (
+	preOncallToken  = "98d2d83a05094e6585f93b31f851d53c"
+	preOncallPrefix = "https://lark-oncall-boe.byted.org"
+)
+
+func preOncallAPIError(ctx context.Context, err error) error {
+
+	if err == nil {
+
+		return nil
+	}
+
+	return err
 }
 
-// Define the structs to match the JSON response structure
-type MetaInfoApiResponse struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
-	Data Data   `json:"data"`
+// Generic function to execute API calls
+func executePreOncallAPIRequest(ctx context.Context, client *http.Client, method, url, token string, requestBody interface{}, responseStruct interface{}) error {
+
+	// Marshal the request body into JSON
+	jsonBody, err := json.Marshal(requestBody)
+	if err != nil {
+		return preOncallAPIError(ctx, err)
+	}
+
+	// Create a new request
+	req, err := http.NewRequest(method, url, bytes.NewBuffer(jsonBody))
+	if err != nil {
+		return preOncallAPIError(ctx, err)
+	}
+
+	// Add headers
+	req.Header.Set("Authorization", "Basic "+token)
+	req.Header.Set("Content-Type", "application/json")
+
+	// Send the request
+	resp, err := client.Do(req)
+	if err != nil {
+		return preOncallAPIError(ctx, err)
+	}
+	defer resp.Body.Close()
+
+	// Read the response body
+	respBody, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return preOncallAPIError(ctx, err)
+	}
+
+	// Unmarshal the response into the provided response struct
+	if err := json.Unmarshal(respBody, &responseStruct); err != nil {
+		return preOncallAPIError(ctx, err)
+	}
+
+	return nil
 }
 
-type Data struct {
-	BusinessList      []Business     `json:"businessList"`
-	TypeList          []CodeNamePair `json:"typeList"`
-	PriorityList      []CodeNamePair `json:"priorityList"`
-	AppList           []CodeNamePair `json:"appList"`
-	CreateChatWayList []CodeNamePair `json:"createChatWayList"`
-	ExternalList      []CodeNamePair `json:"externalList"`
-	SourceList        []CodeNamePair `json:"sourceList"`
-	RegionList        []CodeNamePair `json:"regionList"`
-	StatusList        []CodeNamePair `json:"statusList"`
+func GetPreOncallMetaInfo(ctx context.Context, business bool, stack bool) (MetaInfoApiResponse, error) {
+
+	client := &http.Client{}
+
+	// Define the request body
+	requestBody := MetaInfoApiRequest{
+		Business: true,
+		Stack:    true,
+		Region:   true,
+	}
+
+	log.Infof("get_pre_oncall_meta_info request body: %v", larkcore.Prettify(requestBody))
+
+	// Define the response struct
+	var responseStruct MetaInfoApiResponse
+
+	// Call the generic function
+	url := preOncallPrefix + "/openapi/ticket/v1/getMetaInfo"
+
+	if err := executePreOncallAPIRequest(ctx, client, "POST", url, preOncallToken, requestBody, &responseStruct); err != nil {
+		return responseStruct, preOncallAPIError(ctx, err)
+	}
+
+	log.Infof("get_pre_oncall_meta_info response code: %v, msg: %v", responseStruct.Code, responseStruct.Msg)
+	log.Infof("get_pre_oncall_meta_info response body: %v", larkcore.Prettify(responseStruct))
+
+	return responseStruct, nil
 }
 
-type Business struct {
-	Bid      string   `json:"bid"`
-	Enabled  bool     `json:"enabled"`
-	Name     string   `json:"name"`
-	Desc     string   `json:"desc"`
-	ParentId string   `json:"parentId"`
-	Inherit  bool     `json:"inherit"`
-	Stacks   []string `json:"stacks"`
+func SubmitPreOncallTicket(ctx context.Context, ticketRequest TicketSubmitRequest) (TicketSubmitResponse, error) {
+
+	client := &http.Client{}
+
+	// Define the response struct
+	var responseStruct TicketSubmitResponse
+
+	url := preOncallPrefix + "/openapi/ticket/v1/createTicket"
+
+	if err := executePreOncallAPIRequest(ctx, client, "POST", url, preOncallToken, ticketRequest, &responseStruct); err != nil {
+		return responseStruct, preOncallAPIError(ctx, err)
+	}
+
+	log.Infof("submit_pre_oncall_ticket response code: %v, msg: %v", responseStruct.Code, responseStruct.Msg)
+	log.Infof("submit_pre_oncall_ticket response body: %v", larkcore.Prettify(responseStruct))
+
+	return responseStruct, nil
 }
 
-type CodeNamePair struct {
-	Code string `json:"code"`
-	Name string `json:"name"`
-}
+func GetPreOncallTicket(ctx context.Context, bizTicketID string, channelType string) (TickeInfotResponse, error) {
 
-//func call_metainfo_api() MetaInfoApiResponse {
-//	// Create an instance of the request body
-//	body := requestBody{
-//		Business: true,
-//		Stack:    true,
-//		Region:   true,
-//	}
-//
-//	// Marshal the request body into JSON
-//	jsonBody, err := json.Marshal(body)
-//	if err != nil {
-//		fmt.Println("Error marshaling JSON:", err)
-//		return MetaInfoApiResponse{}
-//	}
-//
-//	// Define the API endpoint and token
-//	url := "https://lark-oncall.bytedance.net/openapi/ticket/v1/getMetaInfo"
-//	token := "26ad213fcdc54e0da3a6e7fc79e99b75"
-//
-//	// Create a new HTTP client
-//	client := &http.Client{}
-//
-//	// Create a new request
-//	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonBody))
-//	if err != nil {
-//		fmt.Println("Error creating request:", err)
-//		return MetaInfoApiResponse{}
-//	}
-//
-//	// Add headers
-//	req.Header.Set("Authorization", "Basic "+token)
-//	req.Header.Set("Content-Type", "application/json")
-//
-//	// Send the request
-//	resp, err := client.Do(req)
-//	if err != nil {
-//		fmt.Println("Error sending request:", err)
-//		return MetaInfoApiResponse{}
-//	}
-//	defer resp.Body.Close()
-//
-//	// Read the response body
-//	respBody, err := ioutil.ReadAll(resp.Body)
-//	if err != nil {
-//		fmt.Println("Error reading response body:", err)
-//		return MetaInfoApiResponse{}
-//	}
-//
-//	// Print the response body
-//	fmt.Println("Response:", string(respBody))
-//
-//	var response MetaInfoApiResponse
-//	err = json.Unmarshal(respBody, &response)
-//	if err != nil {
-//		fmt.Println("Error unmarshaling JSON:", err)
-//		return MetaInfoApiResponse{}
-//	}
-//
-//	// Print the response struct to verify
-//	fmt.Printf("%+v\n", response)
-//
-//	return response
-//}
+	client := &http.Client{}
+
+	// Define the request body
+	// Construct the URL with query parameters
+	url := fmt.Sprintf("%s/openapi/ticket/v1/getTicketsByChannelType?channelType=%s&bizTicketId=%s", preOncallPrefix, channelType, bizTicketID)
+	log.Infof("get_pre_oncall_ticket request url: %v", url)
+	// Call the generic executeAPIRequest function
+	var response TickeInfotResponse
+	err := executePreOncallAPIRequest(ctx, client, "GET", url, preOncallToken, nil, &response)
+	if err != nil {
+		return response, err
+	}
+
+	return response, nil
+
+}

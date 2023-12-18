@@ -1,2 +1,4 @@
+code.byted.org/gopkg/pkg v0.1.0 h1:LvAlvSiNB/uN0YMrmemayO4t8MpJPBXTN1EfNC1g77M=
+code.byted.org/gopkg/pkg v0.1.0/go.mod h1:NPj+tkP10M5nCCc/iGvUpX1IQsDF/CELWR6WlGCsulU=
 github.com/larksuite/oapi-sdk-go/v3 v3.0.32 h1:AgnmZ6GYiuT3k5ISRoHzhTo9GuXlEo/kQAbExzZAkDA=
 github.com/larksuite/oapi-sdk-go/v3 v3.0.32/go.mod h1:F4MLXkfdc/7WAJPLy4lJ0R6VqCxKgqWYS1uYY84p3SI=
