@@ -1,7 +1,6 @@
 package main
 
 import (
-	"code.byted.org/gopkg/pkg/log"
 	"context"
 	"fmt"
 )
@@ -170,7 +169,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, selectedValue map[string]str
 
 	metaInfoResp, err := GetPreOncallMetaInfo(ctx, true, true)
 	if err != nil {
-		log.Errorf("GetCreateTicketCanvasBody err %v", err)
+
 		return InitPreOncallCanvas()
 	}
 

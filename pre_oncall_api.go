@@ -2,11 +2,9 @@ package main
 
 import (
 	"bytes"
-	"code.byted.org/gopkg/pkg/log"
 	"context"
 	"encoding/json"
 	"fmt"
-	larkcore "github.com/larksuite/oapi-sdk-go/v3/core"
 	"io/ioutil"
 	"net/http"
 )
@@ -77,8 +75,6 @@ func GetPreOncallMetaInfo(ctx context.Context, business bool, stack bool) (MetaI
 		Region:   true,
 	}
 
-	log.Infof("get_pre_oncall_meta_info request body: %v", larkcore.Prettify(requestBody))
-
 	// Define the response struct
 	var responseStruct MetaInfoApiResponse
 
@@ -88,9 +84,6 @@ func GetPreOncallMetaInfo(ctx context.Context, business bool, stack bool) (MetaI
 	if err := executePreOncallAPIRequest(ctx, client, "POST", url, preOncallToken, requestBody, &responseStruct); err != nil {
 		return responseStruct, preOncallAPIError(ctx, err)
 	}
-
-	log.Infof("get_pre_oncall_meta_info response code: %v, msg: %v", responseStruct.Code, responseStruct.Msg)
-	log.Infof("get_pre_oncall_meta_info response body: %v", larkcore.Prettify(responseStruct))
 
 	return responseStruct, nil
 }
@@ -108,9 +101,6 @@ func SubmitPreOncallTicket(ctx context.Context, ticketRequest TicketSubmitReques
 		return responseStruct, preOncallAPIError(ctx, err)
 	}
 
-	log.Infof("submit_pre_oncall_ticket response code: %v, msg: %v", responseStruct.Code, responseStruct.Msg)
-	log.Infof("submit_pre_oncall_ticket response body: %v", larkcore.Prettify(responseStruct))
-
 	return responseStruct, nil
 }
 
@@ -121,7 +111,7 @@ func GetPreOncallTicket(ctx context.Context, bizTicketID string, channelType str
 	// Define the request body
 	// Construct the URL with query parameters
 	url := fmt.Sprintf("%s/openapi/ticket/v1/getTicketsByChannelType?channelType=%s&bizTicketId=%s", preOncallPrefix, channelType, bizTicketID)
-	log.Infof("get_pre_oncall_ticket request url: %v", url)
+
 	// Call the generic executeAPIRequest function
 	var response TickeInfotResponse
 	err := executePreOncallAPIRequest(ctx, client, "GET", url, preOncallToken, nil, &response)
