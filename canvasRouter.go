@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	larkcore "github.com/larksuite/oapi-sdk-go/v3/core"
 )
 
 func HandlePreoncallCanvasSubmitAction(body string) (CanvasReponse, error) {
@@ -29,7 +30,7 @@ func HandlePreoncallCanvasSubmitAction(body string) (CanvasReponse, error) {
 		}
 	}
 
-	fmt.Printf("HandlePreoncallCanvasSubmitAction vanvas response %v \n", response)
+	fmt.Printf("HandlePreoncallCanvasSubmitAction vanvas response %v \n", larkcore.Prettify(response))
 
 	return response, nil
 }
