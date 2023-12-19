@@ -167,31 +167,37 @@ func GetCreateTicketCanvasBody(ctx context.Context, selectedValue map[string]str
 
 	fmt.Printf("GetCreateTicketCanvasBody selectedValue %v \n", selectedValue)
 
-	metaInfoResp, err := GetPreOncallMetaInfo(ctx, true, true)
-	if err != nil {
-		fmt.Printf("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v \n", err)
-		return InitPreOncallCanvas()
-	}
+	//metaInfoResp, err := GetPreOncallMetaInfo(ctx, true, true)
+	//if err != nil {
+	//	fmt.Printf("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v \n", err)
+	//	return InitPreOncallCanvas()
+	//}
 
+	//bizLines := make([]string, 0)
+	//regions := make([]string, 0)
+	//stackNames := make([]string, 0)
+	//
+	//businessList := metaInfoResp.Data.BusinessList
+	//for idx, _ := range businessList {
+	//	bussiness := businessList[idx]
+	//	bizLines = append(bizLines, bussiness.Name)
+	//	stacks := bussiness.Stacks
+	//	for _, stack := range stacks {
+	//		stackNames = append(stackNames, bussiness.Name+"-"+stack)
+	//	}
+	//}
+	//
+	//regionList := metaInfoResp.Data.RegionList
+	//for idx, _ := range regionList {
+	//	region := regionList[idx]
+	//	regions = append(regions, region.Name)
+	//}
 	bizLines := make([]string, 0)
+	bizLines = append(bizLines, "test1")
 	regions := make([]string, 0)
+	regions = append(regions, "test2")
 	stackNames := make([]string, 0)
-
-	businessList := metaInfoResp.Data.BusinessList
-	for idx, _ := range businessList {
-		bussiness := businessList[idx]
-		bizLines = append(bizLines, bussiness.Name)
-		stacks := bussiness.Stacks
-		for _, stack := range stacks {
-			stackNames = append(stackNames, bussiness.Name+"-"+stack)
-		}
-	}
-
-	regionList := metaInfoResp.Data.RegionList
-	for idx, _ := range regionList {
-		region := regionList[idx]
-		regions = append(regions, region.Name)
-	}
+	stackNames = append(stackNames, "test3")
 
 	fmt.Printf("GetCreateTicketCanvasBody bizLines %v \n", bizLines)
 	fmt.Printf("GetCreateTicketCanvasBody regions %v \n", regions)

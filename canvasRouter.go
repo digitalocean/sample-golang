@@ -14,6 +14,7 @@ func HandlePreoncallCanvasSubmitAction(body string) (CanvasReponse, error) {
 
 		return CanvasReponse{}, err
 	}
+	fmt.Printf("HandlePreoncallCanvasSubmitAction pretty's body %v \n", body)
 	ctx := context.Background()
 	var response CanvasReponse
 	// TODO: call intercom pre ocall api to create ticket
