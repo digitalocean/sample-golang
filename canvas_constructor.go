@@ -202,5 +202,10 @@ func GetCreateTicketCanvasBody(ctx context.Context, selectedValue map[string]str
 	//fmt.Printf("GetCreateTicketCanvasBody bizLines %v \n", bizLines)
 	//fmt.Printf("GetCreateTicketCanvasBody regions %v \n", regions)
 	//fmt.Printf("GetCreateTicketCanvasBody stackNames %v \n", stackNames)
-	return InitCreateOncalTicketCanvas([]string{"abc", "bbm", "cc"}, []string{"1", "2", "3"}, []string{"t", "e", "l"}, selectedValue, true)
+	bizLines := make([]string, 0)
+	bizLines = append(bizLines, "abc")
+	bizLines = append(bizLines, "bbm")
+	bizLines = append(bizLines, "cc")
+
+	return InitCreateOncalTicketCanvas(bizLines, []string{"1", "2", "3"}, []string{"t", "e", "l"}, selectedValue, true)
 }
