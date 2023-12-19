@@ -192,15 +192,15 @@ func GetCreateTicketCanvasBody(ctx context.Context, selectedValue map[string]str
 	//	region := regionList[idx]
 	//	regions = append(regions, region.Name)
 	//}
-	bizLines := make([]string, 0)
-	bizLines = append(bizLines, "test1")
-	regions := make([]string, 0)
-	regions = append(regions, "test2")
-	stackNames := make([]string, 0)
-	stackNames = append(stackNames, "test3")
+	//bizLines := make([]string, 0)
+	//bizLines = append(bizLines, "test1")
+	//regions := make([]string, 0)
+	//regions = append(regions, "test2")
+	//stackNames := make([]string, 0)
+	//stackNames = append(stackNames, "test3")
 
-	fmt.Printf("GetCreateTicketCanvasBody bizLines %v \n", bizLines)
-	fmt.Printf("GetCreateTicketCanvasBody regions %v \n", regions)
-	fmt.Printf("GetCreateTicketCanvasBody stackNames %v \n", stackNames)
-	return InitCreateOncalTicketCanvas(bizLines, regions, stackNames, selectedValue, true)
+	//fmt.Printf("GetCreateTicketCanvasBody bizLines %v \n", bizLines)
+	//fmt.Printf("GetCreateTicketCanvasBody regions %v \n", regions)
+	//fmt.Printf("GetCreateTicketCanvasBody stackNames %v \n", stackNames)
+	return InitCreateOncalTicketCanvas([]string{"abc", "bbm", "cc"}, []string{"1", "2", "3"}, []string{"t", "e", "l"}, selectedValue, true)
 }
