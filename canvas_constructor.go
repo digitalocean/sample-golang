@@ -64,91 +64,91 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	ticketTitleInput := NewInput(TicketTitleInputID, TicketTitleLabel, "Briefly describe the problem", getValuePtr(TicketTitleInputID, selectedValues))
 
 	// region search
-	regionSearchText := NewText("Region Search", "header")
-	regionSearchInput := NewInput(RegionSearchInputID, RegionSearchLabel, "Enter input here", nil)
-	regionSearchBtn := NewButton(RegionSearchButtonID, RegionSearchButtonLabel, action, "primary", false)
-
-	regionDropDownOptions := []Option{}
-	for _, region := range regions {
-		regionDropDownOptions = append(regionDropDownOptions, *NewOption(region, region))
-	}
-
-	regionSearchDropDown := NewDropdown(RegionSearchDropdownID, RegionSearchDropdownLabel, regionDropDownOptions, getValuePtr(RegionSearchDropdownID, selectedValues))
-
-	// stack search
-	stackSearchText := NewText("Stack Search", "header")
-	stackDropDownOptions := []Option{}
-	for _, stackOption := range stackNames {
-		stackDropDownOptions = append(stackDropDownOptions, *NewOption(stackOption, stackOption))
-	}
-
-	stackSearchDropDown := NewDropdown(StackSearchDropdownID, StackSearchDropdownLabel, stackDropDownOptions, getValuePtr(StackSearchDropdownID, selectedValues))
+	//regionSearchText := NewText("Region Search", "header")
+	//regionSearchInput := NewInput(RegionSearchInputID, RegionSearchLabel, "Enter input here", nil)
+	//regionSearchBtn := NewButton(RegionSearchButtonID, RegionSearchButtonLabel, action, "primary", false)
 	//
-	// priority
-	priorityText := NewText("Priority", "header")
-	prioritySingleSelectOptions := []Option{}
-	priorityList := []string{P0, P1, P2}
-	for _, priority := range priorityList {
-		prioritySingleSelectOptions = append(prioritySingleSelectOptions, *NewOption(priority, priority))
-	}
-
-	var prioritySelectedValue *string
-	if val, exist := selectedValues[PrioritySingleSelectID]; exist {
-		prioritySelectedValue = &val
-	}
-	prioritySingleSelect := NewSingleSelect(PrioritySingleSelectID, "single-select", PrioritySingleSelectLabel, prioritySingleSelectOptions, nil, prioritySelectedValue)
-
-	// create group
-	createGroupText := NewText("Create Group", "header")
-	createGroupSingleSelectOptions := []Option{}
-	createGroupList := []string{AutoCreateGroup, AssociateGroup, NotCreateGroup}
-	for _, createGroup := range createGroupList {
-		createGroupSingleSelectOptions = append(createGroupSingleSelectOptions, *NewOption(createGroup, createGroup))
-	}
-
-	var createGroupSelectedValue *string
-	if val, exist := selectedValues[CreateGroupSingleSelectID]; exist {
-		createGroupSelectedValue = &val
-	}
-	createGroupSingleSelect := NewSingleSelect(CreateGroupSingleSelectID, "single-select", CreateGroupSingleSelectLabel, createGroupSingleSelectOptions, nil, createGroupSelectedValue)
-
-	// user id
-	var userIDInputValue *string
-	if val, exist := selectedValues[userIDInputID]; exist {
-		userIDInputValue = &val
-	}
-	userIDText := NewText("User ID", "header")
-	userIDInput := NewInput(userIDInputID, userIDInputLabel, "type in user id", userIDInputValue)
-
-	// tenant id
-	var tenantIDInputValue *string
-	if val, exist := selectedValues[tenantIDInputID]; exist {
-		tenantIDInputValue = &val
-	}
-	tenantIDText := NewText("Tenant ID", "header")
-	tenantIDInput := NewInput(tenantIDInputID, tenantIDInputLabel, "type in tenant id", tenantIDInputValue)
-
-	// lark version
-	var larkVersionInputValue *string
-	if val, exist := selectedValues[LarkVersionInputID]; exist {
-		larkVersionInputValue = &val
-	}
-	larkVersionText := NewText("Lark Version", "header")
-	larkVersionInput := NewInput(LarkVersionInputID, LarkVersionInputLabel, "type in lark version", larkVersionInputValue)
-
-	// Create button to submit ticket
-	submitTicketBtn := NewButton(SubmitTicketButtonID, SubmitTicketLabel, action, "primary", false)
+	//regionDropDownOptions := []Option{}
+	//for _, region := range regions {
+	//	regionDropDownOptions = append(regionDropDownOptions, *NewOption(region, region))
+	//}
+	//
+	//regionSearchDropDown := NewDropdown(RegionSearchDropdownID, RegionSearchDropdownLabel, regionDropDownOptions, getValuePtr(RegionSearchDropdownID, selectedValues))
+	//
+	//// stack search
+	//stackSearchText := NewText("Stack Search", "header")
+	//stackDropDownOptions := []Option{}
+	//for _, stackOption := range stackNames {
+	//	stackDropDownOptions = append(stackDropDownOptions, *NewOption(stackOption, stackOption))
+	//}
+	//
+	//stackSearchDropDown := NewDropdown(StackSearchDropdownID, StackSearchDropdownLabel, stackDropDownOptions, getValuePtr(StackSearchDropdownID, selectedValues))
+	////
+	//// priority
+	//priorityText := NewText("Priority", "header")
+	//prioritySingleSelectOptions := []Option{}
+	//priorityList := []string{P0, P1, P2}
+	//for _, priority := range priorityList {
+	//	prioritySingleSelectOptions = append(prioritySingleSelectOptions, *NewOption(priority, priority))
+	//}
+	//
+	//var prioritySelectedValue *string
+	//if val, exist := selectedValues[PrioritySingleSelectID]; exist {
+	//	prioritySelectedValue = &val
+	//}
+	//prioritySingleSelect := NewSingleSelect(PrioritySingleSelectID, "single-select", PrioritySingleSelectLabel, prioritySingleSelectOptions, nil, prioritySelectedValue)
+	//
+	//// create group
+	//createGroupText := NewText("Create Group", "header")
+	//createGroupSingleSelectOptions := []Option{}
+	//createGroupList := []string{AutoCreateGroup, AssociateGroup, NotCreateGroup}
+	//for _, createGroup := range createGroupList {
+	//	createGroupSingleSelectOptions = append(createGroupSingleSelectOptions, *NewOption(createGroup, createGroup))
+	//}
+	//
+	//var createGroupSelectedValue *string
+	//if val, exist := selectedValues[CreateGroupSingleSelectID]; exist {
+	//	createGroupSelectedValue = &val
+	//}
+	//createGroupSingleSelect := NewSingleSelect(CreateGroupSingleSelectID, "single-select", CreateGroupSingleSelectLabel, createGroupSingleSelectOptions, nil, createGroupSelectedValue)
+	//
+	//// user id
+	//var userIDInputValue *string
+	//if val, exist := selectedValues[userIDInputID]; exist {
+	//	userIDInputValue = &val
+	//}
+	//userIDText := NewText("User ID", "header")
+	//userIDInput := NewInput(userIDInputID, userIDInputLabel, "type in user id", userIDInputValue)
+	//
+	//// tenant id
+	//var tenantIDInputValue *string
+	//if val, exist := selectedValues[tenantIDInputID]; exist {
+	//	tenantIDInputValue = &val
+	//}
+	//tenantIDText := NewText("Tenant ID", "header")
+	//tenantIDInput := NewInput(tenantIDInputID, tenantIDInputLabel, "type in tenant id", tenantIDInputValue)
+	//
+	//// lark version
+	//var larkVersionInputValue *string
+	//if val, exist := selectedValues[LarkVersionInputID]; exist {
+	//	larkVersionInputValue = &val
+	//}
+	//larkVersionText := NewText("Lark Version", "header")
+	//larkVersionInput := NewInput(LarkVersionInputID, LarkVersionInputLabel, "type in lark version", larkVersionInputValue)
+	//
+	//// Create button to submit ticket
+	//submitTicketBtn := NewButton(SubmitTicketButtonID, SubmitTicketLabel, action, "primary", false)
 
 	content := newContent([]Component{categorySelect, bizLineText, bizLineSearchInput, bizLineSearchBtn,
 		bizLineSearchDropDown, ticketTitleText, ticketTitleInput,
-		regionSearchText, regionSearchInput, regionSearchBtn, regionSearchDropDown,
-		stackSearchText, stackSearchDropDown,
-		priorityText, prioritySingleSelect,
-		createGroupText, createGroupSingleSelect,
-		userIDText, userIDInput,
-		tenantIDText, tenantIDInput,
-		larkVersionText, larkVersionInput,
-		submitTicketBtn,
+		//regionSearchText, regionSearchInput, regionSearchBtn, regionSearchDropDown,
+		//stackSearchText, stackSearchDropDown,
+		//priorityText, prioritySingleSelect,
+		//createGroupText, createGroupSingleSelect,
+		//userIDText, userIDInput,
+		//tenantIDText, tenantIDInput,
+		//larkVersionText, larkVersionInput,
+		//submitTicketBtn,
 	})
 
 	//content := newContent([]Component{categorySelect, bizLineText, bizLineSearchInput, bizLineSearchBtn, bizLineSearchDropDown})

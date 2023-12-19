@@ -29,6 +29,14 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	canvas, err := json.Marshal(response.Canvas)
+	if err != nil {
+		fmt.Println("Error marshalling response %V", http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Printf("this is the response of submit handler %v", string(canvas))
+
 	w.Header().Set("Content-Type", "application/json")
 	jsonResponse, err := json.Marshal(response)
 	if err != nil {
