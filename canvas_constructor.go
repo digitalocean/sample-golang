@@ -98,56 +98,56 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	// bizline
 	bizLineText := NewText("Business Line Search", "header")
 
-	var bizLineSearchValue *string
-	if val, exist := selectedValues[BizLineSearchInputID]; exist {
-		bizLineSearchValue = &val
-	}
+	//var bizLineSearchValue *string
+	//if val, exist := selectedValues[BizLineSearchInputID]; exist {
+	//	bizLineSearchValue = &val
+	//}
 
-	bizLineSearchInput := NewInput(BizLineSearchInputID, BizLineSearchLabel, "Enter input here", bizLineSearchValue)
-	bizLineSearchBtn := NewButton(BizLineSearchButtonID, BizLineSearchButtonLabel, action, "primary", false)
-	bizLineDropDownOptions := []Option{}
-	for _, bizLine := range bizLines {
-		////log.Infof("bizLine %v", bizLine)
-		bizLineDropDownOptions = append(bizLineDropDownOptions, *NewOption(bizLine, bizLine))
-	}
-
-	bizLineSearchDropDown := NewDropdown(BizLineSearchDropdownID, BizLineSearchDropdownLabel, bizLineDropDownOptions, getValuePtr(BizLineSearchDropdownID, selectedValues))
-
-	// ticket title
-	ticketTitleText := NewText("Ticket Title", "header")
-
-	ticketTitleInput := NewInput(TicketTitleInputID, TicketTitleLabel, "Briefly describe the problem", getValuePtr(TicketTitleInputID, selectedValues))
-
-	// region search
-	regionSearchText := NewText("Region Search", "header")
-	regionSearchInput := NewInput(RegionSearchInputID, RegionSearchLabel, "Enter input here", nil)
-	regionSearchBtn := NewButton(RegionSearchButtonID, RegionSearchButtonLabel, action, "primary", false)
-
-	regionDropDownOptions := []Option{}
-	for _, region := range regions {
-		regionDropDownOptions = append(regionDropDownOptions, *NewOption(region, region))
-	}
-
-	regionSearchDropDown := NewDropdown(RegionSearchDropdownID, RegionSearchDropdownLabel, regionDropDownOptions, getValuePtr(RegionSearchDropdownID, selectedValues))
+	//bizLineSearchInput := NewInput(BizLineSearchInputID, BizLineSearchLabel, "Enter input here", bizLineSearchValue)
+	//bizLineSearchBtn := NewButton(BizLineSearchButtonID, BizLineSearchButtonLabel, action, "primary", false)
+	//bizLineDropDownOptions := []Option{}
+	//for _, bizLine := range bizLines {
+	//	////log.Infof("bizLine %v", bizLine)
+	//	bizLineDropDownOptions = append(bizLineDropDownOptions, *NewOption(bizLine, bizLine))
+	//}
+	//
+	//bizLineSearchDropDown := NewDropdown(BizLineSearchDropdownID, BizLineSearchDropdownLabel, bizLineDropDownOptions, getValuePtr(BizLineSearchDropdownID, selectedValues))
+	//
+	//// ticket title
+	//ticketTitleText := NewText("Ticket Title", "header")
+	//
+	//ticketTitleInput := NewInput(TicketTitleInputID, TicketTitleLabel, "Briefly describe the problem", getValuePtr(TicketTitleInputID, selectedValues))
+	//
+	//// region search
+	//regionSearchText := NewText("Region Search", "header")
+	//regionSearchInput := NewInput(RegionSearchInputID, RegionSearchLabel, "Enter input here", nil)
+	//regionSearchBtn := NewButton(RegionSearchButtonID, RegionSearchButtonLabel, action, "primary", false)
+	//
+	//regionDropDownOptions := []Option{}
+	//for _, region := range regions {
+	//	regionDropDownOptions = append(regionDropDownOptions, *NewOption(region, region))
+	//}
+	//
+	//regionSearchDropDown := NewDropdown(RegionSearchDropdownID, RegionSearchDropdownLabel, regionDropDownOptions, getValuePtr(RegionSearchDropdownID, selectedValues))
 
 	//// stack search
-	//stackSearchText := NewText("Stack Search", "header")
-	//stackDropDownOptions := []Option{}
-	//for _, stackOption := range stackNames {
-	//	stackDropDownOptions = append(stackDropDownOptions, *NewOption(stackOption, stackOption))
-	//}
+	stackSearchText := NewText("Stack Search", "header")
+	stackDropDownOptions := []Option{}
+	for _, stackOption := range stackNames {
+		stackDropDownOptions = append(stackDropDownOptions, *NewOption(stackOption, stackOption))
+	}
+
+	stackSearchDropDown := NewDropdown(StackSearchDropdownID, StackSearchDropdownLabel, stackDropDownOptions, getValuePtr(StackSearchDropdownID, selectedValues))
 	//
-	//stackSearchDropDown := NewDropdown(StackSearchDropdownID, StackSearchDropdownLabel, stackDropDownOptions, getValuePtr(StackSearchDropdownID, selectedValues))
-	////
-	//// priority
-	//priorityText := NewText("Priority", "header")
-	//prioritySingleSelectOptions := []Option{}
-	//priorityList := []string{P0, P1, P2}
-	//for _, priority := range priorityList {
-	//	prioritySingleSelectOptions = append(prioritySingleSelectOptions, *NewOption(priority, priority))
-	//}
-	//
-	//prioritySingleSelect := NewSingleSelect(PrioritySingleSelectID, "single-select", PrioritySingleSelectLabel, prioritySingleSelectOptions, nil, getValuePtr(PrioritySingleSelectID, selectedValues))
+	// priority
+	priorityText := NewText("Priority", "header")
+	prioritySingleSelectOptions := []Option{}
+	priorityList := []string{P0, P1, P2}
+	for _, priority := range priorityList {
+		prioritySingleSelectOptions = append(prioritySingleSelectOptions, *NewOption(priority, priority))
+	}
+
+	prioritySingleSelect := NewSingleSelect(PrioritySingleSelectID, "single-select", PrioritySingleSelectLabel, prioritySingleSelectOptions, nil, getValuePtr(PrioritySingleSelectID, selectedValues))
 
 	//// create group
 	//createGroupText := NewText("Create Group", "header")
@@ -175,9 +175,11 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	//// Create button to submit ticket
 	//submitTicketBtn := NewButton(SubmitTicketButtonID, SubmitTicketLabel, action, "primary", false)
 
-	content := newContent([]Component{categorySelect, bizLineText, bizLineSearchInput, bizLineSearchBtn,
-		bizLineSearchDropDown, ticketTitleText, ticketTitleInput, regionSearchText, regionSearchInput, regionSearchBtn, regionSearchDropDown})
-	//stackSearchText, stackSearchDropDown, priorityText, prioritySingleSelect
+	content := newContent([]Component{categorySelect, bizLineText, stackSearchText, stackSearchDropDown, priorityText, prioritySingleSelect})
+	//
+
+	//, bizLineSearchInput, bizLineSearchBtn,
+	//	bizLineSearchDropDown, ticketTitleText, ticketTitleInput, regionSearchText, regionSearchInput, regionSearchBtn, regionSearchDropDown
 
 	//createGroupText, createGroupSingleSelect, userIDText, userIDInput,
 	//tenantIDText, tenantIDInput,
