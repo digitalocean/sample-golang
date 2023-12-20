@@ -84,7 +84,7 @@ func InitRelatedTicketCanvas(ctx context.Context, oncallTickets pre_oncall.Ticke
 }
 
 // InitCreateOncalTicketCanvas is a constructor for Create Create-Ticket CanvasReponse
-func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames []string, selectedValues map[string]string, validInput bool) CanvasReponse {
+func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames []string, selectedValues map[string]string, ticketCreationStatus string) CanvasReponse {
 	if selectedValues == nil {
 		selectedValues = make(map[string]string)
 	}
@@ -178,13 +178,25 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	// Create button to submit ticket
 	submitTicketBtn := NewButton(SubmitTicketButtonID, SubmitTicketLabel, action, "primary", false)
 
-	content := newContent([]Component{categorySelect, bizLineText, bizLineSearchInput, bizLineSearchBtn,
+	components := []Component{categorySelect, bizLineText, bizLineSearchInput, bizLineSearchBtn,
 		bizLineSearchDropDown, ticketTitleText, ticketTitleInput, regionSearchText, regionSearchInput, regionSearchBtn, regionSearchDropDown,
 		stackSearchText, stackSearchDropDown, priorityText, prioritySingleSelect,
 		createGroupText, createGroupSingleSelect, userIDText, userIDInput,
 		tenantIDText, tenantIDInput,
 		larkVersionText, larkVersionInput,
-		submitTicketBtn})
+		submitTicketBtn}
+
+	switch ticketCreationStatus {
+	case WaitingUserInput:
+	case CreatTicketFailed:
+		failedText := NewText("Create ticket failed, please check your input and try again", "header")
+		components = append(components, failedText)
+	case CreateTicketSucceed:
+		succeedText := NewText("Create ticket succeed, please do not submit again", "header")
+		components = append(components, succeedText)
+	}
+
+	content := newContent(components)
 
 	//content := newContent([]Component{categorySelect, bizLineText, bizLineSearchInput, bizLineSearchBtn, bizLineSearchDropDown})
 
@@ -307,6 +319,8 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 	//	return InitPreOncallCanvas()
 	//}
 
+	ticketStatus := WaitingUserInput
+
 	bizLines := extractBizlinesFromCurrentCanvas(ctx, currentCanvas)
 	regions := extractRegionsFromCurrentCanvas(ctx, currentCanvas)
 	stackNames := extractStackNamesFromCurrentCanvas(ctx, currentCanvas)
@@ -423,5 +437,55 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 		regions = searchRegion(ctx, regionSearchKeyword, regionList)
 	}
 
-	return InitCreateOncalTicketCanvas(bizLines, regions, stackNames, inputValues, true)
+	if buttonClick == SubmitTicketButtonID {
+		if !validSubmitForm(ctx, inputValues) {
+			fmt.Printf("GetCreateTicketCanvasBody validSubmitForm failed \n")
+			ticketStatus = CreatTicketFailed
+		} else {
+			fmt.Printf("GetCreateTicketCanvasBody validSubmitForm success \n")
+			ticket := pre_oncall.TicketSubmitRequest{
+				Title:         "",
+				Business:      "",
+				Priority:      "",
+				Stack:         "",
+				Region:        "",
+				UserId:        "",
+				Version:       "",
+				CreateChatWay: "",
+				Type:          "",
+				App:           "",
+				External:      "",
+				Source:        "",
+				Reporter:      "",
+				Remarks:       "",
+				ChannelType:   "",
+				BizTicketId:   "",
+			}
+			resp, err := pre_oncall.SubmitFakePreOncallTicket(ctx, ticket)
+			fmt.Printf("GetCreateTicketCanvasBody SubmitPreOncallTicket resp %v \n", larkcore.Prettify(resp))
+			if err != nil {
+				//log..Errorf("GetCreateTicketCanvasBody SubmitPreOncallTicket err %v", err)
+				fmt.Printf("GetCreateTicketCanvasBody SubmitPreOncallTicket err %v \n", err)
+				ticketStatus = CreatTicketFailed
+			} else {
+				ticketStatus = CreateTicketSucceed
+			}
+		}
+	}
+
+	return InitCreateOncalTicketCanvas(bizLines, regions, stackNames, inputValues, ticketStatus)
+}
+
+func validSubmitForm(ctx context.Context, inputValues map[string]string) bool {
+	//log. := utils.Get//log.gerWithMethod(ctx, "validSubmitForm")
+	//log..Infof("validSubmitForm inputValues %v", inputValues)
+
+	if inputValues == nil {
+		return false
+	}
+	if _, ok := inputValues[BizLineSearchDropdownID]; !ok {
+		return false
+	}
+
+	return true
 }

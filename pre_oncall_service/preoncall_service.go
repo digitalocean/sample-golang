@@ -61,6 +61,8 @@ func HandlePreoncallCanvasSubmitAction(ctx context.Context, body string) (Canvas
 		response = GetCreateTicketCanvasBody(ctx, inputValues, intercomConversationID, assigneeID, BizLineSearchButtonID, canvasReq.CurrentCanvas)
 	case RegionSearchButtonID:
 		response = GetCreateTicketCanvasBody(ctx, inputValues, intercomConversationID, assigneeID, RegionSearchButtonID, canvasReq.CurrentCanvas)
+	case SubmitTicketButtonID:
+		response = GetCreateTicketCanvasBody(ctx, inputValues, intercomConversationID, assigneeID, SubmitTicketButtonID, canvasReq.CurrentCanvas)
 	}
 
 	//log..Infof("HandlePreoncallCanvasSubmitAction vanvas response %v", larkcore.Prettify(response))

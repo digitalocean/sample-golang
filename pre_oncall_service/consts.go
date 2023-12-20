@@ -56,4 +56,8 @@ const (
 
 	RegionSearchDropdownID    = "regionSearchDropdown"
 	RegionSearchDropdownLabel = "regionSearchDropdownLabel"
+
+	WaitingUserInput    = "waitingUserInput"
+	CreatTicketFailed   = "creatTicketFailed"
+	CreateTicketSucceed = "createTicketSucceed"
 )
