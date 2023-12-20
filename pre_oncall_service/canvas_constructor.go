@@ -261,6 +261,8 @@ func searchBusinessLine(ctx context.Context, keyword string, bizLines []pre_onca
 func searchRegion(ctx context.Context, keyword string, regions []pre_oncall.CodeNamePair) []string {
 	//log. := utils.Get//log.gerWithMethod(ctx, "searchRegion")
 	//log..Infof("searchRegion keyword %v", keyword)
+	fmt.Printf("searchRegion keyword %v \n", keyword)
+	fmt.Printf("searchRegion regions %v \n", larkcore.Prettify(regions))
 	result := make([]string, 0)
 	for _, region := range regions {
 		if strings.Contains(strings.ToLower(region.Name), strings.ToLower(keyword)) || keyword == "" {
@@ -489,7 +491,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 	case StackSearchButtonID:
 		//log..Infof("GetCreateTicketCanvasBody stack search button")
 		stackNames = make([]string, 0)
-		if value, ok := inputValues[BizLineSearchDropdownID]; ok {
+		if value, ok := inputValues[StackSearchDropdownID]; ok {
 			resp, err := pre_oncall.GetFakePreOncallMetaInfo(ctx, true, true)
 			if err != nil {
 				//log..Errorf("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v", err)
@@ -501,7 +503,6 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 					stackNames = biz.Stacks
 				}
 			}
-
 		}
 
 		fmt.Printf("GetCreateTicketCanvasBody stackNames %v \n", stackNames)
