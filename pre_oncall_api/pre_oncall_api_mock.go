@@ -2,6 +2,7 @@ package pre_oncall
 
 import (
 	"context"
+	"fmt"
 	"time"
 )
 
@@ -65,6 +66,8 @@ func GetFakePreOncallMetaInfo(ctx context.Context, business bool, stack bool) (M
 
 func SubmitFakePreOncallTicket(ctx context.Context, ticketRequest TicketSubmitRequest) (TicketSubmitResponse, error) {
 	// Create dummy data for the TicketSubmitResponse
+	fmt.Printf("############ ticketRequest submitting : %v\n", ticketRequest)
+
 	fakeResponse := TicketSubmitResponse{
 		Code: 200,                            // Example success code
 		Msg:  "Ticket submission successful", // Success message

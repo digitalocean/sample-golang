@@ -44,37 +44,40 @@ func InitRelatedTicketCanvas(ctx context.Context, oncallTickets pre_oncall.Ticke
 	components := []Component{}
 	components = append(components, singleSelect)
 	// TODO: Replace with the real ticket info
-	for i := 1; i <= 2; i++ {
+
+	for _, ticket := range oncallTickets.Data {
 		ticketBannerTitle := NewText("Related Ticket", "header")
 		components = append(components, ticketBannerTitle)
 
-		ticketID := NewText("Ticket id", "paragraph")
+		ticketID := NewText(fmt.Sprintf("Ticket id: %v", ticket.TicketId), "paragraph")
 		components = append(components, ticketID)
 
-		bizLine := NewText("Biz Line", "paragraph")
+		bizLine := NewText(fmt.Sprintf("Bussiness Line: %v", ticket.BusinessName), "paragraph")
 		components = append(components, bizLine)
 
-		TicketTitle := NewText("Ticket Title", "paragraph")
+		TicketTitle := NewText(fmt.Sprintf("Ticket Title: %v", ticket.Title), "paragraph")
 		components = append(components, TicketTitle)
 
-		ReportBy := NewText("Report By", "paragraph")
+		ReportBy := NewText(fmt.Sprintf("Reported by: %v", ticket.Reporter), "paragraph")
 		components = append(components, ReportBy)
 
-		Assignee := NewText("Assignee", "paragraph")
+		Assignee := NewText(fmt.Sprintf("Assignee: %v", ticket.Assignee), "paragraph")
 		components = append(components, Assignee)
 
-		CreateTime := NewText("Create Time", "paragraph")
+		CreateTime := NewText(fmt.Sprintf("Create Time: %v", ticket.CreatedAt), "paragraph")
 		components = append(components, CreateTime)
 
-		UpdateTime := NewText("Update Time", "paragraph")
+		UpdateTime := NewText(fmt.Sprintf("Update Time: %v", ticket.UpdatedAt), "paragraph")
 		components = append(components, UpdateTime)
 
-		AdditionalInfo := NewText("Additional Info", "paragraph")
+		AdditionalInfo := NewText(fmt.Sprintf("Additional Info: %v", ticket.Remarks), "paragraph")
 		components = append(components, AdditionalInfo)
 
-		GroupLink := NewText("Group Link", "paragraph")
+		GroupLink := NewText(fmt.Sprintf("Group Link %v", ticket.GroupLink), "paragraph")
 		components = append(components, GroupLink)
 
+		TicketLink := NewText(fmt.Sprintf("Ticket Link %v", ticket.TicketLink), "paragraph")
+		components = append(components, TicketLink)
 	}
 
 	content := newContent(components)
@@ -236,11 +239,12 @@ func GetRelatedTicketCanvasBody(ctx context.Context, intercomConversationID stri
 	//log..Infof("GetRelatedTicketCanvasBody intercomConversation %v", intercomConversationID)
 
 	// TODO we use the intercomConversation to get the tickets via pre-oncall api
-	oncallTickets := pre_oncall.TickeInfotResponse{
-		Code: 0,
-		Msg:  "",
-		Data: nil,
+	oncallTickets, err := pre_oncall.GetFakePreOncallTicket(ctx, "11111", "intercom")
+	if err != nil {
+		//log..Errorf("GetRelatedTicketCanvasBody GetPreOncallTicket err %v", err)
+		return InitPreOncallCanvas()
 	}
+
 	return InitRelatedTicketCanvas(ctx, oncallTickets)
 }
 
@@ -343,6 +347,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 
 	ticketStatus := WaitingUserInput
 
+	// extract existing values
 	bizLines := extractBizlinesFromCurrentCanvas(ctx, currentCanvas)
 	regions := extractRegionsFromCurrentCanvas(ctx, currentCanvas)
 	stackNames := extractStackNamesFromCurrentCanvas(ctx, currentCanvas)
