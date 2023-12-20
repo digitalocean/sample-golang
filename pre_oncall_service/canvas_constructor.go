@@ -486,7 +486,49 @@ func validSubmitForm(ctx context.Context, inputValues map[string]string) bool {
 	if inputValues == nil {
 		return false
 	}
-	if _, ok := inputValues[BizLineSearchDropdownID]; !ok {
+
+	// Check Biz Line
+	if val, ok := inputValues[BizLineSearchDropdownID]; !ok || val == "" {
+		return false
+	}
+
+	// Check Ticket Title
+	if val, ok := inputValues[TicketTitleInputID]; !ok || val == "" {
+		return false
+	}
+
+	// Check Region
+	if val, ok := inputValues[RegionSearchDropdownID]; !ok || val == "" {
+		return false
+	}
+
+	// Check Stack
+	if val, ok := inputValues[StackSearchDropdownID]; !ok || val == "" {
+		return false
+	}
+
+	// Check Priority
+	if val, ok := inputValues[PrioritySingleSelectID]; !ok || val == "" {
+		return false
+	}
+
+	// Check Create Group
+	if val, ok := inputValues[CreateGroupSingleSelectID]; !ok || val == "" {
+		return false
+	}
+
+	// Check User ID
+	if val, ok := inputValues[userIDInputID]; !ok || val == "" {
+		return false
+	}
+
+	// Check Tenant ID
+	if val, ok := inputValues[tenantIDInputID]; !ok || val == "" {
+		return false
+	}
+
+	// Check Lark Version
+	if val, ok := inputValues[LarkVersionInputID]; !ok || val == "" {
 		return false
 	}
 

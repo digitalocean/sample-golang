@@ -52,7 +52,7 @@ const (
 	LarkVersionInputLabel = ""
 
 	SubmitTicketButtonID = "submitTicketButton"
-	SubmitTicketLabel    = ""
+	SubmitTicketLabel    = "Create issue"
 
 	RegionSearchDropdownID    = "regionSearchDropdown"
 	RegionSearchDropdownLabel = ""
