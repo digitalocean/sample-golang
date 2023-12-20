@@ -13,6 +13,7 @@ type IntercomCanvasRequest struct {
 	Conversation    IntercomConversation `json:"conversation"`
 	InputValues     map[string]string    `json:"input_values"`
 	ComponentID     string               `json:"component_id"`
+	CurrentCanvas   Canvas               `json:"current_canvas"`
 }
 
 type IntercomConversation struct {
