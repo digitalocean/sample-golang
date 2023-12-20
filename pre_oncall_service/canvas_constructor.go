@@ -266,7 +266,7 @@ func searchRegion(ctx context.Context, keyword string, regions []pre_oncall.Code
 	result := make([]string, 0)
 	for _, region := range regions {
 		if strings.Contains(strings.ToLower(region.Name), strings.ToLower(keyword)) || keyword == "" {
-			result = append(result)
+			result = append(result, region.Name)
 		}
 	}
 
