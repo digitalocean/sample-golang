@@ -57,14 +57,14 @@ func HandlePreoncallCanvasSubmitAction(ctx context.Context, body string) (Canvas
 				response = GetRelatedTicketCanvasBody(ctx, inputValues, intercomConversationID)
 			}
 		}
-	case BizLineSearchButtonID:
-		response = GetCreateTicketCanvasBody(ctx, inputValues, intercomConversationID, assigneeID, BizLineSearchButtonID, canvasReq.CurrentCanvas)
-	case RegionSearchButtonID:
-		response = GetCreateTicketCanvasBody(ctx, inputValues, intercomConversationID, assigneeID, RegionSearchButtonID, canvasReq.CurrentCanvas)
-	case SubmitTicketButtonID:
-		response = GetCreateTicketCanvasBody(ctx, inputValues, intercomConversationID, assigneeID, SubmitTicketButtonID, canvasReq.CurrentCanvas)
-	case StackSearchButtonID:
-		response = GetCreateTicketCanvasBody(ctx, inputValues, intercomConversationID, assigneeID, StackSearchButtonID, canvasReq.CurrentCanvas)
+	case BizLineSearchButtonID, RegionSearchButtonID, SubmitTicketButtonID, StackSearchButtonID:
+		response = GetCreateTicketCanvasBody(ctx, inputValues, intercomConversationID, assigneeID, canvasReq.ComponentID, canvasReq.CurrentCanvas)
+		//case RegionSearchButtonID:
+		//	response = GetCreateTicketCanvasBody(ctx, inputValues, intercomConversationID, assigneeID, RegionSearchButtonID, canvasReq.CurrentCanvas)
+		//case SubmitTicketButtonID:
+		//	response = GetCreateTicketCanvasBody(ctx, inputValues, intercomConversationID, assigneeID, SubmitTicketButtonID, canvasReq.CurrentCanvas)
+		//case StackSearchButtonID:
+		//	response = GetCreateTicketCanvasBody(ctx, inputValues, intercomConversationID, assigneeID, StackSearchButtonID, canvasReq.CurrentCanvas)
 	}
 
 	//log..Infof("HandlePreoncallCanvasSubmitAction vanvas response %v", larkcore.Prettify(response))
