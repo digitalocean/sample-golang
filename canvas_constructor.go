@@ -88,7 +88,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 		selectedValues = make(map[string]string)
 	}
 	////log.Infof("InitCreateOncalTicketCanvas selectedValues %v", selectedValues)
-	fmt.Println("InitCreateOncalTicketCanvas bizLines %v, regions %v, stackNames %v", bizLines, regions, stackNames)
+	fmt.Printf("InitCreateOncalTicketCanvas bizLines %v, regions %v, stackNames %v \n", bizLines, regions, stackNames)
 	option1 := NewOption(RelatedTicketOptionID, "Related Ticket")
 	option2 := NewOption(CreateTicketOptionID, "Create Ticket")
 	action := NewAction("submit")
@@ -365,9 +365,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 		inputValues[userIDInputID] = userID
 		inputValues[tenantIDInputID] = tenantID
 		inputValues[LarkVersionInputID] = larkVersion
-	}
-
-	if buttonClick == BizLineSearchButtonID {
+	} else if buttonClick == BizLineSearchButtonID {
 		var bizLineSearchKeyword string
 		if v, ok := inputValues[BizLineSearchInputID]; ok {
 			bizLineSearchKeyword = v
@@ -395,9 +393,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 
 		bizLines = searchBusinessLine(ctx, bizLineSearchKeyword, bussinessList)
 		inputValues[BizLineSearchDropdownID] = ""
-	}
-
-	if buttonClick == RegionSearchButtonID {
+	} else if buttonClick == RegionSearchButtonID {
 		var regionSearchKeyword string
 		if v, ok := inputValues[RegionSearchInputID]; ok {
 			regionSearchKeyword = v
