@@ -332,7 +332,8 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 
 	fmt.Printf("GetCreateTicketCanvasBody bizLines %v, regions %v, stackNames %v \n", bizLines, regions, stackNames)
 
-	if buttonClick == CreateTicketOptionID {
+	switch buttonClick {
+	case CreateTicketOptionID:
 		//log..Infof("GetCreateTicketCanvasBody create ticket option")
 		resp, err := pre_oncall.GetFakePreOncallMetaInfo(ctx, true, true)
 		if err != nil {
@@ -408,9 +409,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 		inputValues[userIDInputID] = userID
 		inputValues[tenantIDInputID] = tenantID
 		inputValues[LarkVersionInputID] = larkVersion
-	}
-
-	if buttonClick == BizLineSearchButtonID {
+	case BizLineSearchButtonID:
 		var bizLineSearchKeyword string
 		if v, ok := inputValues[BizLineSearchInputID]; ok {
 			bizLineSearchKeyword = v
@@ -423,9 +422,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 		}
 		bussinessList := resp.Data.BusinessList
 		bizLines = searchBusinessLine(ctx, bizLineSearchKeyword, bussinessList)
-	}
-
-	if buttonClick == RegionSearchButtonID {
+	case RegionSearchButtonID:
 		var regionSearchKeyword string
 		if v, ok := inputValues[RegionSearchInputID]; ok {
 			regionSearchKeyword = v
@@ -438,9 +435,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 		}
 		regionList := resp.Data.RegionList
 		regions = searchRegion(ctx, regionSearchKeyword, regionList)
-	}
-
-	if buttonClick == SubmitTicketButtonID {
+	case SubmitTicketButtonID:
 		if !validSubmitForm(ctx, inputValues) {
 			fmt.Printf("GetCreateTicketCanvasBody validSubmitForm failed \n")
 			ticketStatus = CreatTicketFailed
@@ -475,7 +470,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 			}
 		}
 	}
-
+	
 	return InitCreateOncalTicketCanvas(bizLines, regions, stackNames, inputValues, ticketStatus)
 }
 
