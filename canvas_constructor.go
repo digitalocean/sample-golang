@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	larkcore "github.com/larksuite/oapi-sdk-go/v3/core"
 	"strings"
 )
 
@@ -276,7 +277,7 @@ func extractRegionsFromCurrentCanvas(ctx context.Context, currentCanvas Intercom
 
 func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]string, intercomConversationID string, assigneeID int, buttonClick string, currentCanvas IntercomCanvasReceiver) CanvasReponse {
 	//log. utils.GetLoggerWithMethod(ctx, "GetCreateTicketCanvasBody")
-	//log.Infof("GetCreateTicketCanvasBody buttonClick %v, selectedValue %v, intercom convID %v, assigneeID %v, canvas %v", buttonClick, inputValues, intercomConversationID, assigneeID, larkcore.Prettify(currentCanvas))
+	fmt.Println("GetCreateTicketCanvasBody buttonClick %v, selectedValue %v, intercom convID %v, assigneeID %v, canvas %v", buttonClick, inputValues, intercomConversationID, assigneeID, larkcore.Prettify(currentCanvas))
 
 	//metaInfoResp, err := GetPreOncallMetaInfo(ctx, true, true)
 	//if err != nil {
@@ -294,6 +295,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 		resp, err := GetPreOncallMetaInfo(ctx, true, true)
 		if err != nil {
 			//log.Errorf("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v", err)
+			fmt.Println("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v", err)
 			return InitPreOncallCanvas()
 		}
 		//log.Infof("GetCreateTicketCanvasBody resp %v", larkcore.Prettify(resp))
