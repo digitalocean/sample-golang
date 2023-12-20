@@ -48,7 +48,10 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Printf("&$&&&&&&wefds&&&&\n")
-	fmt.Printf("this is the final response of jsonResponse %v", string(jsonResponse))
+
+	fmt.Printf("this is the final response of jsonResponse %v \n", string(jsonResponse))
+
+	fmt.Printf("FINAL ===== %v \n", string(jsonResponse))
 
 	w.Write(jsonResponse)
 
