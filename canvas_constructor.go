@@ -130,24 +130,24 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 
 	regionSearchDropDown := NewDropdown(RegionSearchDropdownID, RegionSearchDropdownLabel, regionDropDownOptions, getValuePtr(RegionSearchDropdownID, selectedValues))
 
-	// stack search
-	stackSearchText := NewText("Stack Search", "header")
-	stackDropDownOptions := []Option{}
-	for _, stackOption := range stackNames {
-		stackDropDownOptions = append(stackDropDownOptions, *NewOption(stackOption, stackOption))
-	}
-
-	stackSearchDropDown := NewDropdown(StackSearchDropdownID, StackSearchDropdownLabel, stackDropDownOptions, getValuePtr(StackSearchDropdownID, selectedValues))
+	//// stack search
+	//stackSearchText := NewText("Stack Search", "header")
+	//stackDropDownOptions := []Option{}
+	//for _, stackOption := range stackNames {
+	//	stackDropDownOptions = append(stackDropDownOptions, *NewOption(stackOption, stackOption))
+	//}
 	//
-	// priority
-	priorityText := NewText("Priority", "header")
-	prioritySingleSelectOptions := []Option{}
-	priorityList := []string{P0, P1, P2}
-	for _, priority := range priorityList {
-		prioritySingleSelectOptions = append(prioritySingleSelectOptions, *NewOption(priority, priority))
-	}
-
-	prioritySingleSelect := NewSingleSelect(PrioritySingleSelectID, "single-select", PrioritySingleSelectLabel, prioritySingleSelectOptions, nil, getValuePtr(PrioritySingleSelectID, selectedValues))
+	//stackSearchDropDown := NewDropdown(StackSearchDropdownID, StackSearchDropdownLabel, stackDropDownOptions, getValuePtr(StackSearchDropdownID, selectedValues))
+	////
+	//// priority
+	//priorityText := NewText("Priority", "header")
+	//prioritySingleSelectOptions := []Option{}
+	//priorityList := []string{P0, P1, P2}
+	//for _, priority := range priorityList {
+	//	prioritySingleSelectOptions = append(prioritySingleSelectOptions, *NewOption(priority, priority))
+	//}
+	//
+	//prioritySingleSelect := NewSingleSelect(PrioritySingleSelectID, "single-select", PrioritySingleSelectLabel, prioritySingleSelectOptions, nil, getValuePtr(PrioritySingleSelectID, selectedValues))
 
 	//// create group
 	//createGroupText := NewText("Create Group", "header")
@@ -176,8 +176,9 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	//submitTicketBtn := NewButton(SubmitTicketButtonID, SubmitTicketLabel, action, "primary", false)
 
 	content := newContent([]Component{categorySelect, bizLineText, bizLineSearchInput, bizLineSearchBtn,
-		bizLineSearchDropDown, ticketTitleText, ticketTitleInput, regionSearchText, regionSearchInput, regionSearchBtn, regionSearchDropDown,
-		stackSearchText, stackSearchDropDown, priorityText, prioritySingleSelect})
+		bizLineSearchDropDown, ticketTitleText, ticketTitleInput, regionSearchText, regionSearchInput, regionSearchBtn, regionSearchDropDown})
+	//stackSearchText, stackSearchDropDown, priorityText, prioritySingleSelect
+
 	//createGroupText, createGroupSingleSelect, userIDText, userIDInput,
 	//tenantIDText, tenantIDInput,
 	//larkVersionText, larkVersionInput,
