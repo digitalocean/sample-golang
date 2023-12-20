@@ -1,4 +1,4 @@
-package main
+package preoncall_service
 
 import (
 	"fmt"
@@ -24,6 +24,7 @@ type IntercomConversation struct {
 // Component interface for all UI components.
 type Component interface {
 	Render() string
+	GetID() string
 }
 
 // Action defines the action to be taken when the button is clicked.
@@ -64,6 +65,10 @@ func (b *Button) Render() string {
 	return fmt.Sprintf("Button ID: %s, Label: %s, Action: %s, Style: %s, Disabled: %v", b.ID, b.Label, b.Action.Type, b.Style, b.Disabled)
 }
 
+func (b *Button) GetID() string {
+	return b.ID
+}
+
 // Text component
 type Text struct {
 	Type  string `json:"type"`
@@ -81,6 +86,10 @@ func (t *Text) Render() string {
 	return fmt.Sprintf("Text: %s, Style: %s", t.Text, t.Style)
 }
 
+func (t *Text) GetID() string {
+	return ""
+}
+
 // Input component
 type Input struct {
 	Type        string  `json:"type"`
@@ -92,6 +101,10 @@ type Input struct {
 
 func (i Input) Render() string {
 	return ""
+}
+
+func (i Input) GetID() string {
+	return i.ID
 }
 
 // NewInput is a constructor for Input
@@ -115,6 +128,10 @@ func NewTextArea(id, label, placeholder string) *TextArea {
 // Render method for TextArea
 func (ta *TextArea) Render() string {
 	return fmt.Sprintf("TextArea ID: %s, Label: %s, Placeholder: %s", ta.ID, ta.Label, ta.Placeholder)
+}
+
+func (ta *TextArea) GetID() string {
+	return ta.ID
 }
 
 // Option for Dropdown and SingleSelect
@@ -148,6 +165,10 @@ func (d *Dropdown) Render() string {
 	return fmt.Sprintf("Dropdown ID: %s, Label: %s, Options: %v", d.ID, d.Label, d.Options)
 }
 
+func (d *Dropdown) GetID() string {
+	return d.ID
+}
+
 // SingleSelect component
 type SingleSelect struct {
 	Type    string   `json:"type"`
@@ -167,6 +188,10 @@ func (ss *SingleSelect) Render() string {
 	return fmt.Sprintf("SingleSelect ID: %s, Label: %s, Options: %v", ss.ID, ss.Label, ss.Options)
 }
 
+func (ss *SingleSelect) GetID() string {
+	return ss.ID
+}
+
 // Spacer component
 type Spacer struct {
 	Type string
@@ -174,6 +199,10 @@ type Spacer struct {
 }
 
 func (s Spacer) Render() string {
+	return ""
+}
+
+func (s Spacer) GetID() string {
 	return ""
 }
 
@@ -200,23 +229,6 @@ type Content struct {
 // Canvas represents the top-level canvas field in your JSON.
 type Canvas struct {
 	Content Content `json:"content"`
-}
-
-// Intercom Canvas Receiver
-type IntercomCanvasReceiver struct {
-	Content IntercomContent `json:"content"`
-}
-
-type IntercomContent struct {
-	Components []IntercomComponent `json:"components"`
-}
-
-type IntercomComponent struct {
-	Type    string   `json:"type"`
-	ID      string   `json:"id"`
-	Label   string   `json:"label"`
-	Options []Option `json:"options"`
-	Value   *string  `json:"value,omitempty"`
 }
 
 // Root structure to encapsulate the Canvas

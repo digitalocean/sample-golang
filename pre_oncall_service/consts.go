@@ -1,4 +1,4 @@
-package main
+package preoncall_service
 
 const (
 	CategorySingleSelectID    = "preOncallTicketOptionID"

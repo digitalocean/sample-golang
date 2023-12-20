@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	preoncall_service "github.com/digitalocean/sample-golang/pre_oncall_service"
 	"io/ioutil"
 	"net/http"
 )
@@ -23,23 +24,21 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	// You must close the original body
 
 	// Unmarshal the JSON into your struct
-	response, err := HandlePreoncallCanvasSubmitAction(context.Background(), bodyString)
+	response, err := preoncall_service.HandlePreoncallCanvasSubmitAction(context.Background(), bodyString)
 	fmt.Printf("this is ###### \n")
 	if err != nil {
-		////log.Fatalf("Error occurred during marshaling. Error: %s", err.Error())
+		//////log..Fatalf("Error occurred during marshaling. Error: %s", err.Error())
 		fmt.Println("Error occurred during marshaling. Error: %s", err.Error())
 		return
 	}
 
 	fmt.Printf("this is =================== \n ")
 
-	canvas, err := json.Marshal(response.Canvas)
-	if err != nil {
-		fmt.Println("Error marshalling response %V", http.StatusInternalServerError)
-		return
-	}
-
-	fmt.Printf("+ ++++ this is the response of submit handler %v \n", string(canvas))
+	//canvas, err := json.Marshal(response.Canvas)
+	//if err != nil {
+	//	fmt.Println("Error marshalling response %V", http.StatusInternalServerError)
+	//	return
+	//}
 
 	w.Header().Set("Content-Type", "application/json")
 	jsonResponse, err := json.Marshal(response)
@@ -47,11 +46,8 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Error marshalling response %V", http.StatusInternalServerError)
 		return
 	}
-	fmt.Printf("&$&&&&&&wefds&&&&\n")
 
-	fmt.Printf("this is the final response of jsonResponse %v \n", string(jsonResponse))
-
-	fmt.Printf("FINAL ===== %v \n", string(jsonResponse))
+	fmt.Printf("this is the response of submit handler %v \n", string(jsonResponse))
 
 	w.Write(jsonResponse)
 
@@ -66,9 +62,9 @@ func InitializeCanvasHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
-	// Log the body, can remove this in production
+	// //log. the body, can remove this in production
 	fmt.Println("Received initialize request with body:", string(body))
-	response := HandlePreoncallInitializationAction(context.Background())
+	response := preoncall_service.HandlePreoncallInitializationAction(context.Background())
 	fmt.Printf("response %v\n", response)
 
 	// Convert the byte slice to a string and print it
