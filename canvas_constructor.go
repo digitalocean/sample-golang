@@ -277,7 +277,7 @@ func extractRegionsFromCurrentCanvas(ctx context.Context, currentCanvas Intercom
 
 func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]string, intercomConversationID string, assigneeID int, buttonClick string, currentCanvas IntercomCanvasReceiver) CanvasReponse {
 	//log. utils.GetLoggerWithMethod(ctx, "GetCreateTicketCanvasBody")
-	fmt.Println("GetCreateTicketCanvasBody buttonClick %v, selectedValue %v, intercom convID %v, assigneeID %v, canvas %v", buttonClick, inputValues, intercomConversationID, assigneeID, larkcore.Prettify(currentCanvas))
+	fmt.Printf("GetCreateTicketCanvasBody buttonClick %v, selectedValue %v, intercom convID %v, assigneeID %v, canvas %v \n", buttonClick, inputValues, intercomConversationID, assigneeID, larkcore.Prettify(currentCanvas))
 
 	//metaInfoResp, err := GetPreOncallMetaInfo(ctx, true, true)
 	//if err != nil {
@@ -428,6 +428,6 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 
 		inputValues[RegionSearchDropdownID] = ""
 	}
-
+	fmt.Printf("GetCreateTicketCanvasBody bizLines %v, regions %v, stackNames %v, inputValues %v \n", bizLines, regions, stackNames, inputValues)
 	return InitCreateOncalTicketCanvas(bizLines, stackNames, stackNames, inputValues, true)
 }
