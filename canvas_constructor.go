@@ -292,25 +292,35 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 	fmt.Println("GetCreateTicketCanvasBody buttonClick %v", regions)
 	if buttonClick == CreateTicketOptionID {
 		//log.Infof("GetCreateTicketCanvasBody create ticket option")
-		resp, err := GetPreOncallMetaInfo(ctx, true, true)
-		if err != nil {
-			//log.Errorf("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v", err)
-			fmt.Println("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v", err)
-			return InitPreOncallCanvas()
-		}
-		//log.Infof("GetCreateTicketCanvasBody resp %v", larkcore.Prettify(resp))
-		bizList := resp.Data.BusinessList
-		for _, biz := range bizList {
-			bizLines = append(bizLines, biz.Name+"-"+biz.Name)
-		}
-		//log.Infof("GetCreateTicketCanvasBody bizLines %v", bizLines)
 
-		regionList := resp.Data.RegionList
-		for _, region := range regionList {
-			regions = append(regions, region.Name)
-		}
+		// TODO: call pre-oncall api remove
+		//resp, err := GetPreOncallMetaInfo(ctx, true, true)
+		//if err != nil {
+		//	//log.Errorf("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v", err)
+		//	fmt.Println("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v", err)
+		//	return InitPreOncallCanvas()
+		//}
+		////log.Infof("GetCreateTicketCanvasBody resp %v", larkcore.Prettify(resp))
+		//bizList := resp.Data.BusinessList
+		//for _, biz := range bizList {
+		//	bizLines = append(bizLines, biz.Name+"-"+biz.Name)
+		//}
+		////log.Infof("GetCreateTicketCanvasBody bizLines %v", bizLines)
+		//
+		//regionList := resp.Data.RegionList
+		//for _, region := range regionList {
+		//	regions = append(regions, region.Name)
+		//}
+		// TODO: call pre-oncall api remove
 
 		//log.Infof("GetCreateTicketCanvasBody regions %v", regions)
+		regions = append(regions, "India")
+		regions = append(regions, "China")
+		regions = append(regions, "US")
+
+		bizLines = append(bizLines, "bid_1")
+		bizLines = append(bizLines, "bid_2")
+		bizLines = append(bizLines, "bid_3")
 
 		larkVersion := ""
 		tenantID := ""
@@ -363,12 +373,26 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 			bizLineSearchKeyword = v
 		}
 
-		resp, err := GetPreOncallMetaInfo(ctx, true, true)
-		if err != nil {
-			//log.Errorf("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v", err)
-			return InitPreOncallCanvas()
-		}
-		bussinessList := resp.Data.BusinessList
+		//resp, err := GetPreOncallMetaInfo(ctx, true, true)
+		//if err != nil {
+		//	//log.Errorf("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v", err)
+		//	return InitPreOncallCanvas()
+		//}
+		//bussinessList := resp.Data.BusinessList
+
+		bussinessList := []Business{}
+		bussinessList = append(bussinessList, Business{
+			Name: "bid_1",
+		})
+
+		bussinessList = append(bussinessList, Business{
+			Name: "bid_2",
+		})
+
+		bussinessList = append(bussinessList, Business{
+			Name: "bid_3",
+		})
+
 		bizLines = searchBusinessLine(ctx, bizLineSearchKeyword, bussinessList)
 	}
 
@@ -378,12 +402,27 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 			regionSearchKeyword = v
 		}
 
-		resp, err := GetPreOncallMetaInfo(ctx, true, true)
-		if err != nil {
-			//log.Errorf("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v", err)
-			return InitPreOncallCanvas()
-		}
-		regionList := resp.Data.RegionList
+		//resp, err := GetPreOncallMetaInfo(ctx, true, true)
+		//if err != nil {
+		//	//log.Errorf("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v", err)
+		//	return InitPreOncallCanvas()
+		//}
+		//regionList := resp.Data.RegionList
+		regionList := []CodeNamePair{}
+		regionList = append(regionList, CodeNamePair{
+			Code: "India",
+			Name: "India",
+		})
+		regionList = append(regionList, CodeNamePair{
+			Code: "China",
+			Name: "China",
+		})
+
+		regionList = append(regionList, CodeNamePair{
+			Code: "US",
+			Name: "US",
+		})
+
 		regions = searchRegion(ctx, regionSearchKeyword, regionList)
 	}
 
