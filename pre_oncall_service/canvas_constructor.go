@@ -153,6 +153,8 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	// stack search
 	stackSearchText := NewText("Stack", "header")
 
+	stackButton := NewButton(StackSearchButtonID, StackSearchButtonLabel, action, "primary", false)
+
 	stackDropDownOptions := []Option{}
 	for _, stackOption := range stackNames {
 		stackDropDownOptions = append(stackDropDownOptions, *NewOption(stackOption, stackOption))
@@ -198,7 +200,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 
 	components := []Component{categorySelect, bizLineSearchText, bizLineSearchInput, bizLineSearchBtn, bizLineText,
 		bizLineSearchDropDown, ticketTitleText, ticketTitleInput, regionSearchText, regionSearchInput, regionSearchBtn, regionSearchDropDown,
-		stackSearchText, stackSearchDropDown, priorityText, prioritySingleSelect,
+		stackSearchText, stackButton, stackSearchDropDown, priorityText, prioritySingleSelect,
 		createGroupText, createGroupSingleSelect, userIDText, userIDInput,
 		tenantIDText, tenantIDInput,
 		larkVersionText, larkVersionInput,
