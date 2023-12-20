@@ -88,6 +88,20 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	if selectedValues == nil {
 		selectedValues = make(map[string]string)
 	}
+
+	// Intercom requires at least 2 options for dropdown to render
+	for len(bizLines) < 2 {
+		bizLines = append(bizLines, "do not select")
+	}
+
+	for len(regions) < 2 {
+		regions = append(regions, "do not select")
+	}
+
+	for len(stackNames) < 2 {
+		stackNames = append(stackNames, "do not select")
+	}
+
 	//log..Infof("InitCreateOncalTicketCanvas selectedValues %v", selectedValues)
 	//log..Infof("InitCreateOncalTicketCanvas bizLines %v, regions %v, stackNames %v", bizLines, regions, stackNames)
 	fmt.Printf("InitCreateOncalTicketCanvas bizLines %v, regions %v, stackNames %v \n", bizLines, regions, stackNames)
@@ -470,7 +484,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 			}
 		}
 	}
-	
+
 	return InitCreateOncalTicketCanvas(bizLines, regions, stackNames, inputValues, ticketStatus)
 }
 
