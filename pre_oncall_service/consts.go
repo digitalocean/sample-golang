@@ -14,48 +14,48 @@ const (
 	BizLineSearchButtonLabel = "Search"
 
 	BizLineSearchDropdownID    = "bizLineSearchDropdown"
-	BizLineSearchDropdownLabel = "bizLineSearchDropdownLabel"
+	BizLineSearchDropdownLabel = ""
 
 	TicketTitleInputID = "ticketTitleInput"
-	TicketTitleLabel   = "ticketTitleLabel"
+	TicketTitleLabel   = ""
 
 	RegionSearchInputID = "regionSearchInput"
-	RegionSearchLabel   = "regionSearchLabel"
+	RegionSearchLabel   = ""
 
 	RegionSearchButtonID    = "regionSearchButton"
 	RegionSearchButtonLabel = "Search"
 
 	StackSearchDropdownID    = "stackSearchDropdown"
-	StackSearchDropdownLabel = "stackSearchDropdownLabel"
+	StackSearchDropdownLabel = ""
 
 	P0 = "P0"
 	P1 = "P1"
 	P2 = "P2"
 
 	PrioritySingleSelectID    = "prioritySingleSelect"
-	PrioritySingleSelectLabel = "prioritySingleSelectLabel"
+	PrioritySingleSelectLabel = ""
 
 	AutoCreateGroup = "Auto Create"
 	AssociateGroup  = "Associate"
 	NotCreateGroup  = "Not Create"
 
 	CreateGroupSingleSelectID    = "createGroupSingleSelect"
-	CreateGroupSingleSelectLabel = "createGroupSingleSelectLabel"
+	CreateGroupSingleSelectLabel = ""
 
 	userIDInputID    = "userIDInput"
-	userIDInputLabel = "userIDInputLabel"
+	userIDInputLabel = ""
 
 	tenantIDInputID    = "tenantIDInput"
-	tenantIDInputLabel = "tenantIDInputLabel"
+	tenantIDInputLabel = ""
 
 	LarkVersionInputID    = "larkVersionInput"
-	LarkVersionInputLabel = "larkVersionInputLabel"
+	LarkVersionInputLabel = ""
 
 	SubmitTicketButtonID = "submitTicketButton"
-	SubmitTicketLabel    = "submitTicketLabel"
+	SubmitTicketLabel    = ""
 
 	RegionSearchDropdownID    = "regionSearchDropdown"
-	RegionSearchDropdownLabel = "regionSearchDropdownLabel"
+	RegionSearchDropdownLabel = ""
 
 	WaitingUserInput    = "waitingUserInput"
 	CreatTicketFailed   = "creatTicketFailed"
