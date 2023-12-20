@@ -304,6 +304,10 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 			return InitPreOncallCanvas()
 		}
 
+		bizLines = make([]string, 0)
+		regions = make([]string, 0)
+		stackNames = make([]string, 0)
+
 		//log..Infof("GetCreateTicketCanvasBody resp %v", larkcore.Prettify(resp))
 		fmt.Printf("GetCreateTicketCanvasBody resp %v \n", larkcore.Prettify(resp))
 		bizList := resp.Data.BusinessList
@@ -400,5 +404,5 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 		regions = searchRegion(ctx, regionSearchKeyword, regionList)
 	}
 
-	return InitCreateOncalTicketCanvas(bizLines, stackNames, stackNames, inputValues, true)
+	return InitCreateOncalTicketCanvas(bizLines, regions, stackNames, inputValues, true)
 }
