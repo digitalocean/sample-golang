@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	larkcore "github.com/larksuite/oapi-sdk-go/v3/core"
 )
 
 // Intercom Canvas Receiver
@@ -39,11 +38,13 @@ func HandlePreoncallCanvasSubmitAction(ctx context.Context, body string) (Canvas
 	inputValues := canvasReq.InputValues
 
 	//log..Infof("HandlePreoncallCanvasSubmitAction pretty's request %v \n", larkcore.Prettify(canvasReq))
-	fmt.Printf("HandlePreoncallCanvasSubmitAction pretty's request %v \n", larkcore.Prettify(canvasReq))
+	//fmt.Printf("HandlePreoncallCanvasSubmitAction pretty's request %v \n", larkcore.Prettify(canvasReq))
+	fmt.Printf("HandlePreoncallCanvasSubmitAction pretty's input value %v \n", inputValues)
+	fmt.Sprintf("component id %v \n", canvasReq.ComponentID)
 	var response CanvasReponse
 	// TODO: call intercom pre ocall api to create ticket
 	//log..Infof("HandlePreoncallCanvasSubmitAction component id %v", canvasReq.ComponentID)
-	fmt.Printf("HandlePreoncallCanvasSubmitAction component id %v", canvasReq.ComponentID)
+	fmt.Printf("HandlePreoncallCanvasSubmitAction component id %v \n", canvasReq.ComponentID)
 	switch canvasReq.ComponentID {
 	case CategorySingleSelectID:
 		//log..Infof("HandlePreoncallCanvasSubmitAction single select ")
