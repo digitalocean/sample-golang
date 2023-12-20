@@ -24,7 +24,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	// Unmarshal the JSON into your struct
 	response, err := HandlePreoncallCanvasSubmitAction(bodyString)
 	if err != nil {
-		//log.Fatalf("Error occurred during marshaling. Error: %s", err.Error())
+		////log.Fatalf("Error occurred during marshaling. Error: %s", err.Error())
 		http.Error(w, "Error unmarshalling request body", http.StatusBadRequest)
 		return
 	}

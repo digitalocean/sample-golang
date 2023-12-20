@@ -5,7 +5,7 @@ const (
 	CategorySingleSelectLabel = "preOncallTicketOptionLabel"
 
 	RelatedTicketOptionID = "related-ticket"
-	SummitTicketOptionID  = "submit-ticket"
+	CreateTicketOptionID  = "submit-ticket"
 
 	BizLineSearchInputID = "bizLineSearchInput"
 	BizLineSearchLabel   = "bizLineSearchLabel"
