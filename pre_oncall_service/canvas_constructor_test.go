@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	pre_oncall "github.com/digitalocean/sample-golang/pre_oncall_api"
+	"github.com/stretchr/testify/assert"
 	"reflect"
 	"testing"
 )
@@ -116,4 +117,105 @@ func TestInitRelatedTicketCanvas(t *testing.T) {
 	if !reflect.DeepEqual(canvasResp, *expectedCanvasResp) {
 		t.Errorf("InitRelatedTicketCanvas() = %v, want %v", canvasResp, *expectedCanvasResp)
 	}
+}
+
+// Mock data for IntercomCanvasReceiver
+func mockIntercomCanvasReceiver() IntercomCanvasReceiver {
+	// Assuming Option and Component are defined types in your package
+	option1 := Option{Text: "BizLine1"}
+	option2 := Option{Text: "BizLine2"}
+	component := IntercomComponent{
+		ID:      BizLineSearchDropdownID,
+		Options: []Option{option1, option2},
+	}
+	return IntercomCanvasReceiver{
+		Content: IntercomContent{
+			Components: []IntercomComponent{component},
+		},
+	}
+}
+
+func TestExtractBizlinesFromCurrentCanvas(t *testing.T) {
+	ctx := context.Background()
+	currentCanvas := mockIntercomCanvasReceiver()
+
+	t.Run("Extract Business Lines", func(t *testing.T) {
+		expected := []string{"BizLine1", "BizLine2"}
+		got := extractBizlinesFromCurrentCanvas(ctx, currentCanvas)
+		assert.Equal(t, expected, got)
+	})
+
+	t.Run("No Business Lines", func(t *testing.T) {
+		// Modify the currentCanvas to have no business line options
+		// and test if the function returns an empty slice
+		currentCanvas.Content.Components[0].Options = []Option{}
+		expected := []string{}
+		got := extractBizlinesFromCurrentCanvas(ctx, currentCanvas)
+		assert.Equal(t, expected, got)
+	})
+
+}
+
+func TestExtractStackNamesFromCurrentCanvas(t *testing.T) {
+	ctx := context.Background()
+
+	t.Run("Extract Stack Names", func(t *testing.T) {
+		currentCanvas := IntercomCanvasReceiver{
+			Content: IntercomContent{
+				Components: []IntercomComponent{
+					{ID: StackSearchDropdownID, Options: []Option{{Text: "Stack1"}, {Text: "Stack2"}}},
+				},
+			},
+		}
+
+		expected := []string{"Stack1", "Stack2"}
+		got := extractStackNamesFromCurrentCanvas(ctx, currentCanvas)
+		assert.Equal(t, expected, got)
+	})
+
+	t.Run("No Stack Names", func(t *testing.T) {
+		currentCanvas := IntercomCanvasReceiver{
+			Content: IntercomContent{
+				Components: []IntercomComponent{
+					{ID: StackSearchDropdownID, Options: []Option{}},
+				},
+			},
+		}
+
+		expected := []string{}
+		got := extractStackNamesFromCurrentCanvas(ctx, currentCanvas)
+		assert.Equal(t, expected, got)
+	})
+}
+
+func TestExtractRegionsFromCurrentCanvas(t *testing.T) {
+	ctx := context.Background()
+
+	t.Run("Extract Regions", func(t *testing.T) {
+		currentCanvas := IntercomCanvasReceiver{
+			Content: IntercomContent{
+				Components: []IntercomComponent{
+					{ID: RegionSearchDropdownID, Options: []Option{{Text: "Region1"}, {Text: "Region2"}}},
+				},
+			},
+		}
+
+		expected := []string{"Region1", "Region2"}
+		got := extractRegionsFromCurrentCanvas(ctx, currentCanvas)
+		assert.Equal(t, expected, got)
+	})
+
+	t.Run("No Regions", func(t *testing.T) {
+		currentCanvas := IntercomCanvasReceiver{
+			Content: IntercomContent{
+				Components: []IntercomComponent{
+					{ID: RegionSearchDropdownID, Options: []Option{}},
+				},
+			},
+		}
+
+		expected := []string{}
+		got := extractRegionsFromCurrentCanvas(ctx, currentCanvas)
+		assert.Equal(t, expected, got)
+	})
 }

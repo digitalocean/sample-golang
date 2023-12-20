@@ -32,14 +32,14 @@ func InitPreOncallCanvas() CanvasReponse {
 	return *canvasResp
 }
 
-func InitRelatedTicketCanvas(ctx context.Context, oncallTickets pre_oncall.TickeInfotResponse) CanvasReponse {
+func InitRelatedTicketCanvas(ctx context.Context, oncallTickets pre_oncall.TickeInfotResponse, inputValues map[string]string) CanvasReponse {
 	//log. := utils.Get//log.gerWithMethod(ctx, "InitRelatedTicketCanvas")
 	//log..Infof("InitRelatedTicketCanvas oncallTickets %v", larkcore.Prettify(oncallTickets))
 
 	option1 := NewOption(RelatedTicketOptionID, "Related Ticket")
 	option2 := NewOption(CreateTicketOptionID, "Create Ticket")
 	action := NewAction("submit")
-	singleSelect := NewSingleSelect(CategorySingleSelectID, "single-select", CategorySingleSelectLabel, []Option{*option1, *option2}, &action, nil)
+	singleSelect := NewSingleSelect(CategorySingleSelectID, "single-select", CategorySingleSelectLabel, []Option{*option1, *option2}, &action, getValuePtr(CategorySingleSelectID, inputValues))
 
 	components := []Component{}
 	components = append(components, singleSelect)
@@ -233,7 +233,7 @@ func GetInitTicketCanvasBody() CanvasReponse {
 	return InitPreOncallCanvas()
 }
 
-func GetRelatedTicketCanvasBody(ctx context.Context, intercomConversationID string) CanvasReponse {
+func GetRelatedTicketCanvasBody(ctx context.Context, inputValue map[string]string, intercomConversationID string) CanvasReponse {
 	//log. := utils.Get//log.gerWithMethod(ctx, "GetRelatedTicketCanvasBody")
 	// We use the intercomConversationID to get the tickets external id via pre-oncall api
 	//log..Infof("GetRelatedTicketCanvasBody intercomConversation %v", intercomConversationID)
@@ -245,7 +245,7 @@ func GetRelatedTicketCanvasBody(ctx context.Context, intercomConversationID stri
 		return InitPreOncallCanvas()
 	}
 
-	return InitRelatedTicketCanvas(ctx, oncallTickets)
+	return InitRelatedTicketCanvas(ctx, oncallTickets, inputValue)
 }
 
 func searchBusinessLine(ctx context.Context, keyword string, bizLines []pre_oncall.Business) []string {

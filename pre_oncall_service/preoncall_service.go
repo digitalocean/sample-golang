@@ -54,7 +54,7 @@ func HandlePreoncallCanvasSubmitAction(ctx context.Context, body string) (Canvas
 			if value == CreateTicketOptionID {
 				response = GetCreateTicketCanvasBody(ctx, inputValues, intercomConversationID, assigneeID, value, canvasReq.CurrentCanvas)
 			} else if value == RelatedTicketOptionID {
-				response = GetRelatedTicketCanvasBody(ctx, intercomConversationID)
+				response = GetRelatedTicketCanvasBody(ctx, inputValues, intercomConversationID)
 			}
 		}
 	case BizLineSearchButtonID:
