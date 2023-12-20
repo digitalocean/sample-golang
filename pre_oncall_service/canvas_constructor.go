@@ -313,13 +313,15 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 		//log..Infof("GetCreateTicketCanvasBody bizLines %v", bizLines)
 
 		regionList := resp.Data.RegionList
+		fmt.Printf("GetCreateTicketCanvasBody regionList %v \n", larkcore.Prettify(regionList))
 		for _, region := range regionList {
+			fmt.Printf("GetCreateTicketCanvasBody region %v \n", larkcore.Prettify(region))
 			regions = append(regions, region.Name)
 		}
 
-		stackNames = append(stackNames, "")
-		stackNames = append(stackNames, "")
-		stackNames = append(stackNames, "")
+		stackNames = append(stackNames, "11")
+		stackNames = append(stackNames, "22")
+		stackNames = append(stackNames, "33")
 
 		//log..Infof("GetCreateTicketCanvasBody regions %v", regions)
 
