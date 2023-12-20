@@ -377,9 +377,9 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 			regions = append(regions, region.Name)
 		}
 
-		stackNames = append(stackNames, "11")
-		stackNames = append(stackNames, "22")
-		stackNames = append(stackNames, "33")
+		//stackNames = append(stackNames, "11")
+		//stackNames = append(stackNames, "22")
+		//stackNames = append(stackNames, "33")
 
 		//log..Infof("GetCreateTicketCanvasBody regions %v", regions)
 
@@ -486,6 +486,25 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 				ticketStatus = CreateTicketSucceed
 			}
 		}
+	case StackSearchButtonID:
+		//log..Infof("GetCreateTicketCanvasBody stack search button")
+		stackNames = make([]string, 0)
+		if value, ok := inputValues[BizLineSearchDropdownID]; ok {
+			resp, err := pre_oncall.GetFakePreOncallMetaInfo(ctx, true, true)
+			if err != nil {
+				//log..Errorf("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v", err)
+				return InitPreOncallCanvas()
+			}
+			bussinessList := resp.Data.BusinessList
+			for _, biz := range bussinessList {
+				if biz.Name == value {
+					stackNames = biz.Stacks
+				}
+			}
+
+		}
+
+		fmt.Printf("GetCreateTicketCanvasBody stackNames %v \n", stackNames)
 	}
 
 	return InitCreateOncalTicketCanvas(bizLines, regions, stackNames, inputValues, ticketStatus)
