@@ -32,13 +32,13 @@ func HandlePreoncallCanvasSubmitAction(ctx context.Context, body string) (Canvas
 			////log.Infof("HandlePreoncallCanvasSubmitAction single select value %v", value)
 			if value == CreateTicketOptionID || value == BizLineSearchButtonID || value == RegionSearchButtonID {
 				response = GetCreateTicketCanvasBody(ctx, inputValues, intercomConversationID, assigneeID, value, canvasReq.CurrentCanvas)
-				fmt.Printf("this is the response of submit handler %v", larkcore.Prettify(response))
+				fmt.Printf("====== response of  GetCreateTicketCanvasBody%v", larkcore.Prettify(response))
 			}
 		}
 	}
 
 	////log.Infof("HandlePreoncallCanvasSubmitAction vanvas response %v", larkcore.Prettify(response))
-
+	fmt.Printf(" ------response of  GetCreateTicketCanvasBody%v", larkcore.Prettify(response))
 	return response, nil
 }
 

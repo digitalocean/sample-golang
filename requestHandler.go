@@ -26,7 +26,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	response, err := HandlePreoncallCanvasSubmitAction(context.Background(), bodyString)
 	if err != nil {
 		////log.Fatalf("Error occurred during marshaling. Error: %s", err.Error())
-		http.Error(w, "Error unmarshalling request body", http.StatusBadRequest)
+		fmt.Println("Error occurred during marshaling. Error: %s", err.Error()
 		return
 	}
 
@@ -36,7 +36,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Printf("this is the response of submit handler %v", string(canvas))
+	fmt.Printf("+ ++++ this is the response of submit handler %v", string(canvas))
 
 	w.Header().Set("Content-Type", "application/json")
 	jsonResponse, err := json.Marshal(response)
