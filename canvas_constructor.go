@@ -287,7 +287,8 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 	bizLines := extractBizlinesFromCurrentCanvas(ctx, currentCanvas)
 	regions := extractRegionsFromCurrentCanvas(ctx, currentCanvas)
 	stackNames := make([]string, 0)
-
+	fmt.Println("GetCreateTicketCanvasBody buttonClick %v", bizLines)
+	fmt.Println("GetCreateTicketCanvasBody buttonClick %v", regions)
 	if buttonClick == CreateTicketOptionID {
 		//log.Infof("GetCreateTicketCanvasBody create ticket option")
 		resp, err := GetPreOncallMetaInfo(ctx, true, true)
