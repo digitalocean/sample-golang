@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -22,7 +23,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	// You must close the original body
 
 	// Unmarshal the JSON into your struct
-	response, err := HandlePreoncallCanvasSubmitAction(bodyString)
+	response, err := HandlePreoncallCanvasSubmitAction(context.Background(), bodyString)
 	if err != nil {
 		////log.Fatalf("Error occurred during marshaling. Error: %s", err.Error())
 		http.Error(w, "Error unmarshalling request body", http.StatusBadRequest)
@@ -60,7 +61,7 @@ func InitializeCanvasHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Log the body, can remove this in production
 	fmt.Println("Received initialize request with body:", string(body))
-	response := HandlePreoncallInitializationAction()
+	response := HandlePreoncallInitializationAction(context.Background())
 	fmt.Printf("response %v\n", response)
 
 	// Convert the byte slice to a string and print it
