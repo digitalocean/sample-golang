@@ -259,6 +259,25 @@ func extractBizlinesFromCurrentCanvas(ctx context.Context, currentCanvas Interco
 	return bizLines
 }
 
+func extractStackNamesFromCurrentCanvas(ctx context.Context, currentCanvas IntercomCanvasReceiver) []string {
+	//log. := utils.Get//log.gerWithMethod(ctx, "extractStackNamesFromCurrentCanvas")
+	//log..Infof("extractStackNamesFromCurrentCanvas currentCanvas %v", larkcore.Prettify(currentCanvas))
+	stackNames := make([]string, 0)
+	for _, component := range currentCanvas.Content.Components {
+		if component.ID == StackSearchDropdownID {
+			//log..Infof("extractStackNamesFromCurrentCanvas find stack dropdown %v", larkcore.Prettify(component))
+			existingOptions := component.Options
+			for _, option := range existingOptions {
+				stackNames = append(stackNames, option.Text)
+			}
+		}
+	}
+
+	//log..Infof("extractStackNamesFromCurrentCanvas stackNames %v", stackNames)
+
+	return stackNames
+}
+
 func extractRegionsFromCurrentCanvas(ctx context.Context, currentCanvas IntercomCanvasReceiver) []string {
 	//log. := utils.Get//log.gerWithMethod(ctx, "extractRegionsFromCurrentCanvas")
 	//log..Infof("extractRegionsFromCurrentCanvas currentCanvas %v", larkcore.Prettify(currentCanvas))
@@ -290,7 +309,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 
 	bizLines := extractBizlinesFromCurrentCanvas(ctx, currentCanvas)
 	regions := extractRegionsFromCurrentCanvas(ctx, currentCanvas)
-	stackNames := make([]string, 0)
+	stackNames := extractStackNamesFromCurrentCanvas(ctx, currentCanvas)
 
 	fmt.Printf("GetCreateTicketCanvasBody buttonClick %v, selectedValue %v, intercom convID %v, assigneeID %v, canvas %v \n", buttonClick, inputValues, intercomConversationID, assigneeID, larkcore.Prettify(currentCanvas))
 
