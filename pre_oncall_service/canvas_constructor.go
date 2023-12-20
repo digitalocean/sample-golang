@@ -328,7 +328,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 		stackNames = make([]string, 0)
 
 		//log..Infof("GetCreateTicketCanvasBody resp %v", larkcore.Prettify(resp))
-		fmt.Printf("GetCreateTicketCanvasBody resp %v \n", larkcore.Prettify(resp))
+		//fmt.Printf("GetCreateTicketCanvasBody resp %v \n", larkcore.Prettify(resp))
 		bizList := resp.Data.BusinessList
 		for _, biz := range bizList {
 			bizLines = append(bizLines, biz.Name+"-"+biz.Name)
