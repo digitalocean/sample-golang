@@ -149,39 +149,39 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 
 	prioritySingleSelect := NewSingleSelect(PrioritySingleSelectID, "single-select", PrioritySingleSelectLabel, prioritySingleSelectOptions, nil, getValuePtr(PrioritySingleSelectID, selectedValues))
 
-	// create group
-	createGroupText := NewText("Create Group", "header")
-	createGroupSingleSelectOptions := []Option{}
-	createGroupList := []string{AutoCreateGroup, AssociateGroup, NotCreateGroup}
-	for _, createGroup := range createGroupList {
-		createGroupSingleSelectOptions = append(createGroupSingleSelectOptions, *NewOption(createGroup, createGroup))
-	}
-
-	createGroupSingleSelect := NewSingleSelect(CreateGroupSingleSelectID, "single-select", CreateGroupSingleSelectLabel, createGroupSingleSelectOptions, nil, getValuePtr(CreateGroupSingleSelectID, selectedValues))
-
-	// user id
-
-	userIDText := NewText("User ID", "header")
-	userIDInput := NewInput(userIDInputID, userIDInputLabel, "type in user id", getValuePtr(userIDInputID, selectedValues))
-
-	// tenant id
-	tenantIDText := NewText("Tenant ID", "header")
-	tenantIDInput := NewInput(tenantIDInputID, tenantIDInputLabel, "type in tenant id", getValuePtr(tenantIDInputID, selectedValues))
-
-	// lark version
-	larkVersionText := NewText("Lark Version", "header")
-	larkVersionInput := NewInput(LarkVersionInputID, LarkVersionInputLabel, "type in lark version", getValuePtr(LarkVersionInputID, selectedValues))
-
-	// Create button to submit ticket
-	submitTicketBtn := NewButton(SubmitTicketButtonID, SubmitTicketLabel, action, "primary", false)
+	//// create group
+	//createGroupText := NewText("Create Group", "header")
+	//createGroupSingleSelectOptions := []Option{}
+	//createGroupList := []string{AutoCreateGroup, AssociateGroup, NotCreateGroup}
+	//for _, createGroup := range createGroupList {
+	//	createGroupSingleSelectOptions = append(createGroupSingleSelectOptions, *NewOption(createGroup, createGroup))
+	//}
+	//
+	//createGroupSingleSelect := NewSingleSelect(CreateGroupSingleSelectID, "single-select", CreateGroupSingleSelectLabel, createGroupSingleSelectOptions, nil, getValuePtr(CreateGroupSingleSelectID, selectedValues))
+	//
+	//// user id
+	//
+	//userIDText := NewText("User ID", "header")
+	//userIDInput := NewInput(userIDInputID, userIDInputLabel, "type in user id", getValuePtr(userIDInputID, selectedValues))
+	//
+	//// tenant id
+	//tenantIDText := NewText("Tenant ID", "header")
+	//tenantIDInput := NewInput(tenantIDInputID, tenantIDInputLabel, "type in tenant id", getValuePtr(tenantIDInputID, selectedValues))
+	//
+	//// lark version
+	//larkVersionText := NewText("Lark Version", "header")
+	//larkVersionInput := NewInput(LarkVersionInputID, LarkVersionInputLabel, "type in lark version", getValuePtr(LarkVersionInputID, selectedValues))
+	//
+	//// Create button to submit ticket
+	//submitTicketBtn := NewButton(SubmitTicketButtonID, SubmitTicketLabel, action, "primary", false)
 
 	content := newContent([]Component{categorySelect, bizLineText, bizLineSearchInput, bizLineSearchBtn,
 		bizLineSearchDropDown, ticketTitleText, ticketTitleInput, regionSearchText, regionSearchInput, regionSearchBtn, regionSearchDropDown,
-		stackSearchText, stackSearchDropDown, priorityText, prioritySingleSelect,
-		createGroupText, createGroupSingleSelect, userIDText, userIDInput,
-		tenantIDText, tenantIDInput,
-		larkVersionText, larkVersionInput,
-		submitTicketBtn})
+		stackSearchText, stackSearchDropDown, priorityText, prioritySingleSelect})
+	//createGroupText, createGroupSingleSelect, userIDText, userIDInput,
+	//tenantIDText, tenantIDInput,
+	//larkVersionText, larkVersionInput,
+	//submitTicketBtn})
 
 	//content := newContent([]Component{categorySelect, bizLineText, bizLineSearchInput, bizLineSearchBtn, bizLineSearchDropDown})
 
