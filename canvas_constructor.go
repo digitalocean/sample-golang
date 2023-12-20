@@ -429,6 +429,8 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 	}
 
 	stackNames = append(stackNames, "pc")
+	stackNames = append(stackNames, "mobile")
+	stackNames = append(stackNames, "web")
 	fmt.Printf("GetCreateTicketCanvasBody bizLines %v, regions %v, stackNames %v, inputValues %v \n", bizLines, regions, stackNames, inputValues)
 	return InitCreateOncalTicketCanvas(bizLines, regions, stackNames, inputValues, true)
 }
