@@ -105,7 +105,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	//log..Infof("InitCreateOncalTicketCanvas selectedValues %v", selectedValues)
 	//log..Infof("InitCreateOncalTicketCanvas bizLines %v, regions %v, stackNames %v", bizLines, regions, stackNames)
 	fmt.Printf("InitCreateOncalTicketCanvas bizLines %v, regions %v, stackNames %v \n", bizLines, regions, stackNames)
-	fmt.Printf("InitCreateOncalTicketCanvas selectedValues %v \n", selectedValues)
+	fmt.Printf("InitCreateOncalTicketCanvas selectedValues %v \n", larkcore.Prettify(selectedValues))
 	option1 := NewOption(RelatedTicketOptionID, "Related Ticket")
 	option2 := NewOption(CreateTicketOptionID, "Create Ticket")
 	action := NewAction("submit")
