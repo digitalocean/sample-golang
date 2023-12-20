@@ -96,7 +96,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	categorySelect := NewSingleSelect(CategorySingleSelectID, "single-select", CategorySingleSelectLabel, []Option{*option1, *option2}, &action, getValuePtr(CategorySingleSelectID, selectedValues))
 
 	// bizline
-	bizLineText := NewText("Business Line Search", "header")
+	//bizLineText := NewText("Business Line Search", "header")
 
 	//var bizLineSearchValue *string
 	//if val, exist := selectedValues[BizLineSearchInputID]; exist {
@@ -140,14 +140,14 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	stackSearchDropDown := NewDropdown(StackSearchDropdownID, StackSearchDropdownLabel, stackDropDownOptions, getValuePtr(StackSearchDropdownID, selectedValues))
 	//
 	// priority
-	priorityText := NewText("Priority", "header")
-	prioritySingleSelectOptions := []Option{}
-	priorityList := []string{P0, P1, P2}
-	for _, priority := range priorityList {
-		prioritySingleSelectOptions = append(prioritySingleSelectOptions, *NewOption(priority, priority))
-	}
-
-	prioritySingleSelect := NewSingleSelect(PrioritySingleSelectID, "single-select", PrioritySingleSelectLabel, prioritySingleSelectOptions, nil, getValuePtr(PrioritySingleSelectID, selectedValues))
+	//priorityText := NewText("Priority", "header")
+	//prioritySingleSelectOptions := []Option{}
+	//priorityList := []string{P0, P1, P2}
+	//for _, priority := range priorityList {
+	//	prioritySingleSelectOptions = append(prioritySingleSelectOptions, *NewOption(priority, priority))
+	//}
+	//
+	//prioritySingleSelect := NewSingleSelect(PrioritySingleSelectID, "single-select", PrioritySingleSelectLabel, prioritySingleSelectOptions, nil, getValuePtr(PrioritySingleSelectID, selectedValues))
 
 	//// create group
 	//createGroupText := NewText("Create Group", "header")
@@ -175,7 +175,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	//// Create button to submit ticket
 	//submitTicketBtn := NewButton(SubmitTicketButtonID, SubmitTicketLabel, action, "primary", false)
 
-	content := newContent([]Component{categorySelect, bizLineText, stackSearchText, stackSearchDropDown, priorityText, prioritySingleSelect})
+	content := newContent([]Component{categorySelect, stackSearchText, stackSearchDropDown})
 	//
 
 	//, bizLineSearchInput, bizLineSearchBtn,
