@@ -455,29 +455,14 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 		regionList := resp.Data.RegionList
 		regions = searchRegion(ctx, regionSearchKeyword, regionList)
 	case SubmitTicketButtonID:
-		if !validSubmitForm(ctx, inputValues) {
+		ticket, isValid := validSubmitForm(ctx, inputValues, intercomConversationID)
+
+		if !isValid {
 			fmt.Printf("GetCreateTicketCanvasBody validSubmitForm failed \n")
 			ticketStatus = CreatTicketFailed
 		} else {
 			fmt.Printf("GetCreateTicketCanvasBody validSubmitForm success \n")
-			ticket := pre_oncall.TicketSubmitRequest{
-				Title:         "",
-				Business:      "",
-				Priority:      "",
-				Stack:         "",
-				Region:        "",
-				UserId:        "",
-				Version:       "",
-				CreateChatWay: "",
-				Type:          "",
-				App:           "",
-				External:      "",
-				Source:        "",
-				Reporter:      "",
-				Remarks:       "",
-				ChannelType:   "",
-				BizTicketId:   "",
-			}
+
 			resp, err := pre_oncall.SubmitFakePreOncallTicket(ctx, ticket)
 			fmt.Printf("GetCreateTicketCanvasBody SubmitPreOncallTicket resp %v \n", larkcore.Prettify(resp))
 			if err != nil {
@@ -518,58 +503,87 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 	return InitCreateOncalTicketCanvas(bizLines, regions, stackNames, inputValues, ticketStatus)
 }
 
-func validSubmitForm(ctx context.Context, inputValues map[string]string) bool {
+func validSubmitForm(ctx context.Context, inputValues map[string]string, intercomConversationID string) (pre_oncall.TicketSubmitRequest, bool) {
 	//log. := utils.Get//log.gerWithMethod(ctx, "validSubmitForm")
 	//log..Infof("validSubmitForm inputValues %v", inputValues)
+	ticket := pre_oncall.TicketSubmitRequest{
+		Title:         "",
+		Business:      "",
+		Priority:      "",
+		Stack:         "",
+		Region:        "",
+		UserId:        "",
+		Version:       "",
+		CreateChatWay: "",
+		// prefill
+		Type:        "Pre-Oncall",
+		App:         "Lark",
+		External:    "字节外",
+		Source:      "客服渠道",
+		Reporter:    "test@larksuite.com",
+		Remarks:     "",
+		ChannelType: "intercom",
+		BizTicketId: intercomConversationID,
+	}
 
 	if inputValues == nil {
-		return false
+		return ticket, false
 	}
 
 	// Check Biz Line
 	if val, ok := inputValues[BizLineSearchDropdownID]; !ok || val == "" {
-		return false
+		return ticket, false
 	}
+
+	ticket.BizTicketId = strings.Split(inputValues[BizLineSearchDropdownID], "-")[1]
 
 	// Check Ticket Title
 	if val, ok := inputValues[TicketTitleInputID]; !ok || val == "" {
-		return false
+		return ticket, false
 	}
+	ticket.Title = inputValues[TicketTitleInputID]
 
 	// Check Region
 	if val, ok := inputValues[RegionSearchDropdownID]; !ok || val == "" {
-		return false
+		return ticket, false
 	}
+	ticket.Region = inputValues[RegionSearchDropdownID]
 
 	// Check Stack
 	if val, ok := inputValues[StackSearchDropdownID]; !ok || val == "" {
-		return false
+		return ticket, false
 	}
+	ticket.Stack = inputValues[StackSearchDropdownID]
 
 	// Check Priority
 	if val, ok := inputValues[PrioritySingleSelectID]; !ok || val == "" {
-		return false
+		return ticket, false
 	}
+	ticket.Priority = inputValues[PrioritySingleSelectID]
 
 	// Check Create Group
 	if val, ok := inputValues[CreateGroupSingleSelectID]; !ok || val == "" {
-		return false
+		return ticket, false
 	}
+	ticket.CreateChatWay = inputValues[CreateGroupSingleSelectID]
 
 	// Check User ID
 	if val, ok := inputValues[userIDInputID]; !ok || val == "" {
-		return false
+		return ticket, false
 	}
+	ticket.UserId = inputValues[userIDInputID]
 
 	// Check Tenant ID
 	if val, ok := inputValues[tenantIDInputID]; !ok || val == "" {
-		return false
+		return ticket, false
 	}
 
 	// Check Lark Version
 	if val, ok := inputValues[LarkVersionInputID]; !ok || val == "" {
-		return false
+		return ticket, false
 	}
+	ticket.Version = inputValues[LarkVersionInputID]
 
-	return true
+	fmt.Printf("validSubmitForm ticket ========== %v \n", larkcore.Prettify(ticket))
+	return ticket, true
 }
