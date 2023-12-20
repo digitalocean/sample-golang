@@ -26,7 +26,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	response, err := HandlePreoncallCanvasSubmitAction(context.Background(), bodyString)
 	if err != nil {
 		////log.Fatalf("Error occurred during marshaling. Error: %s", err.Error())
-		fmt.Println("Error occurred during marshaling. Error: %s", err.Error()
+		fmt.Println("Error occurred during marshaling. Error: %s", err.Error())
 		return
 	}
 
