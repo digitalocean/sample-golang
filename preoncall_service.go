@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	larkcore "github.com/larksuite/oapi-sdk-go/v3/core"
 )
 
 func HandlePreoncallCanvasSubmitAction(ctx context.Context, body string) (CanvasReponse, error) {
@@ -31,6 +32,7 @@ func HandlePreoncallCanvasSubmitAction(ctx context.Context, body string) (Canvas
 			////log.Infof("HandlePreoncallCanvasSubmitAction single select value %v", value)
 			if value == CreateTicketOptionID || value == BizLineSearchButtonID || value == RegionSearchButtonID {
 				response = GetCreateTicketCanvasBody(ctx, inputValues, intercomConversationID, assigneeID, value, canvasReq.CurrentCanvas)
+				fmt.Printf("this is the response of submit handler %v", larkcore.Prettify(response))
 			}
 		}
 	}
