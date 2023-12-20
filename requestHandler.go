@@ -47,7 +47,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Error marshalling response %V", http.StatusInternalServerError)
 		return
 	}
-	fmt.Printf("&$&&&&&&&&&&\n")
+	fmt.Printf("&$&&&&&&wefds&&&&\n")
 	fmt.Printf("this is the final response of jsonResponse %v", string(jsonResponse))
 
 	w.Write(jsonResponse)
