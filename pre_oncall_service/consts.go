@@ -8,10 +8,10 @@ const (
 	CreateTicketOptionID  = "submit-ticket"
 
 	BizLineSearchInputID = "bizLineSearchInput"
-	BizLineSearchLabel   = "bizLineSearchLabel"
+	BizLineSearchLabel   = ""
 
 	BizLineSearchButtonID    = "bizLineSearchButton"
-	BizLineSearchButtonLabel = "bizLineSearchButtonLabel"
+	BizLineSearchButtonLabel = "Search"
 
 	BizLineSearchDropdownID    = "bizLineSearchDropdown"
 	BizLineSearchDropdownLabel = "bizLineSearchDropdownLabel"
@@ -23,7 +23,7 @@ const (
 	RegionSearchLabel   = "regionSearchLabel"
 
 	RegionSearchButtonID    = "regionSearchButton"
-	RegionSearchButtonLabel = "regionSearchButtonLabel"
+	RegionSearchButtonLabel = "Search"
 
 	StackSearchDropdownID    = "stackSearchDropdown"
 	StackSearchDropdownLabel = "stackSearchDropdownLabel"

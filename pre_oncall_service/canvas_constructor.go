@@ -99,7 +99,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	categorySelect := NewSingleSelect(CategorySingleSelectID, "single-select", CategorySingleSelectLabel, []Option{*option1, *option2}, &action, getValuePtr(CategorySingleSelectID, selectedValues))
 
 	// bizline
-	bizLineText := NewText("Business Line Search", "header")
+	bizLineSearchText := NewText("Business Line Search", "header")
 
 	var bizLineSearchValue *string
 	if val, exist := selectedValues[BizLineSearchInputID]; exist {
@@ -108,6 +108,9 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 
 	bizLineSearchInput := NewInput(BizLineSearchInputID, BizLineSearchLabel, "Enter input here", bizLineSearchValue)
 	bizLineSearchBtn := NewButton(BizLineSearchButtonID, BizLineSearchButtonLabel, action, "primary", false)
+
+	bizLineText := NewText("Business Line", "header")
+
 	bizLineDropDownOptions := []Option{}
 	for _, bizLine := range bizLines {
 		//log..Infof("bizLine %v", bizLine)
@@ -178,7 +181,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	// Create button to submit ticket
 	submitTicketBtn := NewButton(SubmitTicketButtonID, SubmitTicketLabel, action, "primary", false)
 
-	components := []Component{categorySelect, bizLineText, bizLineSearchInput, bizLineSearchBtn,
+	components := []Component{categorySelect, bizLineSearchText, bizLineSearchInput, bizLineSearchBtn, bizLineText,
 		bizLineSearchDropDown, ticketTitleText, ticketTitleInput, regionSearchText, regionSearchInput, regionSearchBtn, regionSearchDropDown,
 		stackSearchText, stackSearchDropDown, priorityText, prioritySingleSelect,
 		createGroupText, createGroupSingleSelect, userIDText, userIDInput,
