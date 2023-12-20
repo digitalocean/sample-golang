@@ -24,11 +24,14 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Unmarshal the JSON into your struct
 	response, err := HandlePreoncallCanvasSubmitAction(context.Background(), bodyString)
+	fmt.Printf("this is ###### \n")
 	if err != nil {
 		////log.Fatalf("Error occurred during marshaling. Error: %s", err.Error())
 		fmt.Println("Error occurred during marshaling. Error: %s", err.Error())
 		return
 	}
+
+	fmt.Printf("this is =================== \n ")
 
 	canvas, err := json.Marshal(response.Canvas)
 	if err != nil {
@@ -36,7 +39,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Printf("+ ++++ this is the response of submit handler %v", string(canvas))
+	fmt.Printf("+ ++++ this is the response of submit handler %v \n", string(canvas))
 
 	w.Header().Set("Content-Type", "application/json")
 	jsonResponse, err := json.Marshal(response)
