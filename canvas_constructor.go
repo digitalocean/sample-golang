@@ -292,7 +292,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 	fmt.Println("GetCreateTicketCanvasBody buttonClick %v", regions)
 	if buttonClick == CreateTicketOptionID {
 		//log.Infof("GetCreateTicketCanvasBody create ticket option")
-
+		fmt.Printf("GetCreateTicketCanvasBody create ticket option %v \n", inputValues)
 		// TODO: call pre-oncall api remove
 		//resp, err := GetPreOncallMetaInfo(ctx, true, true)
 		//if err != nil {
@@ -425,5 +425,5 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 		inputValues[RegionSearchDropdownID] = ""
 	}
 	fmt.Printf("GetCreateTicketCanvasBody bizLines %v, regions %v, stackNames %v, inputValues %v \n", bizLines, regions, stackNames, inputValues)
-	return InitCreateOncalTicketCanvas(bizLines, stackNames, stackNames, inputValues, true)
+	return InitCreateOncalTicketCanvas(bizLines, regions, stackNames, inputValues, true)
 }
