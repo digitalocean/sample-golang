@@ -140,7 +140,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 
 	// region search
 	regionSearchText := NewText("Region Search", "header")
-	regionSearchInput := NewInput(RegionSearchInputID, RegionSearchLabel, "Enter input here", nil)
+	regionSearchInput := NewInput(RegionSearchInputID, RegionSearchLabel, "Enter input here", getValuePtr(RegionSearchInputID, selectedValues))
 	regionSearchBtn := NewButton(RegionSearchButtonID, RegionSearchButtonLabel, action, "primary", false)
 
 	regionDropDownOptions := []Option{}
@@ -249,8 +249,8 @@ func searchBusinessLine(ctx context.Context, keyword string, bizLines []pre_onca
 	//log..Infof("searchBusinessLine keyword %v", keyword)
 	result := make([]string, 0)
 	for _, biz := range bizLines {
-		if strings.Contains(strings.ToLower(biz.Name), strings.ToLower(keyword)) || keyword == "" {
-			result = append(result, biz.Name+"-"+biz.Name)
+		if strings.Contains(strings.ToLower(biz.Name+"-"+biz.Bid), strings.ToLower(keyword)) || keyword == "" {
+			result = append(result, biz.Name+"-"+biz.Bid)
 		}
 	}
 
@@ -368,7 +368,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 		//fmt.Printf("GetCreateTicketCanvasBody resp %v \n", larkcore.Prettify(resp))
 		bizList := resp.Data.BusinessList
 		for _, biz := range bizList {
-			bizLines = append(bizLines, biz.Name+"-"+biz.Name)
+			bizLines = append(bizLines, biz.Name+"-"+biz.Bid)
 		}
 		//log..Infof("GetCreateTicketCanvasBody bizLines %v", bizLines)
 
@@ -490,19 +490,26 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 		}
 	case StackSearchButtonID:
 		//log..Infof("GetCreateTicketCanvasBody stack search button")
+		fmt.Printf("GetCreateTicketCanvasBody stack search button \n")
 		stackNames = make([]string, 0)
-		if value, ok := inputValues[StackSearchDropdownID]; ok {
+		if value, ok := inputValues[BizLineSearchDropdownID]; ok && strings.Contains(value, "-") {
 			resp, err := pre_oncall.GetFakePreOncallMetaInfo(ctx, true, true)
 			if err != nil {
 				//log..Errorf("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v", err)
 				return InitPreOncallCanvas()
 			}
+
+			bizName := strings.Split(value, "-")[0]
+			fmt.Printf("Get bizName %v when doing stack search \n", bizName)
+
 			bussinessList := resp.Data.BusinessList
 			for _, biz := range bussinessList {
-				if biz.Name == value {
+				if biz.Name == bizName {
 					stackNames = biz.Stacks
 				}
 			}
+
+			fmt.Printf("Search results stackNames is %v \n", stackNames)
 		}
 
 		fmt.Printf("GetCreateTicketCanvasBody stackNames %v \n", stackNames)
