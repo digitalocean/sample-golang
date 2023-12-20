@@ -8,12 +8,12 @@ import (
 
 // IntercomCanvasRequest is the struct for the canvas request body from Intercom
 type IntercomCanvasRequest struct {
-	WorkspaceID     string               `json:"workspace_id"`
-	WorkspaceRegion string               `json:"workspace_region"`
-	Conversation    IntercomConversation `json:"conversation"`
-	InputValues     map[string]string    `json:"input_values"`
-	ComponentID     string               `json:"component_id"`
-	CurrentCanvas   Canvas               `json:"current_canvas"`
+	WorkspaceID     string                 `json:"workspace_id"`
+	WorkspaceRegion string                 `json:"workspace_region"`
+	Conversation    IntercomConversation   `json:"conversation"`
+	InputValues     map[string]string      `json:"input_values"`
+	ComponentID     string                 `json:"component_id"`
+	CurrentCanvas   IntercomCanvasReceiver `json:"current_canvas"`
 }
 
 type IntercomConversation struct {
@@ -200,6 +200,23 @@ type Content struct {
 // Canvas represents the top-level canvas field in your JSON.
 type Canvas struct {
 	Content Content `json:"content"`
+}
+
+// Intercom Canvas Receiver
+type IntercomCanvasReceiver struct {
+	Content IntercomContent `json:"content"`
+}
+
+type IntercomContent struct {
+	Components []IntercomComponent `json:"components"`
+}
+
+type IntercomComponent struct {
+	Type    string   `json:"type"`
+	ID      string   `json:"id"`
+	Label   string   `json:"label"`
+	Options []Option `json:"options"`
+	Value   *string  `json:"value,omitempty"`
 }
 
 // Root structure to encapsulate the Canvas
