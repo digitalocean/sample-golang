@@ -151,7 +151,8 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 	regionSearchDropDown := NewDropdown(RegionSearchDropdownID, RegionSearchDropdownLabel, regionDropDownOptions, getValuePtr(RegionSearchDropdownID, selectedValues))
 
 	// stack search
-	stackSearchText := NewText("Stack Search", "header")
+	stackSearchText := NewText("Stack", "header")
+
 	stackDropDownOptions := []Option{}
 	for _, stackOption := range stackNames {
 		stackDropDownOptions = append(stackDropDownOptions, *NewOption(stackOption, stackOption))
