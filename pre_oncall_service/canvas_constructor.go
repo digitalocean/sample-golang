@@ -495,7 +495,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 				return InitPreOncallCanvas()
 			}
 
-			bizName := strings.Split(value, "-")[0]
+			bizName := value
 			fmt.Printf("Get bizName %v when doing stack search \n", bizName)
 
 			bussinessList := resp.Data.BusinessList
