@@ -46,7 +46,7 @@ func InitRelatedTicketCanvas(ctx context.Context, oncallTickets pre_oncall.Ticke
 	// TODO: Replace with the real ticket info
 
 	for index, ticket := range oncallTickets.Data {
-		ticketBannerTitle := NewText(fmt.Sprintf("Related Ticket %v", index), "header")
+		ticketBannerTitle := NewText(fmt.Sprintf("Related Ticket %v", index+1), "header")
 		components = append(components, ticketBannerTitle)
 
 		ticketID := NewText(fmt.Sprintf("Ticket id: %v", ticket.TicketId), "paragraph")

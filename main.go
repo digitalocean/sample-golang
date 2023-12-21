@@ -66,7 +66,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//fmt.Printf("this is the response of submit handler %v \n", string(jsonResponse))
+	fmt.Printf("this is the response of submit handler %v \n", string(jsonResponse))
 
 	w.Write(jsonResponse)
 

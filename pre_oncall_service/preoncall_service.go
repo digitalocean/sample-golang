@@ -26,6 +26,7 @@ type IntercomComponent struct {
 func HandlePreoncallCanvasSubmitAction(ctx context.Context, body string) (CanvasReponse, error) {
 	//log. := utils.Get//log.gerWithMethod(ctx, "HandlePreoncallCanvasSubmitAction")
 	//log..Infof("HandlePreoncallCanvasSubmitAction request body: %v", body)
+	//fmt.Printf("HandlePreoncallCanvasSubmitAction request body: %v \n", body)
 	var canvasReq IntercomCanvasRequest
 	if err := json.Unmarshal([]byte(body), &canvasReq); err != nil {
 		fmt.Println("meet parse err", err)
@@ -68,7 +69,7 @@ func HandlePreoncallCanvasSubmitAction(ctx context.Context, body string) (Canvas
 	}
 
 	//log..Infof("HandlePreoncallCanvasSubmitAction vanvas response %v", larkcore.Prettify(response))
-
+	//fmt.Printf("------- HandlePreoncallCanvasSubmitAction vanvas response %v \n", larkcore.Prettify(response))
 	return response, nil
 }
 

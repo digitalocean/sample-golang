@@ -10,10 +10,10 @@ import (
 )
 
 const (
-	//preOncallToken  = "26ad213fcdc54e0da3a6e7fc79e99b75"
-	preOncallToken = "98d2d83a05094e6585f93b31f851d53c"
-	//preOncallPrefix = "https://lark-oncall.bytedance.net"
-	preOncallPrefix = "https://lark-oncall-boe.byted.org"
+	preOncallToken = "26ad213fcdc54e0da3a6e7fc79e99b75"
+	//preOncallToken = "98d2d83a05094e6585f93b31f851d53c"
+	preOncallPrefix = "https://lark-oncall.bytedance.net"
+	//preOncallPrefix = "https://lark-oncall-boe.byted.org"
 )
 
 func preOncallAPIError(ctx context.Context, err error) error {
