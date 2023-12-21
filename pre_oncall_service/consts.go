@@ -35,6 +35,8 @@ const (
 	P1 = "P1"
 	P2 = "P2"
 
+	EmptyPlaceHolder = ""
+
 	PrioritySingleSelectID    = "prioritySingleSelect"
 	PrioritySingleSelectLabel = ""
 

@@ -94,15 +94,15 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 
 	// Intercom requires at least 2 options for dropdown to render
 	for len(bizLines) < 2 {
-		bizLines = append(bizLines, "do not select")
+		bizLines = append(bizLines, EmptyPlaceHolder)
 	}
 
 	for len(regions) < 2 {
-		regions = append(regions, "do not select")
+		regions = append(regions, EmptyPlaceHolder)
 	}
 
 	for len(stackNames) < 2 {
-		stackNames = append(stackNames, "do not select")
+		stackNames = append(stackNames, EmptyPlaceHolder)
 	}
 
 	//log..Infof("InitCreateOncalTicketCanvas selectedValues %v", selectedValues)
