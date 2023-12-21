@@ -359,7 +359,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 	switch buttonClick {
 	case CreateTicketOptionID:
 		//log..Infof("GetCreateTicketCanvasBody create ticket option")
-		resp, err := pre_oncall.GetFakePreOncallMetaInfo(ctx, true, true)
+		resp, err := pre_oncall.GetPreOncallMetaInfo(ctx, true, true)
 		if err != nil {
 			//log..Errorf("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v", err)
 			return InitPreOncallCanvas()
@@ -439,7 +439,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 			bizLineSearchKeyword = v
 		}
 
-		resp, err := pre_oncall.GetFakePreOncallMetaInfo(ctx, true, true)
+		resp, err := pre_oncall.GetPreOncallMetaInfo(ctx, true, true)
 		if err != nil {
 			//log..Errorf("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v", err)
 			return InitPreOncallCanvas()
@@ -483,7 +483,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 		fmt.Printf("GetCreateTicketCanvasBody stack search button \n")
 		stackNames = make([]string, 0)
 		if value, ok := inputValues[BizLineSearchDropdownID]; ok && strings.Contains(value, "-") {
-			resp, err := pre_oncall.GetFakePreOncallMetaInfo(ctx, true, true)
+			resp, err := pre_oncall.GetPreOncallMetaInfo(ctx, true, true)
 			if err != nil {
 				//log..Errorf("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v", err)
 				return InitPreOncallCanvas()
