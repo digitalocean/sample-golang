@@ -446,19 +446,21 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 		}
 		bussinessList := resp.Data.BusinessList
 		bizLines = searchBusinessLine(ctx, bizLineSearchKeyword, bussinessList)
+		inputValues[BizLineSearchDropdownID] = ""
 	case RegionSearchButtonID:
 		var regionSearchKeyword string
 		if v, ok := inputValues[RegionSearchInputID]; ok {
 			regionSearchKeyword = v
 		}
 
-		resp, err := pre_oncall.GetFakePreOncallMetaInfo(ctx, true, true)
+		resp, err := pre_oncall.GetPreOncallMetaInfo(ctx, true, true)
 		if err != nil {
 			//log..Errorf("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v", err)
 			return InitPreOncallCanvas()
 		}
 		regionList := resp.Data.RegionList
 		regions = searchRegion(ctx, regionSearchKeyword, regionList)
+		inputValues[RegionSearchDropdownID] = ""
 	case SubmitTicketButtonID:
 		ticket, isValid := validSubmitForm(ctx, inputValues, intercomConversationID)
 
@@ -482,6 +484,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 		//log..Infof("GetCreateTicketCanvasBody stack search button")
 		fmt.Printf("GetCreateTicketCanvasBody stack search button \n")
 		stackNames = make([]string, 0)
+		inputValues[StackSearchDropdownID] = ""
 		if value, ok := inputValues[BizLineSearchDropdownID]; ok && strings.Contains(value, "-") {
 			resp, err := pre_oncall.GetPreOncallMetaInfo(ctx, true, true)
 			if err != nil {
