@@ -45,8 +45,8 @@ func InitRelatedTicketCanvas(ctx context.Context, oncallTickets pre_oncall.Ticke
 	components = append(components, singleSelect)
 	// TODO: Replace with the real ticket info
 
-	for _, ticket := range oncallTickets.Data {
-		ticketBannerTitle := NewText("Related Ticket", "header")
+	for index, ticket := range oncallTickets.Data {
+		ticketBannerTitle := NewText(fmt.Sprintf("Related Ticket %v", index), "header")
 		components = append(components, ticketBannerTitle)
 
 		ticketID := NewText(fmt.Sprintf("Ticket id: %v", ticket.TicketId), "paragraph")
@@ -73,10 +73,10 @@ func InitRelatedTicketCanvas(ctx context.Context, oncallTickets pre_oncall.Ticke
 		AdditionalInfo := NewText(fmt.Sprintf("Additional Info: %v", ticket.Remarks), "paragraph")
 		components = append(components, AdditionalInfo)
 
-		GroupLink := NewText(fmt.Sprintf("Group Link %v", ticket.GroupLink), "paragraph")
+		GroupLink := NewText(fmt.Sprintf("Group Link: %v", ticket.GroupLink), "paragraph")
 		components = append(components, GroupLink)
 
-		TicketLink := NewText(fmt.Sprintf("Ticket Link %v", ticket.TicketLink), "paragraph")
+		TicketLink := NewText(fmt.Sprintf("Ticket Link: %v", ticket.TicketLink), "paragraph")
 		components = append(components, TicketLink)
 	}
 
