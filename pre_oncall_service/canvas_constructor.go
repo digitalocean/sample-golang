@@ -532,7 +532,7 @@ func validSubmitForm(ctx context.Context, inputValues map[string]string, interco
 		External:    "字节外",
 		Source:      "客服渠道",
 		Reporter:    "test@larksuite.com",
-		Remarks:     "",
+		Remarks:     " ",
 		ChannelType: "intercom",
 		BizTicketId: intercomConversationID,
 	}

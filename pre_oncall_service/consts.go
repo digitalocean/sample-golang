@@ -40,9 +40,9 @@ const (
 	PrioritySingleSelectID    = "prioritySingleSelect"
 	PrioritySingleSelectLabel = ""
 
-	AutoCreateGroup = "Auto Create"
-	AssociateGroup  = "Associate"
-	NotCreateGroup  = "Not Create"
+	AutoCreateGroup = "autoCreate"
+	AssociateGroup  = "bindExistChat"
+	NotCreateGroup  = "dontCreate"
 
 	CreateGroupSingleSelectID    = "createGroupSingleSelect"
 	CreateGroupSingleSelectLabel = ""
