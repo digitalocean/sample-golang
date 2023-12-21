@@ -373,7 +373,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 		//fmt.Printf("GetCreateTicketCanvasBody resp %v \n", larkcore.Prettify(resp))
 		bizList := resp.Data.BusinessList
 		for _, biz := range bizList {
-			bizLines = append(bizLines, biz.Name+"-"+biz.Bid)
+			bizLines = append(bizLines, biz.Name)
 		}
 		//log..Infof("GetCreateTicketCanvasBody bizLines %v", bizLines)
 
@@ -469,7 +469,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 			ticketStatus = CreatTicketFailed
 		} else {
 			fmt.Printf("GetCreateTicketCanvasBody validSubmitForm success \n")
-			resp, err := pre_oncall.SubmitFakePreOncallTicket(ctx, ticket)
+			resp, err := pre_oncall.SubmitPreOncallTicket(ctx, ticket)
 			fmt.Printf("GetCreateTicketCanvasBody SubmitPreOncallTicket resp %v \n", larkcore.Prettify(resp))
 			if err != nil {
 				//log..Errorf("GetCreateTicketCanvasBody SubmitPreOncallTicket err %v", err)
