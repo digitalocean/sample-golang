@@ -253,8 +253,8 @@ func searchBusinessLine(ctx context.Context, keyword string, bizLines []pre_onca
 	//log..Infof("searchBusinessLine keyword %v", keyword)
 	result := make([]string, 0)
 	for _, biz := range bizLines {
-		if strings.Contains(strings.ToLower(biz.Name+"-"+biz.Bid), strings.ToLower(keyword)) || keyword == "" {
-			result = append(result, biz.Name+"-"+biz.Bid)
+		if strings.Contains(strings.ToLower(biz.Name), strings.ToLower(keyword)) || keyword == "" {
+			result = append(result, biz.Name)
 		}
 	}
 
@@ -546,7 +546,21 @@ func validSubmitForm(ctx context.Context, inputValues map[string]string, interco
 		return ticket, false
 	}
 
-	ticket.Business = strings.Split(inputValues[BizLineSearchDropdownID], "-")[1]
+	fmt.Printf("validSubmitForm BizLineSearchDropdownID %v \n", inputValues[BizLineSearchDropdownID])
+
+	resp, err := pre_oncall.GetPreOncallMetaInfo(ctx, true, true)
+	if err != nil {
+		//log..Errorf("validSubmitForm GetPreOncallMetaInfo err %v", err)
+		return ticket, false
+	}
+
+	bizList := resp.Data.BusinessList
+	for _, biz := range bizList {
+		if biz.Name == inputValues[BizLineSearchDropdownID] {
+			ticket.Business = biz.Bid
+			break
+		}
+	}
 
 	// Check Ticket Title
 	if val, ok := inputValues[TicketTitleInputID]; !ok || val == "" {
