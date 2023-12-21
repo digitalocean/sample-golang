@@ -578,7 +578,7 @@ func validSubmitForm(ctx context.Context, inputValues map[string]string, interco
 	if val, ok := inputValues[StackSearchDropdownID]; !ok || val == "" {
 		return ticket, false
 	}
-	ticket.Stack = inputValues[StackSearchDropdownID]
+	ticket.Stack = chooseFormValue(inputValues[StackSearchDropdownID] == EmptyPlaceHolder, "", inputValues[StackSearchDropdownID])
 
 	// Check Priority
 	if val, ok := inputValues[PrioritySingleSelectID]; !ok || val == "" {
@@ -611,4 +611,12 @@ func validSubmitForm(ctx context.Context, inputValues map[string]string, interco
 
 	fmt.Printf("validSubmitForm ticket ========== %v \n", larkcore.Prettify(ticket))
 	return ticket, true
+}
+
+// Ternary-like function
+func chooseFormValue(condition bool, trueVal, falseVal string) string {
+	if condition {
+		return trueVal
+	}
+	return falseVal
 }
