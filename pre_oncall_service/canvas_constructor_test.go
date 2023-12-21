@@ -81,9 +81,9 @@ var mockOncallTickets = pre_oncall.TickeInfotResponse{
 // TestInitRelatedTicketCanvas tests the InitRelatedTicketCanvas function
 func TestInitRelatedTicketCanvas(t *testing.T) {
 	ctx := context.Background()
-
+	inputValue := make(map[string]string, 0)
 	// Call the function with mock data
-	canvasResp := InitRelatedTicketCanvas(ctx, mockOncallTickets)
+	canvasResp := InitRelatedTicketCanvas(ctx, mockOncallTickets, inputValue)
 
 	// Build the expected response
 	expectedComponents := []Component{}

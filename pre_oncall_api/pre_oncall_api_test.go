@@ -47,7 +47,7 @@ func TestPreOncallTicketCreation(t *testing.T) {
 }
 
 func TestGetPreOncallMetaInfo(t *testing.T) {
-	resp, err := GetPreOncallTicket(context.Background(), "11111", "intercom")
+	resp, err := GetPreOncallTicket(context.Background(), "397", "intercom")
 	if err != nil {
 		t.Errorf("call_metainfo_api() returned an error: %v", err)
 	}

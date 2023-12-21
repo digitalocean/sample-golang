@@ -38,7 +38,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	// Convert the bytes to string and print it
 	bodyString := string(bodyBytes)
-	fmt.Printf("this iis the body this %v \n", bodyString)
+	//fmt.Printf("this iis the body this %v \n", bodyString)
 	fmt.Println("======================================")
 	// You must close the original body
 
@@ -66,7 +66,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Printf("this is the response of submit handler %v \n", string(jsonResponse))
+	//fmt.Printf("this is the response of submit handler %v \n", string(jsonResponse))
 
 	w.Write(jsonResponse)
 
@@ -95,7 +95,7 @@ func InitializeCanvasHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Error marshalling response %V", http.StatusInternalServerError)
 		return
 	}
-	fmt.Printf("this is the response of initialize handler %v \n", string(jsonResponse))
+	//fmt.Printf("this is the response of initialize handler %v \n", string(jsonResponse))
 
 	w.Write(jsonResponse)
 }

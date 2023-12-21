@@ -15,7 +15,7 @@ func getValuePtr(key string, selectedValues map[string]string) *string {
 	if val, exist := selectedValues[key]; exist && val != "" {
 		selectedValue = &val
 	}
-	fmt.Printf("getValuePtr selectedValue %v \n", selectedValue)
+	//fmt.Printf("getValuePtr selectedValue %v \n", selectedValue)
 	return selectedValue
 }
 
@@ -107,7 +107,7 @@ func InitCreateOncalTicketCanvas(bizLines []string, regions []string, stackNames
 
 	//log..Infof("InitCreateOncalTicketCanvas selectedValues %v", selectedValues)
 	//log..Infof("InitCreateOncalTicketCanvas bizLines %v, regions %v, stackNames %v", bizLines, regions, stackNames)
-	fmt.Printf("InitCreateOncalTicketCanvas bizLines %v, regions %v, stackNames %v \n", bizLines, regions, stackNames)
+	//fmt.Printf("InitCreateOncalTicketCanvas bizLines %v, regions %v, stackNames %v \n", bizLines, regions, stackNames)
 	fmt.Printf("InitCreateOncalTicketCanvas selectedValues %v \n", larkcore.Prettify(selectedValues))
 	option1 := NewOption(RelatedTicketOptionID, "Related Ticket")
 	option2 := NewOption(CreateTicketOptionID, "Create Ticket")
@@ -239,7 +239,7 @@ func GetRelatedTicketCanvasBody(ctx context.Context, inputValue map[string]strin
 	//log..Infof("GetRelatedTicketCanvasBody intercomConversation %v", intercomConversationID)
 
 	// TODO we use the intercomConversation to get the tickets via pre-oncall api
-	oncallTickets, err := pre_oncall.GetFakePreOncallTicket(ctx, "11111", "intercom")
+	oncallTickets, err := pre_oncall.GetPreOncallTicket(ctx, intercomConversationID, "intercom")
 	if err != nil {
 		//log..Errorf("GetRelatedTicketCanvasBody GetPreOncallTicket err %v", err)
 		return InitPreOncallCanvas()
@@ -352,9 +352,9 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 	regions := extractRegionsFromCurrentCanvas(ctx, currentCanvas)
 	stackNames := extractStackNamesFromCurrentCanvas(ctx, currentCanvas)
 
-	fmt.Printf("GetCreateTicketCanvasBody buttonClick %v, selectedValue %v, intercom convID %v, assigneeID %v, canvas %v \n", buttonClick, inputValues, intercomConversationID, assigneeID, larkcore.Prettify(currentCanvas))
+	//fmt.Printf("GetCreateTicketCanvasBody buttonClick %v, selectedValue %v, intercom convID %v, assigneeID %v, canvas %v \n", buttonClick, inputValues, intercomConversationID, assigneeID, larkcore.Prettify(currentCanvas))
 
-	fmt.Printf("GetCreateTicketCanvasBody bizLines %v, regions %v, stackNames %v \n", bizLines, regions, stackNames)
+	//fmt.Printf("GetCreateTicketCanvasBody bizLines %v, regions %v, stackNames %v \n", bizLines, regions, stackNames)
 
 	switch buttonClick {
 	case CreateTicketOptionID:
@@ -463,13 +463,12 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 		inputValues[RegionSearchDropdownID] = ""
 	case SubmitTicketButtonID:
 		ticket, isValid := validSubmitForm(ctx, inputValues, intercomConversationID)
-
+		fmt.Printf("GetCreateTicketCanvasBody validSubmitForm ticket %v \n", larkcore.Prettify(ticket))
 		if !isValid {
 			fmt.Printf("GetCreateTicketCanvasBody validSubmitForm failed \n")
 			ticketStatus = CreatTicketFailed
 		} else {
 			fmt.Printf("GetCreateTicketCanvasBody validSubmitForm success \n")
-
 			resp, err := pre_oncall.SubmitFakePreOncallTicket(ctx, ticket)
 			fmt.Printf("GetCreateTicketCanvasBody SubmitPreOncallTicket resp %v \n", larkcore.Prettify(resp))
 			if err != nil {
@@ -477,7 +476,11 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 				fmt.Printf("GetCreateTicketCanvasBody SubmitPreOncallTicket err %v \n", err)
 				ticketStatus = CreatTicketFailed
 			} else {
-				ticketStatus = CreateTicketSucceed
+				if resp.Data.TicketId != "" {
+					ticketStatus = CreateTicketSucceed
+				} else {
+					ticketStatus = CreatTicketFailed
+				}
 			}
 		}
 	case StackSearchButtonID:
@@ -543,7 +546,7 @@ func validSubmitForm(ctx context.Context, inputValues map[string]string, interco
 		return ticket, false
 	}
 
-	ticket.BizTicketId = strings.Split(inputValues[BizLineSearchDropdownID], "-")[1]
+	ticket.Business = strings.Split(inputValues[BizLineSearchDropdownID], "-")[1]
 
 	// Check Ticket Title
 	if val, ok := inputValues[TicketTitleInputID]; !ok || val == "" {
