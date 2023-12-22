@@ -488,7 +488,7 @@ func GetCreateTicketCanvasBody(ctx context.Context, inputValues map[string]strin
 		fmt.Printf("GetCreateTicketCanvasBody stack search button \n")
 		stackNames = make([]string, 0)
 		inputValues[StackSearchDropdownID] = ""
-		if value, ok := inputValues[BizLineSearchDropdownID]; ok && strings.Contains(value, "-") {
+		if value, ok := inputValues[BizLineSearchDropdownID]; ok {
 			resp, err := pre_oncall.GetPreOncallMetaInfo(ctx, true, true)
 			if err != nil {
 				//log..Errorf("GetCreateTicketCanvasBody GetPreOncallMetaInfo err %v", err)
