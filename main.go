@@ -127,8 +127,7 @@ func main() {
 	fmt.Println()
 	fmt.Printf("==> Server listening at %s 🚀\n", bindAddr)
 
-	err := http.ListenAndServe(fmt.Sprintf(":%s", port), nil)
-	if err != nil {
+	if err := http.ListenAndServe(bindAddr, nil); err != nil {
 		panic(err)
 	}
 }
