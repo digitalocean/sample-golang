@@ -1,13 +1,14 @@
 package main
 
 import (
+	"context"
+	"encoding/json"
 	"fmt"
+	preoncall_service "github.com/digitalocean/sample-golang/pre_oncall_service"
+	"io/ioutil"
 	"net/http"
 	"os"
-	"strconv"
 	"strings"
-
-	"github.com/gofrs/uuid"
 )
 
 const startupMessage = `[38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;54;48;5;39m [38;5;54;48;5;39m [38;5;54;48;5;39m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [0m
@@ -27,80 +28,83 @@ const startupMessage = `[38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [
 [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;56;48;5;51m�[38;5;141;48;5;87m�[38;5;123;48;5;231m�[38;5;31;48;5;195m [38;5;57;48;5;73m�[38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;51;48;5;51m [38;5;56;48;5;51m�[38;5;81;48;5;195m�[38;5;55;48;5;45m [38;5;99;48;5;51m�[38;5;177;48;5;38m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;123;48;5;255m�[38;5;231;48;5;231m�[38;5;231;48;5;231m�[38;5;231;48;5;231m�[38;5;231;48;5;231m�[38;5;231;48;5;231m�[38;5;231;48;5;231m�[38;5;231;48;5;231m�[38;5;231;48;5;231m�[38;5;231;48;5;231m�[38;5;231;48;5;231m�[38;5;231;48;5;231m�[38;5;231;48;5;231m�[38;5;231;48;5;231m�[38;5;231;48;5;231m�[38;5;51;48;5;255m�[38;5;168;48;5;241m�[38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [38;5;1;48;5;16m [0m
 [0m`
 
-func logRequest(r *http.Request) {
-	uri := r.RequestURI
-	method := r.Method
-	fmt.Println("Got request!", method, uri)
+func SubmitHandler(w http.ResponseWriter, r *http.Request) {
+	bodyBytes, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, "Error reading request body", http.StatusInternalServerError)
+		return
+	}
+	fmt.Println("-------------------------------------- this is submit request")
+	defer r.Body.Close()
+	// Convert the bytes to string and print it
+	bodyString := string(bodyBytes)
+	//fmt.Printf("this iis the body this %v \n", bodyString)
+	fmt.Println("======================================")
+	// You must close the original body
+
+	// Unmarshal the JSON into your struct
+	response, err := preoncall_service.HandlePreoncallCanvasSubmitAction(context.Background(), bodyString)
+	fmt.Printf("this is ###### \n")
+	if err != nil {
+		//////log..Fatalf("Error occurred during marshaling. Error: %s", err.Error())
+		fmt.Println("Error occurred during marshaling. Error: %s", err.Error())
+		return
+	}
+
+	fmt.Printf("this is =================== \n ")
+
+	//canvas, err := json.Marshal(response.Canvas)
+	//if err != nil {
+	//	fmt.Println("Error marshalling response %V", http.StatusInternalServerError)
+	//	return
+	//}
+
+	w.Header().Set("Content-Type", "application/json")
+	jsonResponse, err := json.Marshal(response)
+	if err != nil {
+		fmt.Println("Error marshalling response %V", http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Printf("this is the response of submit handler %v \n", string(jsonResponse))
+
+	w.Write(jsonResponse)
+
+}
+
+func InitializeCanvasHandler(w http.ResponseWriter, r *http.Request) {
+	// Read the body of the POST request
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer r.Body.Close()
+
+	// //log. the body, can remove this in production
+	fmt.Println("Received initialize request with body:", string(body))
+	response := preoncall_service.HandlePreoncallInitializationAction(context.Background())
+	fmt.Printf("response %v\n", response)
+
+	// Convert the byte slice to a string and print it
+
+	// Send the response as JSON
+	w.Header().Set("Content-Type", "application/json")
+	jsonResponse, err := json.Marshal(response)
+	if err != nil {
+		fmt.Println("Error marshalling response %V", http.StatusInternalServerError)
+		return
+	}
+	//fmt.Printf("this is the response of initialize handler %v \n", string(jsonResponse))
+
+	w.Write(jsonResponse)
 }
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		logRequest(r)
-		fmt.Fprintf(w, "Hello! you've requested %s\n", r.URL.Path)
-	})
 
-	http.HandleFunc("/cached", func(w http.ResponseWriter, r *http.Request) {
-		logRequest(r)
-		maxAgeParams, ok := r.URL.Query()["max-age"]
-		if ok && len(maxAgeParams) > 0 {
-			maxAge, _ := strconv.Atoi(maxAgeParams[0])
-			w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", maxAge))
-		}
-		responseHeaderParams, ok := r.URL.Query()["headers"]
-		if ok {
-			for _, header := range responseHeaderParams {
-				h := strings.Split(header, ":")
-				w.Header().Set(h[0], strings.TrimSpace(h[1]))
-			}
-		}
-		statusCodeParams, ok := r.URL.Query()["status"]
-		if ok {
-			statusCode, _ := strconv.Atoi(statusCodeParams[0])
-			w.WriteHeader(statusCode)
-		}
-		requestID := uuid.Must(uuid.NewV4())
-		fmt.Fprint(w, requestID.String())
-	})
-
-	http.HandleFunc("/headers", func(w http.ResponseWriter, r *http.Request) {
-		logRequest(r)
-		keys, ok := r.URL.Query()["key"]
-		if ok && len(keys) > 0 {
-			fmt.Fprint(w, r.Header.Get(keys[0]))
-			return
-		}
-		headers := []string{}
-		headers = append(headers, fmt.Sprintf("host=%s", r.Host))
-		for key, values := range r.Header {
-			headers = append(headers, fmt.Sprintf("%s=%s", key, strings.Join(values, ",")))
-		}
-		fmt.Fprint(w, strings.Join(headers, "\n"))
-	})
-
-	http.HandleFunc("/env", func(w http.ResponseWriter, r *http.Request) {
-		logRequest(r)
-		keys, ok := r.URL.Query()["key"]
-		if ok && len(keys) > 0 {
-			fmt.Fprint(w, os.Getenv(keys[0]))
-			return
-		}
-		envs := []string{}
-		envs = append(envs, os.Environ()...)
-		fmt.Fprint(w, strings.Join(envs, "\n"))
-	})
-
-	http.HandleFunc("/status", func(w http.ResponseWriter, r *http.Request) {
-		logRequest(r)
-		codeParams, ok := r.URL.Query()["code"]
-		if ok && len(codeParams) > 0 {
-			statusCode, _ := strconv.Atoi(codeParams[0])
-			if statusCode >= 200 && statusCode < 600 {
-				w.WriteHeader(statusCode)
-			}
-		}
-		requestID := uuid.Must(uuid.NewV4())
-		fmt.Fprint(w, requestID.String())
-	})
+	// Handle POST requests to the "/initialize" endpoint
+	http.HandleFunc("/initialize", InitializeCanvasHandler)
+	http.HandleFunc("/submit", SubmitHandler)
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -131,4 +135,5 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
 }
