@@ -16,6 +16,9 @@ type IntercomCanvasRequest struct {
 	CurrentCanvas   IntercomCanvasReceiver `json:"current_canvas"`
 }
 
+// comment1
+
+// comment2
 type IntercomConversation struct {
 	ConversationID  string `json:"id"`
 	AdminAssigneeID int    `json:"admin_assignee_id"`
