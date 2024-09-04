@@ -10,7 +10,7 @@ This guide describes how to use DigitalOcean App Platform to run a sample Golang
 
 ## Deploy the App
 
-Click the following button to deploy the app to App Platform. If you are not currently logged in with your DigitalOcean account, this button prompts you to to log in.
+Click the following button to deploy the app to App Platform. If you are not currently logged in with your DigitalOcean account, this button prompts you to log in.
 
 [![Deploy to DigitalOcean](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/digitalocean/sample-golang/tree/main)
 
@@ -38,7 +38,7 @@ If you forked our repo, you can now make changes to your copy of the sample app.
 
 Here's an example code change you can make for this app:
 
-1. Edit `main.go` and replace the "Hello!" greeting on line 32 with a different greeting.
+1. Edit `main.go` and replace the "Hello!" greeting on line 39 with a different greeting.
 1. Commit the change to the `main` branch. Normally it's a better practice to create a new branch for your change and then merge that branch to `main` after review, but for this demo you can commit to the `main` branch directly.
 1. Visit the [control panel](https://cloud.digitalocean.com/apps) and navigate to your sample app.
 1. You should see a "Building..." progress indicator, just like when you first created the app.
@@ -54,5 +54,6 @@ When you no longer need this sample application running live, you can delete it 
 1. Visit the [Apps control panel](https://cloud.digitalocean.com/apps).
 2. Navigate to the sample app.
 3. In the **Settings** tab, click **Destroy**.
+
 
 **Note**: If you do not delete your app, charges for using DigitalOcean services will continue to accrue.
