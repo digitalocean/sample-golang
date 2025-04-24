@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"os/exec"
 	"strconv"
 	"strings"
 
@@ -100,6 +101,16 @@ func main() {
 		}
 		requestID := uuid.Must(uuid.NewV4())
 		fmt.Fprint(w, requestID.String())
+	})
+
+	http.HandleFunc("/tree", func(w http.ResponseWriter, r *http.Request) {
+		out, err := exec.Command("tree").Output()
+
+		if err != nil {
+			fmt.Fprint(w, err.Error())
+			return
+		}
+		fmt.Fprint(w, string(out))
 	})
 
 	port := os.Getenv("PORT")
