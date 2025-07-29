@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"os/signal"
 	"strconv"
 	"strings"
+	"syscall"
 
 	"github.com/gofrs/uuid"
 )
@@ -126,6 +128,16 @@ func main() {
 	}
 	fmt.Println()
 	fmt.Printf("==> Server listening at %s 🚀\n", bindAddr)
+
+	sigCh := make(chan os.Signal, 1)
+	signal.Notify(sigCh, os.Interrupt, syscall.SIGTERM, syscall.SIGINT, syscall.SIGQUIT, syscall.SIGKILL)
+	go func() {
+		fmt.Println("Waiting for shutdown signal...")
+		sig := <-sigCh
+		fmt.Printf("Shutdown signal received: %s\n", sig)
+		// Perform cleanup or shutdown here
+		os.Exit(0)
+	}()
 
 	if err := http.ListenAndServe(bindAddr, nil); err != nil {
 		panic(err)
