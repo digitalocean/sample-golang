@@ -58,7 +58,11 @@ func main() {
 			statusCode, _ := strconv.Atoi(statusCodeParams[0])
 			w.WriteHeader(statusCode)
 		}
-		requestID := uuid.Must(uuid.NewV4())
+		requestID, err := uuid.NewV4()
+		if err != nil {
+			http.Error(w, "failed to generate UUID", http.StatusInternalServerError)
+			return
+		}
 		fmt.Fprint(w, requestID.String())
 	})
 
@@ -98,7 +102,11 @@ func main() {
 				w.WriteHeader(statusCode)
 			}
 		}
-		requestID := uuid.Must(uuid.NewV4())
+		requestID, err := uuid.NewV4()
+		if err != nil {
+			http.Error(w, "failed to generate UUID", http.StatusInternalServerError)
+			return
+		}
 		fmt.Fprint(w, requestID.String())
 	})
 
