@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -88,8 +89,8 @@ func main() {
 			fmt.Fprint(w, os.Getenv(keys[0]))
 			return
 		}
-		envs := []string{}
-		envs = append(envs, os.Environ()...)
+		envs := os.Environ()
+		sort.Strings(envs)
 		fmt.Fprint(w, strings.Join(envs, "\n"))
 	})
 
